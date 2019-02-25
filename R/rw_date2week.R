@@ -1,3 +1,4 @@
+#' @export
 rw_date2week <- function(x, week_start = 7, numeric = FALSE, ...) {
 
   x <- try(as.POSIXlt(x))
@@ -13,7 +14,7 @@ rw_date2week <- function(x, week_start = 7, numeric = FALSE, ...) {
   the_week_bounds <- the_date + (4L - wday)
   res <- week_in_year(the_week_bounds)
   
-  first_week_is_last_year <- grepl("01", format(the_date, "%m")) && res >= 52
+  first_week_is_last_year <- grepl("01", format(the_date, "%m")) & res >= 52
   if (!numeric) {
     the_year <- as.integer(format(the_date, "%Y"))
     res <- sprintf("%04d-W%02d-%d", 
@@ -37,6 +38,7 @@ week_in_year <- function(the_date) {
   1L + (as.numeric(the_date) - as.numeric(jan1)) %/% 7L
 }
 
+#' @export
 rw_week2date <- function(x, week_start = 7) {
 
   pat <- "^(?<year>[0-9]{4})-W(?<week>[0-9]{2})-(?<day>[0-9])$"
@@ -55,7 +57,9 @@ rw_week2date <- function(x, week_start = 7) {
   january_1 <- ifelse(is.na(out[, "year"]), NA, sprintf("%s-01-01", out[, "year"]))
   january_1 <- as.Date(january_1, tz = "UTC")
   j1_day    <- get_wday(january_1, week_start) - 1L
-  j1_is_first <- as.integer(j1_day < 3)
+  
+  # If the previous year is included in this year's first date, subtract a week
+  j1_is_first <- as.integer(j1_day < 4)
   weeks_as_days <- (out[, "week"] - j1_is_first) * 7L
   first_week <- january_1 - j1_day
   
