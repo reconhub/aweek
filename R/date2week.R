@@ -34,13 +34,16 @@
 #' # By default, the weeks are defined as ISO weeks, which start on Monday
 #' print(iso_dat <- date2week(dat))
 #'
+#' # If you want lubridate-style numeric-only weeks, you need look no further
+#' # than the "numeric" argument
+#' date2week(dat, 1, numeric = TRUE)
+#'
 #' # The rainboweek class can be converted back to a date with `as.Date()`
 #' as.Date(iso_dat)
 #'
-#' # If you remove the day portion from the result, you can convert the days to
-#' # the beginning of the week:
-#' print(iso_dat_trunc <- gsub("-\\d$", "", iso_dat))
-#' as.Date(iso_dat_trunc)
+#' # If you want to show only the first day of the week, you can use the 
+#' # `floor_day` argument
+#' as.Date(iso_dat, floor_day = TRUE)
 #'
 #' # ISO week definition: Monday -- 1
 #' date2week(dat, 1)
