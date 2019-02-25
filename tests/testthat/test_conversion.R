@@ -2,7 +2,7 @@ context("conversion tests")
 
 
 dat <- Sys.Date()
-datw <- rw_date2week(dat, 5)
+datw <- date2week(dat, 5)
 
 
 test_that("rainboweek prints as expected", {
@@ -12,6 +12,14 @@ test_that("rainboweek prints as expected", {
 
 })
 
+
+test_that("a character can be converted to a date", {
+
+  w <- week2date("2018-W13", 1)
+  expect_is(w, "Date")
+  expect_identical(format(w, "%Y-%m-%d"), "2018-03-26")
+
+})
 
 test_that("rainboweek can be converted to character", {
 

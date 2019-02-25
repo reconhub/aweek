@@ -32,7 +32,7 @@
 #' print(dat <- Sys.Date() + -6:7)
 #' 
 #' # By default, the weeks are defined as ISO weeks, which start on Monday
-#' print(iso_dat <- rw_date2week(dat))
+#' print(iso_dat <- date2week(dat))
 #'
 #' # The rainboweek class can be converted back to a date with `as.Date()`
 #' as.Date(iso_dat)
@@ -43,31 +43,34 @@
 #' as.Date(iso_dat_trunc)
 #'
 #' # ISO week definition: Monday -- 1
-#' rw_date2week(dat, 1)
+#' date2week(dat, 1)
 #'
 #' # Tuesday -- 2
-#' rw_date2week(dat, 2)
+#' date2week(dat, 2)
 #'
 #' # Wednesday -- 3
-#' rw_date2week(dat, 3)
+#' date2week(dat, 3)
 #'
 #' # Thursday -- 4
-#' rw_date2week(dat, 4)
+#' date2week(dat, 4)
 #'
 #' # Friday -- 5
-#' rw_date2week(dat, 5)
+#' date2week(dat, 5)
 #'
 #' # Saturday -- 6
-#' rw_date2week(dat, 6)
+#' date2week(dat, 6)
 #'
 #' # Epiweek definition: Sunday -- 7 
-#' rw_date2week(dat, 7)
-rw_date2week <- function(x, week_start = 1, floor_day = FALSE, numeric = FALSE, ...) {
+#' date2week(dat, 7)
+date2week <- function(x, week_start = 1, floor_day = FALSE, numeric = FALSE, ...) {
 
-  x <- try(as.POSIXlt(x, ...))
-  if (inherits(x, "try-error")) {
-    stop(sprintf("there is no method for an object of class %s", 
-                 paste(class(x), collapse = ", "))) 
+  ox <- x
+  x  <- tryCatch(as.POSIXlt(x, ...), error = function(e) e)
+
+  if (inherits(x, "error")) {
+    mc <- match.call()
+    msg <- "%s could not be converted to a date. as.POSIXlt() returned this error:\n%s"
+    stop(sprintf(msg, deparse(mc[["x"]]), x$message))
   }
   wday       <- as.integer(x$wday) + 1L # weekdays in R run 0:6, 0 being Sunday
   week_start <- as.integer(week_start)

@@ -7,17 +7,22 @@ dats <- sprintf("%d-%02d-%02d",
                 01)
 
 
-dats    <- as.Date(dats)
+dats <- as.Date(dats)
 
+test_that("an error is thrown if something can't be converted to a date", {
+                
+  expect_error(date2week(iris), "iris could not be converted to a date")                
+                
+})
 
 test_that("January first dates can be properly converted", {
 
   # ISO week
-  datw    <- rw_date2week(dats, 1)
+  datw    <- date2week(dats, 1)
   # Epi week
-  datew   <- rw_date2week(dats, 7, numeric = TRUE)
-  datf    <- rw_date2week(dats, 1, floor_day = TRUE)
-  datn    <- rw_date2week(dats, 1, numeric = TRUE)
+  datew   <- date2week(dats, 7, numeric = TRUE)
+  datf    <- date2week(dats, 1, floor_day = TRUE)
+  datn    <- date2week(dats, 1, numeric = TRUE)
   datback <- as.Date(datw)
   # isoweeks
   weeknums <- c(1, 1, 1, 1, 53, 52, 1, 1, 1, 53, 52, 52, 1, 1, 1, 53, 52, 1, 1) 
@@ -52,8 +57,8 @@ test_that("dates can be co back and forth no matter the start day", {
 
 
   for (i in 1:7) {
-    datw    <- rw_date2week(dats, i)
-    datback <- rw_week2date(datw)
+    datw    <- date2week(dats, i)
+    datback <- week2date(datw)
 
     expect_identical(as.character(dats), as.character(datback), 
                      info = sprintf("day: %d", i))
