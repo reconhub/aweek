@@ -1,0 +1,14 @@
+^CODE_OF_CONDUCT\.md$
+^LICENSE\.md$
+^.*\.Rproj$
+^\.Rproj\.user$
+^README\.Rmd$
+^README\.md
+^README-.*\.png$
+^\.travis\.yml$
+^\.lintr$
+^appveyor\.yml$
+^codecov\.yml$
+^cran-comments\.md$
+^docs/
+
