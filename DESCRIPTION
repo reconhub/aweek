@@ -1,13 +1,16 @@
 Package: rw
-Title: An expressive Title in Titlecase
+Title: Convert Dates to Arbitrary Week Definitions
 Version: 0.0.1.9000
-Authors@R: person("Your", "Name", email = "your.name@localhost", role = c("aut", "cre"))
-Description: Please add a description.
-Depends: R (>= 3.5.2)
+Authors@R: person(c("Zhian N."), "Kamvar", email = "zkamvar@gmail.com", role = c("aut", "cre"))
+Description: Which day a week starts depends heavily on the either the local or
+  professional context. This package, rw, stands for 'rainbow weeks' and is 
+  designed to be a lightweight solution to easily switching between week-based
+  date definitions. 
+Depends: R (>= 3.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Suggests: testthat, roxygen2
+Suggests: testthat, roxygen2, knitr
 RoxygenNote: 6.1.1
 URL: https://github.com/reconhub/rw
 BugReports: https://github.com/reconhub/rw/issues
