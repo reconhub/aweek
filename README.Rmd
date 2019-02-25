@@ -6,27 +6,46 @@ output: github_document
 
 # Welcome to the *rw* package!
 
-This is just a template. Please remove, add or edit parts as you see fit.
+This package will convert dates to epiweeks, isoweeks, and all others in between
+with minimal overhead.
+
+```{r epiweek}
+
+library(rw)
+onset <- Sys.Date() + sample(-50:0, 100, replace = TRUE)
+onset
+date2week(onset, week_start = 1) # ISO weeks starting on Monday (default)
+date2week(onset, week_start = 6) # EPI week starting on Saturday
+x <- date2week(onset, week_start = 6, floor_day = TRUE) # rruncate to just the weeks
+table(x)
+table(week2date(x))
+```
+
 
 ## Installing the package
 
 To install the current stable, CRAN version of the package, type:
+
 ```{r install, eval = FALSE}
 install.packages("rw")
 ```
 
 To benefit from the latest features and bug fixes, install the development, *github* version of the package using:
+
 ```{r install2, eval = FALSE}
-devtools::install_github("reconhub/rw")
+remotes::install_github("zkamvar/rw")
 ```
 
-Note that this requires the package *devtools* installed.
+Note that this requires the package *remotes* installed.
 
 
-# What does it do?
+# Main Features
 
-The main features of the package include:
-
+ - `date2week()` converts dates to a week format (YYYY-Www-d) that can start on 
+   any day. 
+ - `week2date()/as.Date()` does the backwards conversion from (YYYY-Www(-d)) to
+   a numeric date. 
+ - Dependencies only on R itself.
 
 
 # Resources

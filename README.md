@@ -1,35 +1,135 @@
----
-output: github_document
----
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rw)](https://cran.r-project.org/package=rw)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rw)](https://cran.r-project.org/package=rw)
 
-# Welcome to the *rw* package!
+# Welcome to the *rw* package\!
 
-This is just a template. Please remove, add or edit parts as you see fit.
+This package will convert dates to epiweeks, isoweeks, and all others in
+between with minimal overhead.
+
+``` r
+library(rw)
+onset <- Sys.Date() + sample(-50:0, 100, replace = TRUE)
+onset
+```
+
+    ##   [1] "2019-01-14" "2019-01-27" "2019-02-13" "2019-02-11" "2019-01-27"
+    ##   [6] "2019-01-23" "2019-01-31" "2019-01-12" "2019-01-07" "2019-01-30"
+    ##  [11] "2019-01-25" "2019-02-13" "2019-01-08" "2019-01-11" "2019-02-24"
+    ##  [16] "2019-02-10" "2019-01-14" "2019-02-12" "2019-01-14" "2019-01-26"
+    ##  [21] "2019-02-07" "2019-02-12" "2019-02-21" "2019-01-22" "2019-01-25"
+    ##  [26] "2019-01-09" "2019-01-27" "2019-01-24" "2019-01-20" "2019-02-26"
+    ##  [31] "2019-01-20" "2019-02-20" "2019-01-27" "2019-01-26" "2019-02-11"
+    ##  [36] "2019-01-16" "2019-02-06" "2019-01-07" "2019-01-29" "2019-01-10"
+    ##  [41] "2019-01-24" "2019-02-11" "2019-01-19" "2019-01-14" "2019-01-11"
+    ##  [46] "2019-01-08" "2019-01-20" "2019-02-05" "2019-02-16" "2019-02-15"
+    ##  [51] "2019-02-09" "2019-02-24" "2019-02-09" "2019-01-13" "2019-01-19"
+    ##  [56] "2019-02-15" "2019-02-09" "2019-02-12" "2019-01-07" "2019-01-25"
+    ##  [61] "2019-01-12" "2019-02-10" "2019-01-21" "2019-02-23" "2019-01-22"
+    ##  [66] "2019-02-08" "2019-01-23" "2019-02-24" "2019-01-10" "2019-02-12"
+    ##  [71] "2019-02-18" "2019-01-09" "2019-02-20" "2019-01-27" "2019-01-31"
+    ##  [76] "2019-02-08" "2019-01-12" "2019-01-24" "2019-02-24" "2019-02-09"
+    ##  [81] "2019-02-21" "2019-02-20" "2019-01-13" "2019-01-29" "2019-01-07"
+    ##  [86] "2019-02-09" "2019-02-09" "2019-02-10" "2019-01-15" "2019-02-11"
+    ##  [91] "2019-01-07" "2019-01-14" "2019-01-11" "2019-02-15" "2019-01-29"
+    ##  [96] "2019-02-02" "2019-02-24" "2019-01-19" "2019-02-20" "2019-01-08"
+
+``` r
+date2week(onset, week_start = 1) # ISO weeks starting on Monday (default)
+```
+
+    ## <rainboweek start: 1>
+    ##   [1] "2019-W03-1" "2019-W04-7" "2019-W07-3" "2019-W07-1" "2019-W04-7"
+    ##   [6] "2019-W04-3" "2019-W05-4" "2019-W02-6" "2019-W02-1" "2019-W05-3"
+    ##  [11] "2019-W04-5" "2019-W07-3" "2019-W02-2" "2019-W02-5" "2019-W08-7"
+    ##  [16] "2019-W06-7" "2019-W03-1" "2019-W07-2" "2019-W03-1" "2019-W04-6"
+    ##  [21] "2019-W06-4" "2019-W07-2" "2019-W08-4" "2019-W04-2" "2019-W04-5"
+    ##  [26] "2019-W02-3" "2019-W04-7" "2019-W04-4" "2019-W03-7" "2019-W09-2"
+    ##  [31] "2019-W03-7" "2019-W08-3" "2019-W04-7" "2019-W04-6" "2019-W07-1"
+    ##  [36] "2019-W03-3" "2019-W06-3" "2019-W02-1" "2019-W05-2" "2019-W02-4"
+    ##  [41] "2019-W04-4" "2019-W07-1" "2019-W03-6" "2019-W03-1" "2019-W02-5"
+    ##  [46] "2019-W02-2" "2019-W03-7" "2019-W06-2" "2019-W07-6" "2019-W07-5"
+    ##  [51] "2019-W06-6" "2019-W08-7" "2019-W06-6" "2019-W02-7" "2019-W03-6"
+    ##  [56] "2019-W07-5" "2019-W06-6" "2019-W07-2" "2019-W02-1" "2019-W04-5"
+    ##  [61] "2019-W02-6" "2019-W06-7" "2019-W04-1" "2019-W08-6" "2019-W04-2"
+    ##  [66] "2019-W06-5" "2019-W04-3" "2019-W08-7" "2019-W02-4" "2019-W07-2"
+    ##  [71] "2019-W08-1" "2019-W02-3" "2019-W08-3" "2019-W04-7" "2019-W05-4"
+    ##  [76] "2019-W06-5" "2019-W02-6" "2019-W04-4" "2019-W08-7" "2019-W06-6"
+    ##  [81] "2019-W08-4" "2019-W08-3" "2019-W02-7" "2019-W05-2" "2019-W02-1"
+    ##  [86] "2019-W06-6" "2019-W06-6" "2019-W06-7" "2019-W03-2" "2019-W07-1"
+    ##  [91] "2019-W02-1" "2019-W03-1" "2019-W02-5" "2019-W07-5" "2019-W05-2"
+    ##  [96] "2019-W05-6" "2019-W08-7" "2019-W03-6" "2019-W08-3" "2019-W02-2"
+
+``` r
+date2week(onset, week_start = 6) # EPI week starting on Saturday
+```
+
+    ## <rainboweek start: 6>
+    ##   [1] "2019-W03-3" "2019-W05-2" "2019-W07-5" "2019-W07-3" "2019-W05-2"
+    ##   [6] "2019-W04-5" "2019-W05-6" "2019-W03-1" "2019-W02-3" "2019-W05-5"
+    ##  [11] "2019-W04-7" "2019-W07-5" "2019-W02-4" "2019-W02-7" "2019-W09-2"
+    ##  [16] "2019-W07-2" "2019-W03-3" "2019-W07-4" "2019-W03-3" "2019-W05-1"
+    ##  [21] "2019-W06-6" "2019-W07-4" "2019-W08-6" "2019-W04-4" "2019-W04-7"
+    ##  [26] "2019-W02-5" "2019-W05-2" "2019-W04-6" "2019-W04-2" "2019-W09-4"
+    ##  [31] "2019-W04-2" "2019-W08-5" "2019-W05-2" "2019-W05-1" "2019-W07-3"
+    ##  [36] "2019-W03-5" "2019-W06-5" "2019-W02-3" "2019-W05-4" "2019-W02-6"
+    ##  [41] "2019-W04-6" "2019-W07-3" "2019-W04-1" "2019-W03-3" "2019-W02-7"
+    ##  [46] "2019-W02-4" "2019-W04-2" "2019-W06-4" "2019-W08-1" "2019-W07-7"
+    ##  [51] "2019-W07-1" "2019-W09-2" "2019-W07-1" "2019-W03-2" "2019-W04-1"
+    ##  [56] "2019-W07-7" "2019-W07-1" "2019-W07-4" "2019-W02-3" "2019-W04-7"
+    ##  [61] "2019-W03-1" "2019-W07-2" "2019-W04-3" "2019-W09-1" "2019-W04-4"
+    ##  [66] "2019-W06-7" "2019-W04-5" "2019-W09-2" "2019-W02-6" "2019-W07-4"
+    ##  [71] "2019-W08-3" "2019-W02-5" "2019-W08-5" "2019-W05-2" "2019-W05-6"
+    ##  [76] "2019-W06-7" "2019-W03-1" "2019-W04-6" "2019-W09-2" "2019-W07-1"
+    ##  [81] "2019-W08-6" "2019-W08-5" "2019-W03-2" "2019-W05-4" "2019-W02-3"
+    ##  [86] "2019-W07-1" "2019-W07-1" "2019-W07-2" "2019-W03-4" "2019-W07-3"
+    ##  [91] "2019-W02-3" "2019-W03-3" "2019-W02-7" "2019-W07-7" "2019-W05-4"
+    ##  [96] "2019-W06-1" "2019-W09-2" "2019-W04-1" "2019-W08-5" "2019-W02-4"
+
+``` r
+x <- date2week(onset, week_start = 6, floor_day = TRUE) # rruncate to just the weeks
+table(x)
+```
+
+    ## x
+    ## 2019-W02-1 2019-W03-1 2019-W04-1 2019-W05-1 2019-W06-1 2019-W07-1 
+    ##         15         12         17         13          6         22 
+    ## 2019-W08-1 2019-W09-1 
+    ##          8          7
+
+``` r
+table(week2date(x))
+```
+
+    ## 
+    ## 2019-01-05 2019-01-12 2019-01-19 2019-01-26 2019-02-02 2019-02-09 
+    ##         15         12         17         13          6         22 
+    ## 2019-02-16 2019-02-23 
+    ##          8          7
 
 ## Installing the package
 
 To install the current stable, CRAN version of the package, type:
 
-```r
+``` r
 install.packages("rw")
 ```
 
-To benefit from the latest features and bug fixes, install the development, *github* version of the package using:
+To benefit from the latest features and bug fixes, install the
+development, *github* version of the package using:
 
-```r
-devtools::install_github("reconhub/rw")
+``` r
+remotes::install_github("zkamvar/rw")
 ```
 
-Note that this requires the package *devtools* installed.
+Note that this requires the package *remotes* installed.
 
+# Main Features
 
-# What does it do?
-
-The main features of the package include:
-
-
+  - `date2week()` converts dates to a week format (YYYY-Www-d) that can
+    start on any day.
+  - `week2date()/as.Date()` does the backwards conversion from
+    (YYYY-Www(-d)) to a numeric date.
+  - Dependencies only on R itself.
 
 # Resources
 
@@ -37,20 +137,23 @@ The main features of the package include:
 
 An overview and examples of *rw* are provided in the vignettes:
 
-...
+…
 
 ## Websites
 
 The following websites are available:
 
-...
+…
 
 ## Getting help online
 
-Bug reports and feature requests should be posted on *github* using the [*issue*](http://github.com/reconhub/rw/issues) system. All other questions should be posted on the **RECON forum**: <br>
-[http://www.repidemicsconsortium.org/forum/](http://www.repidemicsconsortium.org/forum/)
+Bug reports and feature requests should be posted on *github* using the
+[*issue*](http://github.com/reconhub/rw/issues) system. All other
+questions should be posted on the **RECON forum**: <br>
+<http://www.repidemicsconsortium.org/forum/>
 
 Contributions are welcome via **pull requests**.
 
-Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
-
+Please note that this project is released with a [Contributor Code of
+Conduct](CONDUCT.md). By participating in this project you agree to
+abide by its terms.
