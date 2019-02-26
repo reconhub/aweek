@@ -83,22 +83,32 @@ date2week <- function(x, week_start = 1, floor_day = FALSE, numeric = FALSE, ...
   wday <- get_wday(wday, week_start)
   the_date <- as.Date(x)
   the_week_bounds <- the_date + (4L - wday)
-  res <- week_in_year(the_week_bounds)
+  the_week <- week_in_year(the_week_bounds)
 
-  first_week_is_last_year <- grepl("01", format(the_date, "%m")) & res >= 52
+  # adjust for cases where the year is different than the date
+  december <- format(the_date, "%m") == "12"
+  january  <- format(the_date, "%m") == "01"
+  boundary_adjustment <- integer(length(the_date))
+  
+  # Shift the year backwards if the date is in january, but the week is not
+  boundary_adjustment[january  & the_week >= 52] <- -1L
+
+  # Shift the year forwards if the date is in december, but it's the first week
+  boundary_adjustment[december & the_week == 1]  <- 1L
+
   if (!numeric) {
     the_year <- as.integer(format(the_date, "%Y"))
-    res <- sprintf("%04d-W%02d-%d", 
-                   the_year - first_week_is_last_year,
-                   res,
+    the_week <- sprintf("%04d-W%02d-%d", 
+                   the_year + boundary_adjustment,
+                   the_week,
                    wday
                    )
-    class(res) <- "aweek"
-    attr(res, "week_start") <- week_start 
+    class(the_week) <- "aweek"
+    attr(the_week, "week_start") <- week_start 
     if (floor_day) {
-      res <- gsub("-\\d", "", res)
+      the_week <- gsub("-\\d", "", the_week)
     }
   }
-  res
+  the_week
 }
 
