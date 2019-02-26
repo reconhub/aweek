@@ -1,3 +1,8 @@
+# aweek 0.0.3.9000
+
+* `date2week()` now properly accounts for dates in december that occur in the
+  first week of the next year. 
+
 # aweek 0.0.2.9000
 
 * `floor_day` now truncates the week instead changing the last digit to 1 for
