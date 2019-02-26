@@ -1,4 +1,4 @@
-context("conversion to rainboweek tests")
+context("conversion to aweek tests")
 
 
 dats <- sprintf("%d-%02d-%02d",
@@ -33,7 +33,7 @@ test_that("January first dates can be properly converted", {
                 "2009-W01-4", "2009-W53-5", "2010-W52-6", "2011-W52-7",
                 "2013-W01-2", "2014-W01-3", "2015-W01-4", "2015-W53-5",
                 "2016-W52-7", "2018-W01-1", "2019-W01-2")
-  class(iw) <- "rainboweek"
+  class(iw) <- "aweek"
   attr(iw, "week_start") <- 1L
   floored <-gsub("-\\d$", "-1", iw)
 

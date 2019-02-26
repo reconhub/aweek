@@ -2,8 +2,8 @@
 #' @rdname date2week
 week2date <- function(x, week_start = 1, floor_day = FALSE) {
 
-  if (!inherits(x, "rainboweek")) {
-    class(x) <- "rainboweek"
+  if (!inherits(x, "aweek")) {
+    class(x) <- "aweek"
     attr(x, "week_start") <- week_start
   }
   return(as.Date(x, floor_day))
@@ -12,7 +12,7 @@ week2date <- function(x, week_start = 1, floor_day = FALSE) {
 
 #' @export
 #' @rdname date2week
-as.Date.rainboweek <- function(x, floor_day = FALSE, ...) {
+as.Date.aweek <- function(x, floor_day = FALSE, ...) {
 
   week_start <- attr(x, "week_start")
   x   <- unclass(x)
@@ -51,7 +51,7 @@ as.Date.rainboweek <- function(x, floor_day = FALSE, ...) {
 #' @export
 #' @param tz passed on to [as.POSIXlt()]
 #' @rdname date2week
-as.POSIXlt.rainboweek <- function(x, tz, floor_day = FALSE, ...) {
+as.POSIXlt.aweek <- function(x, tz, floor_day = FALSE, ...) {
 
   as.POSIXlt(as.Date(x, floor_day), tz, ...)
 
@@ -60,7 +60,7 @@ as.POSIXlt.rainboweek <- function(x, tz, floor_day = FALSE, ...) {
 
 #' @export
 #' @rdname date2week
-as.character.rainboweek <- function(x, ...) {
+as.character.aweek <- function(x, ...) {
 
   attr(x, "week_start") <- NULL
   unclass(x)
@@ -69,9 +69,9 @@ as.character.rainboweek <- function(x, ...) {
 
 #' @export
 #' @rdname date2week
-print.rainboweek <- function(x, ...) {
+print.aweek <- function(x, ...) {
 
-  cat(sprintf("<rainboweek start: %s>\n", attr(x, "week_start")))
+  cat(sprintf("<aweek start: %s>\n", attr(x, "week_start")))
   print(as.character(x))
   invisible(x)
 

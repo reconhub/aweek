@@ -1,4 +1,4 @@
 library(testthat)
-library(rw)
+library(aweek)
 
-test_check("rw")
+test_check("aweek")

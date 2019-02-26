@@ -38,7 +38,7 @@
 #' # than the "numeric" argument
 #' date2week(dat, 1, numeric = TRUE)
 #'
-#' # The rainboweek class can be converted back to a date with `as.Date()`
+#' # The aweek class can be converted back to a date with `as.Date()`
 #' as.Date(iso_dat)
 #'
 #' # If you want to show only the first day of the week, you can use the 
@@ -91,7 +91,7 @@ date2week <- function(x, week_start = 1, floor_day = FALSE, numeric = FALSE, ...
                    res,
                    wday
                    )
-    class(res) <- "rainboweek"
+    class(res) <- "aweek"
     attr(res, "week_start") <- week_start 
     if (floor_day) {
       res <- gsub("-\\d", "-1", res)

@@ -3,23 +3,23 @@
 \name{date2week}
 \alias{date2week}
 \alias{week2date}
-\alias{as.Date.rainboweek}
-\alias{as.POSIXlt.rainboweek}
-\alias{as.character.rainboweek}
-\alias{print.rainboweek}
+\alias{as.Date.aweek}
+\alias{as.POSIXlt.aweek}
+\alias{as.character.aweek}
+\alias{print.aweek}
 \title{Convert date to a an arbitrary week definition}
 \usage{
 date2week(x, week_start = 1, floor_day = FALSE, numeric = FALSE, ...)
 
 week2date(x, week_start = 1, floor_day = FALSE)
 
-\method{as.Date}{rainboweek}(x, floor_day = FALSE, ...)
+\method{as.Date}{aweek}(x, floor_day = FALSE, ...)
 
-\method{as.POSIXlt}{rainboweek}(x, tz, floor_day = FALSE, ...)
+\method{as.POSIXlt}{aweek}(x, tz, floor_day = FALSE, ...)
 
-\method{as.character}{rainboweek}(x, ...)
+\method{as.character}{aweek}(x, ...)
 
-\method{print}{rainboweek}(x, ...)
+\method{print}{aweek}(x, ...)
 }
 \arguments{
 \item{x}{a [Date], [POSIXt], [character], or any data that can be easily
@@ -64,7 +64,7 @@ print(iso_dat <- date2week(dat))
 # than the "numeric" argument
 date2week(dat, 1, numeric = TRUE)
 
-# The rainboweek class can be converted back to a date with `as.Date()`
+# The aweek class can be converted back to a date with `as.Date()`
 as.Date(iso_dat)
 
 # If you want to show only the first day of the week, you can use the 

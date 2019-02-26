@@ -5,9 +5,9 @@ dat <- Sys.Date()
 datw <- date2week(dat, 5)
 
 
-test_that("rainboweek prints as expected", {
+test_that("aweek prints as expected", {
 
-  expect_output(wtad <- print(datw), "rainboweek start: 5")
+  expect_output(wtad <- print(datw), "aweek start: 5")
   expect_identical(wtad, datw)
 
 })
@@ -21,13 +21,13 @@ test_that("a character can be converted to a date", {
 
 })
 
-test_that("rainboweek can be converted to character", {
+test_that("aweek can be converted to character", {
 
-  expect_failure(expect_output(print(as.character(datw)), "rainboweek start: 5"))
+  expect_failure(expect_output(print(as.character(datw)), "aweek start: 5"))
 
 })
 
-test_that("rainboweek can be converted to POSIXlt", {
+test_that("aweek can be converted to POSIXlt", {
 
   p <- as.POSIXlt(datw)
   expect_identical(as.POSIXlt(dat), p)
@@ -35,7 +35,7 @@ test_that("rainboweek can be converted to POSIXlt", {
 })
 
 
-test_that("rainboweek can be converted to POSIXlt", {
+test_that("aweek can be converted to POSIXlt", {
 
   p <- as.POSIXlt(datw)
   expect_identical(as.POSIXlt(dat), p)
