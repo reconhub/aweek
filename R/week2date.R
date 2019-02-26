@@ -71,7 +71,8 @@ as.character.aweek <- function(x, ...) {
 #' @rdname date2week
 print.aweek <- function(x, ...) {
 
-  cat(sprintf("<aweek start: %s>\n", attr(x, "week_start")))
+  tmp <- week2date("2019-W08-1", attr(x, "week_start"))
+  cat(sprintf("<aweek start: %s>\n", format(tmp, "%A"))) 
   print(as.character(x))
   invisible(x)
 

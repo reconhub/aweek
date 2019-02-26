@@ -2,6 +2,7 @@
 
 * `floor_day` now truncates the week instead changing the last digit to 1 for
   aesthetics. (Thanks to @aspina7 for the suggestion)
+* `print.aweek()` now displays the day of the week in the current locale.
 
 # aweek 0.0.1.9000
 

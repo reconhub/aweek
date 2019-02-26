@@ -41,7 +41,7 @@ onset
 date2week(onset, week_start = 1) # ISO weeks starting on Monday (default)
 ```
 
-    ## <aweek start: 1>
+    ## <aweek start: Monday>
     ##  [1] "2019-W08-3" "2019-W08-3" "2019-W08-3" "2019-W08-5" "2019-W08-6"
     ##  [6] "2019-W08-6" "2019-W08-7" "2019-W09-1" "2019-W09-1" "2019-W09-1"
     ## [11] "2019-W09-3" "2019-W09-4" "2019-W09-5" "2019-W09-5" "2019-W09-6"
@@ -51,7 +51,7 @@ date2week(onset, week_start = 1) # ISO weeks starting on Monday (default)
 date2week(onset, week_start = 7) # EPI week starting on Sunday
 ```
 
-    ## <aweek start: 7>
+    ## <aweek start: Sunday>
     ##  [1] "2019-W08-4" "2019-W08-4" "2019-W08-4" "2019-W08-6" "2019-W08-7"
     ##  [6] "2019-W08-7" "2019-W09-1" "2019-W09-2" "2019-W09-2" "2019-W09-2"
     ## [11] "2019-W09-4" "2019-W09-5" "2019-W09-6" "2019-W09-6" "2019-W09-7"
@@ -61,7 +61,7 @@ date2week(onset, week_start = 7) # EPI week starting on Sunday
 date2week(onset, week_start = 6) # EPI week starting on Saturday
 ```
 
-    ## <aweek start: 6>
+    ## <aweek start: Saturday>
     ##  [1] "2019-W08-5" "2019-W08-5" "2019-W08-5" "2019-W08-7" "2019-W09-1"
     ##  [6] "2019-W09-1" "2019-W09-2" "2019-W09-3" "2019-W09-3" "2019-W09-3"
     ## [11] "2019-W09-5" "2019-W09-6" "2019-W09-7" "2019-W09-7" "2019-W10-1"

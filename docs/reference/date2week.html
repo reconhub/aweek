@@ -195,7 +195,7 @@ be able to convert each day.</p>
 #&gt;  [6] "2019-02-25" "2019-02-26" "2019-02-27" "2019-02-28" "2019-03-01"
 #&gt; [11] "2019-03-02" "2019-03-03" "2019-03-04" "2019-03-05"</div><div class='input'>
 <span class='co'># By default, the weeks are defined as ISO weeks, which start on Monday</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>iso_dat</span> <span class='kw'>&lt;-</span> <span class='fu'>date2week</span>(<span class='no'>dat</span>))</div><div class='output co'>#&gt; &lt;aweek start: 1&gt;
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>iso_dat</span> <span class='kw'>&lt;-</span> <span class='fu'>date2week</span>(<span class='no'>dat</span>))</div><div class='output co'>#&gt; &lt;aweek start: Monday&gt;
 #&gt;  [1] "2019-W08-3" "2019-W08-4" "2019-W08-5" "2019-W08-6" "2019-W08-7"
 #&gt;  [6] "2019-W09-1" "2019-W09-2" "2019-W09-3" "2019-W09-4" "2019-W09-5"
 #&gt; [11] "2019-W09-6" "2019-W09-7" "2019-W10-1" "2019-W10-2"</div><div class='input'>
@@ -212,37 +212,37 @@ be able to convert each day.</p>
 #&gt;  [6] "2019-02-25" "2019-02-25" "2019-02-25" "2019-02-25" "2019-02-25"
 #&gt; [11] "2019-02-25" "2019-02-25" "2019-03-04" "2019-03-04"</div><div class='input'>
 <span class='co'># ISO week definition: Monday -- 1</span>
-<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; &lt;aweek start: 1&gt;
+<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; &lt;aweek start: Monday&gt;
 #&gt;  [1] "2019-W08-3" "2019-W08-4" "2019-W08-5" "2019-W08-6" "2019-W08-7"
 #&gt;  [6] "2019-W09-1" "2019-W09-2" "2019-W09-3" "2019-W09-4" "2019-W09-5"
 #&gt; [11] "2019-W09-6" "2019-W09-7" "2019-W10-1" "2019-W10-2"</div><div class='input'>
 <span class='co'># Tuesday -- 2</span>
-<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; &lt;aweek start: 2&gt;
+<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; &lt;aweek start: Tuesday&gt;
 #&gt;  [1] "2019-W08-2" "2019-W08-3" "2019-W08-4" "2019-W08-5" "2019-W08-6"
 #&gt;  [6] "2019-W08-7" "2019-W09-1" "2019-W09-2" "2019-W09-3" "2019-W09-4"
 #&gt; [11] "2019-W09-5" "2019-W09-6" "2019-W09-7" "2019-W10-1"</div><div class='input'>
 <span class='co'># Wednesday -- 3</span>
-<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>3</span>)</div><div class='output co'>#&gt; &lt;aweek start: 3&gt;
+<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>3</span>)</div><div class='output co'>#&gt; &lt;aweek start: Wednesday&gt;
 #&gt;  [1] "2019-W08-1" "2019-W08-2" "2019-W08-3" "2019-W08-4" "2019-W08-5"
 #&gt;  [6] "2019-W08-6" "2019-W08-7" "2019-W09-1" "2019-W09-2" "2019-W09-3"
 #&gt; [11] "2019-W09-4" "2019-W09-5" "2019-W09-6" "2019-W09-7"</div><div class='input'>
 <span class='co'># Thursday -- 4</span>
-<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>4</span>)</div><div class='output co'>#&gt; &lt;aweek start: 4&gt;
+<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>4</span>)</div><div class='output co'>#&gt; &lt;aweek start: Thursday&gt;
 #&gt;  [1] "2019-W07-7" "2019-W08-1" "2019-W08-2" "2019-W08-3" "2019-W08-4"
 #&gt;  [6] "2019-W08-5" "2019-W08-6" "2019-W08-7" "2019-W09-1" "2019-W09-2"
 #&gt; [11] "2019-W09-3" "2019-W09-4" "2019-W09-5" "2019-W09-6"</div><div class='input'>
 <span class='co'># Friday -- 5</span>
-<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>5</span>)</div><div class='output co'>#&gt; &lt;aweek start: 5&gt;
+<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>5</span>)</div><div class='output co'>#&gt; &lt;aweek start: Friday&gt;
 #&gt;  [1] "2019-W07-6" "2019-W07-7" "2019-W08-1" "2019-W08-2" "2019-W08-3"
 #&gt;  [6] "2019-W08-4" "2019-W08-5" "2019-W08-6" "2019-W08-7" "2019-W09-1"
 #&gt; [11] "2019-W09-2" "2019-W09-3" "2019-W09-4" "2019-W09-5"</div><div class='input'>
 <span class='co'># Saturday -- 6</span>
-<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>6</span>)</div><div class='output co'>#&gt; &lt;aweek start: 6&gt;
+<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>6</span>)</div><div class='output co'>#&gt; &lt;aweek start: Saturday&gt;
 #&gt;  [1] "2019-W08-5" "2019-W08-6" "2019-W08-7" "2019-W09-1" "2019-W09-2"
 #&gt;  [6] "2019-W09-3" "2019-W09-4" "2019-W09-5" "2019-W09-6" "2019-W09-7"
 #&gt; [11] "2019-W10-1" "2019-W10-2" "2019-W10-3" "2019-W10-4"</div><div class='input'>
 <span class='co'># Epiweek definition: Sunday -- 7 </span>
-<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>7</span>)</div><div class='output co'>#&gt; &lt;aweek start: 7&gt;
+<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>7</span>)</div><div class='output co'>#&gt; &lt;aweek start: Sunday&gt;
 #&gt;  [1] "2019-W08-4" "2019-W08-5" "2019-W08-6" "2019-W08-7" "2019-W09-1"
 #&gt;  [6] "2019-W09-2" "2019-W09-3" "2019-W09-4" "2019-W09-5" "2019-W09-6"
 #&gt; [11] "2019-W09-7" "2019-W10-1" "2019-W10-2" "2019-W10-3"</div></pre>
