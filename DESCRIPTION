@@ -9,7 +9,11 @@ Depends: R (>= 3.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Suggests: testthat, roxygen2, knitr
+Suggests: 
+    testthat,
+    roxygen2,
+    knitr,
+    covr
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/zkamvar/aweek
