@@ -97,7 +97,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/reconhub/aweek">
+  <a href="https://github.com/zkamvar/aweek">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -115,7 +115,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Convert date to a an arbitrary week definition</h1>
-    <small class="dont-index">Source: <a href='https://github.com/reconhub/aweek/blob/master/R/date2week.R'><code>R/date2week.R</code></a>, <a href='https://github.com/reconhub/aweek/blob/master/R/week2date.R'><code>R/week2date.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/zkamvar/aweek/blob/master/R/date2week.R'><code>R/date2week.R</code></a>, <a href='https://github.com/zkamvar/aweek/blob/master/R/week2date.R'><code>R/week2date.R</code></a></small>
     <div class="hidden name"><code>date2week.Rd</code></div>
     </div>
 
@@ -146,8 +146,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a [Date], [POSIXt], [character], or any data that can be easily
-converted to a date with [as.POSIXlt()].</p></td>
+      <td><p>a <a href='https://www.rdocumentation.org/packages/base/topics/Dates'>Date</a>, <a href='https://www.rdocumentation.org/packages/base/topics/DateTimeClasses'>POSIXt</a>, <a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a>, or any data that can be easily
+converted to a date with <code><a href='https://www.rdocumentation.org/packages/base/topics/as.POSIXlt'>as.POSIXlt()</a></code>.</p></td>
     </tr>
     <tr>
       <th>week_start</th>
@@ -155,33 +155,35 @@ converted to a date with [as.POSIXlt()].</p></td>
     </tr>
     <tr>
       <th>floor_day</th>
-      <td><p>when `TRUE`, the days will be set to the start of the week.</p></td>
+      <td><p>when <code>TRUE</code>, the days will be set to the start of the week.</p></td>
     </tr>
     <tr>
       <th>numeric</th>
-      <td><p>if `TRUE`, only the numeric week be returned. If `FALSE`
+      <td><p>if <code>TRUE</code>, only the numeric week be returned. If <code>FALSE</code>
 (default), the date in the format "YYYY-Www-d" will be returned.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>arguments passed to [as.POSIXlt()], unused in all other cases.</p></td>
+      <td><p>arguments passed to <code><a href='https://www.rdocumentation.org/packages/base/topics/as.POSIXlt'>as.POSIXlt()</a></code>, unused in all other cases.</p></td>
     </tr>
     <tr>
       <th>tz</th>
-      <td><p>passed on to [as.POSIXlt()]</p></td>
+      <td><p>passed on to <code><a href='https://www.rdocumentation.org/packages/base/topics/as.POSIXlt'>as.POSIXlt()</a></code></p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Weeks differ in their start dates depending on context. The ISO 8601
-  standard specifies that Monday starts the week while the US CDC uses Sunday
-  as the start of the week. For example, MSF has varying start dates 
-  depending on country in order to better coordinate response.</p>
+    <p>Weeks differ in their start dates depending on context. The ISO
+8601 standard specifies that Monday starts the week
+(<a href='http://en.wikipedia.org/wiki/ISO_week_date'>http://en.wikipedia.org/wiki/ISO_week_date</a>) while the US CDC uses
+Sunday as the start of the week (<a href='http://www.cmmcp.org/epiweek.htm'>http://www.cmmcp.org/epiweek.htm</a>). For
+example, MSF has varying start dates depending on country in order to
+better coordinate response.</p>
 <p>While there are package that conver conversion for ISOweeks and epiweeks,
-  these do not provide seamless conversion from dates to epiweeks with 
-  non-standard start dates. This package provides a lightweight utility to
-  be able to convert each day.</p>
+these do not provide seamless conversion from dates to epiweeks with
+non-standard start dates. This package provides a lightweight utility to
+be able to convert each day.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
