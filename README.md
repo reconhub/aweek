@@ -2,10 +2,8 @@
 <!-- badges: start -->
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/aweek)](https://cran.r-project.org/package=aweek)
-
 [![Codecov test
 coverage](https://codecov.io/gh/zkamvar/aweek/branch/master/graph/badge.svg)](https://codecov.io/gh/zkamvar/aweek?branch=master)
-
 [![Travis build
 status](https://travis-ci.org/zkamvar/aweek.svg?branch=master)](https://travis-ci.org/zkamvar/aweek)
 
@@ -75,8 +73,8 @@ table(x)
 ```
 
     ## x
-    ## 2019-W08-1 2019-W09-1 2019-W10-1 
-    ##          4         10          6
+    ## 2019-W08 2019-W09 2019-W10 
+    ##        4       10        6
 
 ``` r
 table(week2date(x))

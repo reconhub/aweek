@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">aweek</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2.9000</span>
       </span>
     </div>
 
@@ -85,7 +85,9 @@
 
     
     
+<!-- badges: start -->
 
+<!-- badges: end -->
 <div id="welcome-to-the-aweek-package" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#welcome-to-the-aweek-package" class="anchor"></a>Welcome to the <em>aweek</em> package!</h1></div>
@@ -119,8 +121,8 @@
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw"><a href="reference/date2week.html">date2week</a></span>(onset, <span class="dt">week_start =</span> <span class="dv">6</span>, <span class="dt">floor_day =</span> <span class="ot">TRUE</span>) <span class="co"># truncate to just the weeks</span></a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(x)</a></code></pre></div>
 <pre><code>## x
-## 2019-W08-1 2019-W09-1 2019-W10-1 
-##          4         10          6</code></pre>
+## 2019-W08 2019-W09 2019-W10 
+##        4       10        6</code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(<span class="kw"><a href="reference/date2week.html">week2date</a></span>(x))</a></code></pre></div>
 <pre><code>## 
 ## 2019-02-16 2019-02-23 2019-03-02 
@@ -181,6 +183,8 @@
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://cran.r-project.org/package=aweek"><img src="http://www.r-pkg.org/badges/version/aweek" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://codecov.io/gh/zkamvar/aweek?branch=master"><img src="https://codecov.io/gh/zkamvar/aweek/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://travis-ci.org/zkamvar/aweek"><img src="https://travis-ci.org/zkamvar/aweek.svg?branch=master" alt="Travis build status"></a></li>
 </ul>
 </div>
 </div>
