@@ -11,6 +11,7 @@ Encoding: UTF-8
 LazyData: true
 Suggests: testthat, roxygen2, knitr
 RoxygenNote: 6.1.1
-URL: https://github.com/reconhub/aweek
-BugReports: https://github.com/reconhub/aweek/issues
+Roxygen: list(markdown = TRUE)
+URL: https://github.com/zkamvar/aweek
+BugReports: https://github.com/zkamvar/aweek/issues
 VignetteBuilder: knitr

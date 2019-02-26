@@ -12,10 +12,12 @@
 #' 
 #' @param ... arguments passed to [as.POSIXlt()], unused in all other cases.
 #' 
-#' @details Weeks differ in their start dates depending on context. The ISO 8601
-#'   standard specifies that Monday starts the week while the US CDC uses Sunday
-#'   as the start of the week. For example, MSF has varying start dates 
-#'   depending on country in order to better coordinate response. 
+#' @details Weeks differ in their start dates depending on context. The ISO
+#'   8601 standard specifies that Monday starts the week
+#'   (<http://en.wikipedia.org/wiki/ISO_week_date>) while the US CDC uses
+#'   Sunday as the start of the week (<http://www.cmmcp.org/epiweek.htm>). For
+#'   example, MSF has varying start dates depending on country in order to
+#'   better coordinate response. 
 #'
 #'   While there are package that conver conversion for ISOweeks and epiweeks,
 #'   these do not provide seamless conversion from dates to epiweeks with 

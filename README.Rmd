@@ -6,29 +6,33 @@ output: github_document
 
 # Welcome to the *aweek* package!
 
-This package will convert dates to epiweeks, isoweeks, and all others in between
-with minimal overhead.
+This package will convert dates to epiweeks, isoweeks, and all others in
+between with minimal overhead. Other packages such as
+[lubridate](https://github.com/tidyverse/lubridate),
+[ISOweek](https://cran.r-project.org/package=ISOweek), and
+[surveillance](http://surveillance.r-forge.r-project.org/) have the ability to
+define ISOweeks and/or epiweeks have the ability to define ISOweeks and/or
+epiweeks, the ability to easily switch between day and week intervals is only
+available for ISOweeks. However, the ability to easily switch between day and
+week intervals is only available for ISOweeks and all of the packages above
+have dependencies that require compiled code.
+
 
 ```{r epiweek}
 
 library(aweek)
-onset <- Sys.Date() + sample(-50:0, 100, replace = TRUE)
+set.seed(2019-02-26)
+onset <- Sys.Date() + sort(sample(-6:7, 20, replace = TRUE))
 onset
 date2week(onset, week_start = 1) # ISO weeks starting on Monday (default)
+date2week(onset, week_start = 7) # EPI week starting on Sunday
 date2week(onset, week_start = 6) # EPI week starting on Saturday
 x <- date2week(onset, week_start = 6, floor_day = TRUE) # truncate to just the weeks
 table(x)
 table(week2date(x))
 ```
 
-
 ## Installing the package
-
-To install the current stable, CRAN version of the package, type:
-
-```{r install, eval = FALSE}
-install.packages("aweek")
-```
 
 To benefit from the latest features and bug fixes, install the development, *github* version of the package using:
 
@@ -46,21 +50,6 @@ Note that this requires the package *remotes* installed.
  - `week2date()/as.Date()` does the backwards conversion from (YYYY-Www(-d)) to
    a numeric date. 
  - Dependencies only on R itself.
-
-
-# Resources
-
-## Vignettes
-
-An overview and examples of *aweek* are provided in the vignettes:
-
-...
-
-## Websites
-
-The following websites are available:
-
-...
 
 ## Getting help online
 

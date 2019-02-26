@@ -22,33 +22,35 @@ week2date(x, week_start = 1, floor_day = FALSE)
 \method{print}{aweek}(x, ...)
 }
 \arguments{
-\item{x}{a [Date], [POSIXt], [character], or any data that can be easily
-converted to a date with [as.POSIXlt()].}
+\item{x}{a \link{Date}, \link{POSIXt}, \link{character}, or any data that can be easily
+converted to a date with \code{\link[=as.POSIXlt]{as.POSIXlt()}}.}
 
 \item{week_start}{The start of the week from 1 to 7 where 1 = Monday}
 
-\item{floor_day}{when `TRUE`, the days will be set to the start of the week.}
+\item{floor_day}{when \code{TRUE}, the days will be set to the start of the week.}
 
-\item{numeric}{if `TRUE`, only the numeric week be returned. If `FALSE`
+\item{numeric}{if \code{TRUE}, only the numeric week be returned. If \code{FALSE}
 (default), the date in the format "YYYY-Www-d" will be returned.}
 
-\item{...}{arguments passed to [as.POSIXlt()], unused in all other cases.}
+\item{...}{arguments passed to \code{\link[=as.POSIXlt]{as.POSIXlt()}}, unused in all other cases.}
 
-\item{tz}{passed on to [as.POSIXlt()]}
+\item{tz}{passed on to \code{\link[=as.POSIXlt]{as.POSIXlt()}}}
 }
 \description{
 Convert date to a an arbitrary week definition
 }
 \details{
-Weeks differ in their start dates depending on context. The ISO 8601
-  standard specifies that Monday starts the week while the US CDC uses Sunday
-  as the start of the week. For example, MSF has varying start dates 
-  depending on country in order to better coordinate response. 
+Weeks differ in their start dates depending on context. The ISO
+8601 standard specifies that Monday starts the week
+(\url{http://en.wikipedia.org/wiki/ISO_week_date}) while the US CDC uses
+Sunday as the start of the week (\url{http://www.cmmcp.org/epiweek.htm}). For
+example, MSF has varying start dates depending on country in order to
+better coordinate response.
 
-  While there are package that conver conversion for ISOweeks and epiweeks,
-  these do not provide seamless conversion from dates to epiweeks with 
-  non-standard start dates. This package provides a lightweight utility to
-  be able to convert each day.
+While there are package that conver conversion for ISOweeks and epiweeks,
+these do not provide seamless conversion from dates to epiweeks with
+non-standard start dates. This package provides a lightweight utility to
+be able to convert each day.
 }
 \examples{
 
