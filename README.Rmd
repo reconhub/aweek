@@ -16,7 +16,7 @@ onset <- Sys.Date() + sample(-50:0, 100, replace = TRUE)
 onset
 date2week(onset, week_start = 1) # ISO weeks starting on Monday (default)
 date2week(onset, week_start = 6) # EPI week starting on Saturday
-x <- date2week(onset, week_start = 6, floor_day = TRUE) # rruncate to just the weeks
+x <- date2week(onset, week_start = 6, floor_day = TRUE) # truncate to just the weeks
 table(x)
 table(week2date(x))
 ```
