@@ -1,5 +1,15 @@
 
+<!-- badges: start -->
+
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/aweek)](https://cran.r-project.org/package=aweek)
+
+[![Codecov test
+coverage](https://codecov.io/gh/zkamvar/aweek/branch/master/graph/badge.svg)](https://codecov.io/gh/zkamvar/aweek?branch=master)
+
+[![Travis build
+status](https://travis-ci.org/zkamvar/aweek.svg?branch=master)](https://travis-ci.org/zkamvar/aweek)
+
+<!-- badges: end -->
 
 # Welcome to the *aweek* package\!
 
