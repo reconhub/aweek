@@ -35,7 +35,7 @@ test_that("January first dates can be properly converted", {
                 "2016-W52-7", "2018-W01-1", "2019-W01-2")
   class(iw) <- "aweek"
   attr(iw, "week_start") <- 1L
-  floored <-gsub("-\\d$", "-1", iw)
+  floored <-gsub("-\\d$", "", iw)
 
   # conversions are reversible
   expect_identical(as.character(dats), as.character(datback))

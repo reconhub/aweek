@@ -96,7 +96,7 @@ date2week <- function(x, week_start = 1, floor_day = FALSE, numeric = FALSE, ...
     class(res) <- "aweek"
     attr(res, "week_start") <- week_start 
     if (floor_day) {
-      res <- gsub("-\\d", "-1", res)
+      res <- gsub("-\\d", "", res)
     }
   }
   res
