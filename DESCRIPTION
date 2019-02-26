@@ -1,9 +1,9 @@
-Package: rw
+Package: aweek
 Title: Convert Dates to Arbitrary Week Definitions
 Version: 0.0.1.9000
 Authors@R: person(c("Zhian N."), "Kamvar", email = "zkamvar@gmail.com", role = c("aut", "cre"))
 Description: Which day a week starts depends heavily on the either the local or
-  professional context. This package, rw, stands for 'rainbow weeks' and is 
+  professional context. This package, aweek, stands for 'rainbow weeks' and is 
   designed to be a lightweight solution to easily switching between week-based
   date definitions. 
 Depends: R (>= 3.0)
@@ -12,6 +12,6 @@ Encoding: UTF-8
 LazyData: true
 Suggests: testthat, roxygen2, knitr
 RoxygenNote: 6.1.1
-URL: https://github.com/reconhub/rw
-BugReports: https://github.com/reconhub/rw/issues
+URL: https://github.com/reconhub/aweek
+BugReports: https://github.com/reconhub/aweek/issues
 VignetteBuilder: knitr

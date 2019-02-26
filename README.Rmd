@@ -2,16 +2,16 @@
 output: github_document
 ---
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rw)](https://cran.r-project.org/package=rw)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/aweek)](https://cran.r-project.org/package=aweek)
 
-# Welcome to the *rw* package!
+# Welcome to the *aweek* package!
 
 This package will convert dates to epiweeks, isoweeks, and all others in between
 with minimal overhead.
 
 ```{r epiweek}
 
-library(rw)
+library(aweek)
 onset <- Sys.Date() + sample(-50:0, 100, replace = TRUE)
 onset
 date2week(onset, week_start = 1) # ISO weeks starting on Monday (default)
@@ -27,13 +27,13 @@ table(week2date(x))
 To install the current stable, CRAN version of the package, type:
 
 ```{r install, eval = FALSE}
-install.packages("rw")
+install.packages("aweek")
 ```
 
 To benefit from the latest features and bug fixes, install the development, *github* version of the package using:
 
 ```{r install2, eval = FALSE}
-remotes::install_github("zkamvar/rw")
+remotes::install_github("zkamvar/aweek")
 ```
 
 Note that this requires the package *remotes* installed.
@@ -52,7 +52,7 @@ Note that this requires the package *remotes* installed.
 
 ## Vignettes
 
-An overview and examples of *rw* are provided in the vignettes:
+An overview and examples of *aweek* are provided in the vignettes:
 
 ...
 
@@ -64,7 +64,7 @@ The following websites are available:
 
 ## Getting help online
 
-Bug reports and feature requests should be posted on *github* using the [*issue*](http://github.com/reconhub/rw/issues) system. All other questions should be posted on the **RECON forum**: <br>
+Bug reports and feature requests should be posted on *github* using the [*issue*](http://github.com/reconhub/aweek/issues) system. All other questions should be posted on the **RECON forum**: <br>
 [http://www.repidemicsconsortium.org/forum/](http://www.repidemicsconsortium.org/forum/)
 
 Contributions are welcome via **pull requests**.
