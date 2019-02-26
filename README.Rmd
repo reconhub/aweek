@@ -6,7 +6,9 @@ output: github_document
 
 # Welcome to the *aweek* package!
 
-This package will convert dates to epiweeks, isoweeks, and all others in
+This package will convert dates to
+[epiweeks](http://www.cmmcp.org/epiweek.htm),
+[isoweeks](http://en.wikipedia.org/wiki/ISO_week_date), and all others in
 between with minimal overhead. Other packages such as
 [lubridate](https://github.com/tidyverse/lubridate),
 [ISOweek](https://cran.r-project.org/package=ISOweek), and
