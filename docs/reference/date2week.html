@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert date to a an arbitrary week definition — date2week • aweek</title>
+<title>Convert date to a an arbitrary week definition — as.POSIXlt.aweek • aweek</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
 
 
 
-<meta property="og:title" content="Convert date to a an arbitrary week definition — date2week" />
+<meta property="og:title" content="Convert date to a an arbitrary week definition — as.POSIXlt.aweek" />
 
 <meta property="og:description" content="Convert date to a an arbitrary week definition" />
 <meta name="twitter:card" content="summary" />
@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">aweek</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4.9000</span>
       </span>
     </div>
 
@@ -115,7 +115,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Convert date to a an arbitrary week definition</h1>
-    <small class="dont-index">Source: <a href='https://github.com/zkamvar/aweek/blob/master/R/date2week.R'><code>R/date2week.R</code></a>, <a href='https://github.com/zkamvar/aweek/blob/master/R/week2date.R'><code>R/week2date.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/zkamvar/aweek/blob/master/R/conversions.R'><code>R/conversions.R</code></a>, <a href='https://github.com/zkamvar/aweek/blob/master/R/date2week.R'><code>R/date2week.R</code></a>, <a href='https://github.com/zkamvar/aweek/blob/master/R/print.aweek.R'><code>R/print.aweek.R</code></a>, and 2 more</small>
     <div class="hidden name"><code>date2week.Rd</code></div>
     </div>
 
@@ -125,21 +125,22 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>date2week</span>(<span class='no'>x</span>, <span class='kw'>week_start</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>floor_day</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>numeric</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
-
-<span class='fu'>week2date</span>(<span class='no'>x</span>, <span class='kw'>week_start</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>floor_day</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for aweek</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.Date'>as.Date</a></span>(<span class='no'>x</span>, <span class='kw'>floor_day</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for aweek</span>
+    <pre class="usage"><span class='co'># S3 method for aweek</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.POSIXlt'>as.POSIXlt</a></span>(<span class='no'>x</span>, <span class='no'>tz</span>, <span class='kw'>floor_day</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for aweek</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>as.character</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
+<span class='fu'>date2week</span>(<span class='no'>x</span>, <span class='kw'>week_start</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>floor_day</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>numeric</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>factor</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+
 <span class='co'># S3 method for aweek</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='fu'>week2date</span>(<span class='no'>x</span>, <span class='kw'>week_start</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>floor_day</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'># S3 method for aweek</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.Date'>as.Date</a></span>(<span class='no'>x</span>, <span class='kw'>floor_day</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -150,12 +151,20 @@
 converted to a date with <code><a href='https://www.rdocumentation.org/packages/base/topics/as.POSIXlt'>as.POSIXlt()</a></code>.</p></td>
     </tr>
     <tr>
-      <th>week_start</th>
-      <td><p>The start of the week from 1 to 7 where 1 = Monday</p></td>
+      <th>tz</th>
+      <td><p>passed on to <code><a href='https://www.rdocumentation.org/packages/base/topics/as.POSIXlt'>as.POSIXlt()</a></code></p></td>
     </tr>
     <tr>
       <th>floor_day</th>
       <td><p>when <code>TRUE</code>, the days will be set to the start of the week.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>arguments passed to <code><a href='https://www.rdocumentation.org/packages/base/topics/as.POSIXlt'>as.POSIXlt()</a></code>, unused in all other cases.</p></td>
+    </tr>
+    <tr>
+      <th>week_start</th>
+      <td><p>The start of the week from 1 to 7 where 1 = Monday</p></td>
     </tr>
     <tr>
       <th>numeric</th>
@@ -163,12 +172,13 @@ converted to a date with <code><a href='https://www.rdocumentation.org/packages/
 (default), the date in the format "YYYY-Www-d" will be returned.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>arguments passed to <code><a href='https://www.rdocumentation.org/packages/base/topics/as.POSIXlt'>as.POSIXlt()</a></code>, unused in all other cases.</p></td>
-    </tr>
-    <tr>
-      <th>tz</th>
-      <td><p>passed on to <code><a href='https://www.rdocumentation.org/packages/base/topics/as.POSIXlt'>as.POSIXlt()</a></code></p></td>
+      <th>factor</th>
+      <td><p>if <code>TRUE</code>, a factor will be returned with levels spanning the
+range of dates. If <code>floor_date = FALSE</code>, then this will use the sequence
+of days between the first and last date, but if <code>floor_date = TRUE</code>, then
+the sequence of weeks between the first and last date will be used. <em>Take
+caution when using this with a large date range as the resulting factor can
+contain all days between dates</em>.</p></td>
     </tr>
     </table>
     
@@ -191,61 +201,72 @@ be able to convert each day.</p>
 <span class='co'># The same set of days will occur in different weeks depending on the start</span>
 <span class='co'># date. Here we can define a week before and after today</span>
 
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.time'>Sys.Date</a></span>() + -<span class='fl'>6</span>:<span class='fl'>7</span>)</div><div class='output co'>#&gt;  [1] "2019-02-20" "2019-02-21" "2019-02-22" "2019-02-23" "2019-02-24"
-#&gt;  [6] "2019-02-25" "2019-02-26" "2019-02-27" "2019-02-28" "2019-03-01"
-#&gt; [11] "2019-03-02" "2019-03-03" "2019-03-04" "2019-03-05"</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.time'>Sys.Date</a></span>() + -<span class='fl'>6</span>:<span class='fl'>7</span>)</div><div class='output co'>#&gt;  [1] "2019-02-24" "2019-02-25" "2019-02-26" "2019-02-27" "2019-02-28"
+#&gt;  [6] "2019-03-01" "2019-03-02" "2019-03-03" "2019-03-04" "2019-03-05"
+#&gt; [11] "2019-03-06" "2019-03-07" "2019-03-08" "2019-03-09"</div><div class='input'>
 <span class='co'># By default, the weeks are defined as ISO weeks, which start on Monday</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>iso_dat</span> <span class='kw'>&lt;-</span> <span class='fu'>date2week</span>(<span class='no'>dat</span>))</div><div class='output co'>#&gt; &lt;aweek start: Monday&gt;
-#&gt;  [1] "2019-W08-3" "2019-W08-4" "2019-W08-5" "2019-W08-6" "2019-W08-7"
-#&gt;  [6] "2019-W09-1" "2019-W09-2" "2019-W09-3" "2019-W09-4" "2019-W09-5"
-#&gt; [11] "2019-W09-6" "2019-W09-7" "2019-W10-1" "2019-W10-2"</div><div class='input'>
+#&gt;  [1] "2019-W08-7" "2019-W09-1" "2019-W09-2" "2019-W09-3" "2019-W09-4"
+#&gt;  [6] "2019-W09-5" "2019-W09-6" "2019-W09-7" "2019-W10-1" "2019-W10-2"
+#&gt; [11] "2019-W10-3" "2019-W10-4" "2019-W10-5" "2019-W10-6"</div><div class='input'>
 <span class='co'># If you want lubridate-style numeric-only weeks, you need look no further</span>
 <span class='co'># than the "numeric" argument</span>
-<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>1</span>, <span class='kw'>numeric</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;  [1]  8  8  8  8  8  9  9  9  9  9  9  9 10 10</div><div class='input'>
+<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>1</span>, <span class='kw'>numeric</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;  [1]  8  9  9  9  9  9  9  9 10 10 10 10 10 10</div><div class='input'>
+<span class='co'># You can also convert to factor and include all of the missing dates, but</span>
+<span class='co'># beware that this may result in a very large factor due to the number of</span>
+<span class='co'># levels present</span>
+<span class='fu'>date2week</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.time'>Sys.Date</a></span>() + <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>10</span>), <span class='kw'>factor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; &lt;aweek start: Monday&gt;
+#&gt; [1] 2019-W09-6 2019-W11-2
+#&gt; 11 Levels: 2019-W09-6 2019-W09-7 2019-W10-1 2019-W10-2 ... 2019-W11-2</div><div class='input'>
+
 <span class='co'># The aweek class can be converted back to a date with `as.Date()`</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.Date'>as.Date</a></span>(<span class='no'>iso_dat</span>)</div><div class='output co'>#&gt;  [1] "2019-02-20" "2019-02-21" "2019-02-22" "2019-02-23" "2019-02-24"
-#&gt;  [6] "2019-02-25" "2019-02-26" "2019-02-27" "2019-02-28" "2019-03-01"
-#&gt; [11] "2019-03-02" "2019-03-03" "2019-03-04" "2019-03-05"</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.Date'>as.Date</a></span>(<span class='no'>iso_dat</span>)</div><div class='output co'>#&gt;  [1] "2019-02-24" "2019-02-25" "2019-02-26" "2019-02-27" "2019-02-28"
+#&gt;  [6] "2019-03-01" "2019-03-02" "2019-03-03" "2019-03-04" "2019-03-05"
+#&gt; [11] "2019-03-06" "2019-03-07" "2019-03-08" "2019-03-09"</div><div class='input'>
 <span class='co'># If you want to show only the first day of the week, you can use the </span>
 <span class='co'># `floor_day` argument</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.Date'>as.Date</a></span>(<span class='no'>iso_dat</span>, <span class='kw'>floor_day</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;  [1] "2019-02-18" "2019-02-18" "2019-02-18" "2019-02-18" "2019-02-18"
-#&gt;  [6] "2019-02-25" "2019-02-25" "2019-02-25" "2019-02-25" "2019-02-25"
-#&gt; [11] "2019-02-25" "2019-02-25" "2019-03-04" "2019-03-04"</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.Date'>as.Date</a></span>(<span class='no'>iso_dat</span>, <span class='kw'>floor_day</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;  [1] "2019-02-18" "2019-02-25" "2019-02-25" "2019-02-25" "2019-02-25"
+#&gt;  [6] "2019-02-25" "2019-02-25" "2019-02-25" "2019-03-04" "2019-03-04"
+#&gt; [11] "2019-03-04" "2019-03-04" "2019-03-04" "2019-03-04"</div><div class='input'>
+<span class='co'># This also works with `factor`:</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.Date'>as.Date</a></span>(<span class='no'>iso_dat</span>, <span class='kw'>floor_day</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>factor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;  [1] "2019-02-18" "2019-02-25" "2019-02-25" "2019-02-25" "2019-02-25"
+#&gt;  [6] "2019-02-25" "2019-02-25" "2019-02-25" "2019-03-04" "2019-03-04"
+#&gt; [11] "2019-03-04" "2019-03-04" "2019-03-04" "2019-03-04"</div><div class='input'>
 <span class='co'># ISO week definition: Monday -- 1</span>
 <span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; &lt;aweek start: Monday&gt;
-#&gt;  [1] "2019-W08-3" "2019-W08-4" "2019-W08-5" "2019-W08-6" "2019-W08-7"
-#&gt;  [6] "2019-W09-1" "2019-W09-2" "2019-W09-3" "2019-W09-4" "2019-W09-5"
-#&gt; [11] "2019-W09-6" "2019-W09-7" "2019-W10-1" "2019-W10-2"</div><div class='input'>
+#&gt;  [1] "2019-W08-7" "2019-W09-1" "2019-W09-2" "2019-W09-3" "2019-W09-4"
+#&gt;  [6] "2019-W09-5" "2019-W09-6" "2019-W09-7" "2019-W10-1" "2019-W10-2"
+#&gt; [11] "2019-W10-3" "2019-W10-4" "2019-W10-5" "2019-W10-6"</div><div class='input'>
 <span class='co'># Tuesday -- 2</span>
 <span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; &lt;aweek start: Tuesday&gt;
-#&gt;  [1] "2019-W08-2" "2019-W08-3" "2019-W08-4" "2019-W08-5" "2019-W08-6"
-#&gt;  [6] "2019-W08-7" "2019-W09-1" "2019-W09-2" "2019-W09-3" "2019-W09-4"
-#&gt; [11] "2019-W09-5" "2019-W09-6" "2019-W09-7" "2019-W10-1"</div><div class='input'>
+#&gt;  [1] "2019-W08-6" "2019-W08-7" "2019-W09-1" "2019-W09-2" "2019-W09-3"
+#&gt;  [6] "2019-W09-4" "2019-W09-5" "2019-W09-6" "2019-W09-7" "2019-W10-1"
+#&gt; [11] "2019-W10-2" "2019-W10-3" "2019-W10-4" "2019-W10-5"</div><div class='input'>
 <span class='co'># Wednesday -- 3</span>
 <span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>3</span>)</div><div class='output co'>#&gt; &lt;aweek start: Wednesday&gt;
-#&gt;  [1] "2019-W08-1" "2019-W08-2" "2019-W08-3" "2019-W08-4" "2019-W08-5"
-#&gt;  [6] "2019-W08-6" "2019-W08-7" "2019-W09-1" "2019-W09-2" "2019-W09-3"
-#&gt; [11] "2019-W09-4" "2019-W09-5" "2019-W09-6" "2019-W09-7"</div><div class='input'>
-<span class='co'># Thursday -- 4</span>
-<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>4</span>)</div><div class='output co'>#&gt; &lt;aweek start: Thursday&gt;
-#&gt;  [1] "2019-W07-7" "2019-W08-1" "2019-W08-2" "2019-W08-3" "2019-W08-4"
-#&gt;  [6] "2019-W08-5" "2019-W08-6" "2019-W08-7" "2019-W09-1" "2019-W09-2"
-#&gt; [11] "2019-W09-3" "2019-W09-4" "2019-W09-5" "2019-W09-6"</div><div class='input'>
-<span class='co'># Friday -- 5</span>
-<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>5</span>)</div><div class='output co'>#&gt; &lt;aweek start: Friday&gt;
-#&gt;  [1] "2019-W07-6" "2019-W07-7" "2019-W08-1" "2019-W08-2" "2019-W08-3"
-#&gt;  [6] "2019-W08-4" "2019-W08-5" "2019-W08-6" "2019-W08-7" "2019-W09-1"
-#&gt; [11] "2019-W09-2" "2019-W09-3" "2019-W09-4" "2019-W09-5"</div><div class='input'>
-<span class='co'># Saturday -- 6</span>
-<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>6</span>)</div><div class='output co'>#&gt; &lt;aweek start: Saturday&gt;
 #&gt;  [1] "2019-W08-5" "2019-W08-6" "2019-W08-7" "2019-W09-1" "2019-W09-2"
 #&gt;  [6] "2019-W09-3" "2019-W09-4" "2019-W09-5" "2019-W09-6" "2019-W09-7"
 #&gt; [11] "2019-W10-1" "2019-W10-2" "2019-W10-3" "2019-W10-4"</div><div class='input'>
-<span class='co'># Epiweek definition: Sunday -- 7 </span>
-<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>7</span>)</div><div class='output co'>#&gt; &lt;aweek start: Sunday&gt;
+<span class='co'># Thursday -- 4</span>
+<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>4</span>)</div><div class='output co'>#&gt; &lt;aweek start: Thursday&gt;
 #&gt;  [1] "2019-W08-4" "2019-W08-5" "2019-W08-6" "2019-W08-7" "2019-W09-1"
 #&gt;  [6] "2019-W09-2" "2019-W09-3" "2019-W09-4" "2019-W09-5" "2019-W09-6"
-#&gt; [11] "2019-W09-7" "2019-W10-1" "2019-W10-2" "2019-W10-3"</div></pre>
+#&gt; [11] "2019-W09-7" "2019-W10-1" "2019-W10-2" "2019-W10-3"</div><div class='input'>
+<span class='co'># Friday -- 5</span>
+<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>5</span>)</div><div class='output co'>#&gt; &lt;aweek start: Friday&gt;
+#&gt;  [1] "2019-W08-3" "2019-W08-4" "2019-W08-5" "2019-W08-6" "2019-W08-7"
+#&gt;  [6] "2019-W09-1" "2019-W09-2" "2019-W09-3" "2019-W09-4" "2019-W09-5"
+#&gt; [11] "2019-W09-6" "2019-W09-7" "2019-W10-1" "2019-W10-2"</div><div class='input'>
+<span class='co'># Saturday -- 6</span>
+<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>6</span>)</div><div class='output co'>#&gt; &lt;aweek start: Saturday&gt;
+#&gt;  [1] "2019-W09-2" "2019-W09-3" "2019-W09-4" "2019-W09-5" "2019-W09-6"
+#&gt;  [6] "2019-W09-7" "2019-W10-1" "2019-W10-2" "2019-W10-3" "2019-W10-4"
+#&gt; [11] "2019-W10-5" "2019-W10-6" "2019-W10-7" "2019-W11-1"</div><div class='input'>
+<span class='co'># Epiweek definition: Sunday -- 7 </span>
+<span class='fu'>date2week</span>(<span class='no'>dat</span>, <span class='fl'>7</span>)</div><div class='output co'>#&gt; &lt;aweek start: Sunday&gt;
+#&gt;  [1] "2019-W09-1" "2019-W09-2" "2019-W09-3" "2019-W09-4" "2019-W09-5"
+#&gt;  [6] "2019-W09-6" "2019-W09-7" "2019-W10-1" "2019-W10-2" "2019-W10-3"
+#&gt; [11] "2019-W10-4" "2019-W10-5" "2019-W10-6" "2019-W10-7"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
