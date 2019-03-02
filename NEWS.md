@@ -1,3 +1,8 @@
+# aweek 0.0.4.9000
+
+* `date2week()` gains a `factor` argument, which will automatically compute the
+  levels within the date range.
+
 # aweek 0.0.3.9000
 
 * `date2week()` now properly accounts for dates in december that occur in the

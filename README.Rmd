@@ -40,6 +40,17 @@ table(x)
 table(week2date(x))
 ```
 
+You can also use it to automatically calculate factor levels, which is useful
+in tabulating across weeks and including missing values. 
+
+```{r show_factors}
+set.seed(2019-02-26)
+onset <- Sys.Date() + sort(sample(-48:49, 20, replace = TRUE))
+x <- date2week(onset, week_start = 6, floor_day = TRUE, factor = TRUE)
+x
+table(x)
+```
+
 ## Installing the package
 
 To benefit from the latest features and bug fixes, install the development, *github* version of the package using:

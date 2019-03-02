@@ -8,6 +8,7 @@ datw <- date2week(dat, 5)
 test_that("aweek prints as expected", {
 
   expect_output(wtad <- print(datw), "aweek start: Friday")
+  expect_output(print(date2week(dat, 5, factor = TRUE)), "Levels:")
   expect_identical(wtad, datw)
 
 })
