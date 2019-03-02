@@ -15,7 +15,7 @@ week2date <- function(x, week_start = 1, floor_day = FALSE) {
 as.Date.aweek <- function(x, floor_day = FALSE, ...) {
 
   week_start <- attr(x, "week_start")
-  x   <- unclass(x)
+  x          <- as.character(x)
   if (floor_day) {
     pat <- "^(?<year>[0-9]{4})-W(?<week>[0-9]{2})"
   } else {
@@ -45,36 +45,6 @@ as.Date.aweek <- function(x, floor_day = FALSE, ...) {
   first_week <- january_1 - j1_day
 
   unname(first_week + (weeks_as_days + out[, "day"] - 1L))
-
-}
-
-#' @export
-#' @param tz passed on to [as.POSIXlt()]
-#' @rdname date2week
-as.POSIXlt.aweek <- function(x, tz, floor_day = FALSE, ...) {
-
-  as.POSIXlt(as.Date(x, floor_day), tz, ...)
-
-}
-
-
-#' @export
-#' @rdname date2week
-as.character.aweek <- function(x, ...) {
-
-  attr(x, "week_start") <- NULL
-  unclass(x)
-
-}
-
-#' @export
-#' @rdname date2week
-print.aweek <- function(x, ...) {
-
-  tmp <- week2date("2019-W08-1", attr(x, "week_start"))
-  cat(sprintf("<aweek start: %s>\n", format(tmp, "%A"))) 
-  print(as.character(x))
-  invisible(x)
 
 }
 

@@ -9,6 +9,13 @@
 #'
 #' @param numeric if `TRUE`, only the numeric week be returned. If `FALSE`
 #'   (default), the date in the format "YYYY-Www-d" will be returned.  
+#'
+#' @param factor if `TRUE`, a factor will be returned with levels spanning the
+#'   range of dates. If `floor_date = FALSE`, then this will use the sequence
+#'   of days between the first and last date, but if `floor_date = TRUE`, then
+#'   the sequence of weeks between the first and last date will be used. _Take
+#'   caution when using this with a large date range as the resulting factor can
+#'   contain all days between dates_.
 #' 
 #' @param ... arguments passed to [as.POSIXlt()], unused in all other cases.
 #' 
@@ -40,12 +47,21 @@
 #' # than the "numeric" argument
 #' date2week(dat, 1, numeric = TRUE)
 #'
+#' # You can also convert to factor and include all of the missing dates, but
+#' # beware that this may result in a very large factor due to the number of
+#' # levels present
+#' date2week(Sys.Date() + c(0, 10), factor = TRUE)
+#'
+#'
 #' # The aweek class can be converted back to a date with `as.Date()`
 #' as.Date(iso_dat)
 #'
 #' # If you want to show only the first day of the week, you can use the 
 #' # `floor_day` argument
 #' as.Date(iso_dat, floor_day = TRUE)
+#'
+#' # This also works with `factor`:
+#' as.Date(iso_dat, floor_day = TRUE, factor = TRUE)
 #'
 #' # ISO week definition: Monday -- 1
 #' date2week(dat, 1)
@@ -67,9 +83,8 @@
 #'
 #' # Epiweek definition: Sunday -- 7 
 #' date2week(dat, 7)
-date2week <- function(x, week_start = 1, floor_day = FALSE, numeric = FALSE, ...) {
+date2week <- function(x, week_start = 1, floor_day = FALSE, numeric = FALSE, factor = FALSE, ...) {
 
-  ox <- x
   x  <- tryCatch(as.POSIXlt(x, ...), error = function(e) e)
 
   if (inherits(x, "error")) {
@@ -103,11 +118,22 @@ date2week <- function(x, week_start = 1, floor_day = FALSE, numeric = FALSE, ...
                    the_week,
                    wday
                    )
-    class(the_week) <- "aweek"
-    attr(the_week, "week_start") <- week_start 
     if (floor_day) {
       the_week <- gsub("-\\d", "", the_week)
     }
+
+    if (factor) {
+      min_date <- which.min(the_date)
+      max_date <- which.max(the_date)
+      drange   <- date2week(range(the_date), week_start = week_start, 
+                            floor_day = floor_day, factor = FALSE, numeric = FALSE)
+      drange   <- week2date(drange, week_start = week_start)
+      lvls     <- seq.Date(drange[1], drange[2], by = if (floor_day) 7L else 1)
+      lvls     <- date2week(lvls, week_start = week_start, floor_day = floor_day)
+      the_week <- factor(the_week, levels = lvls)
+    }
+    class(the_week) <- c("aweek", oldClass(the_week))
+    attr(the_week, "week_start") <- week_start 
   }
   the_week
 }
