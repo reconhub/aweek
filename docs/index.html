@@ -55,7 +55,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/introduction.html">aweek: package overview</a>
+      <a href="articles/introduction.html">aweek means 'any week'</a>
     </li>
   </ul>
 </li>
@@ -145,21 +145,22 @@
 ##        1        2        0        3        2        1</code></pre>
 <p>It’s also possible to specify the week_start in terms of the current locale, however it is important to be aware that code like this may not be portable.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">lct &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/locales">Sys.getlocale</a></span>(<span class="st">"LC_TIME"</span>)</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2">res &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/locales">Sys.setlocale</a></span>(<span class="st">"LC_TIME"</span>, <span class="st">"de_DE.utf8"</span>)</a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="kw"><a href="reference/date2week.html">date2week</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.time">Sys.Date</a></span>(), <span class="dt">week_start =</span> <span class="st">"Sonntag"</span>)</a></code></pre></div>
-<pre><code>## &lt;aweek start: Sonntag&gt;
+<a class="sourceLine" id="cb17-2" data-line-number="2">res &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/locales">Sys.setlocale</a></span>(<span class="st">"LC_TIME"</span>, <span class="st">"de_DE.utf8"</span>)</a></code></pre></div>
+<pre><code>## Warning in Sys.setlocale("LC_TIME", "de_DE.utf8"): OS reports request to
+## set locale to "de_DE.utf8" cannot be honored</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw"><a href="reference/date2week.html">date2week</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.time">Sys.Date</a></span>(), <span class="dt">week_start =</span> <span class="st">"Sonntag"</span>)</a></code></pre></div>
+<pre><code>## Error: The weekday 'Sonntag' did not match any of the valid weekdays in the current locale ('en_US.UTF-8') or an English locale:
+##   Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw"><a href="reference/date2week.html">date2week</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.time">Sys.Date</a></span>(), <span class="dt">week_start =</span> <span class="st">"Sunday"</span>)</a></code></pre></div>
+<pre><code>## &lt;aweek start: Sunday&gt;
 ## [1] "2019-W10-1"</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw"><a href="reference/date2week.html">date2week</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.time">Sys.Date</a></span>(), <span class="dt">week_start =</span> <span class="st">"Sunday"</span>)</a></code></pre></div>
-<pre><code>## &lt;aweek start: Sonntag&gt;
-## [1] "2019-W10-1"</code></pre>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/locales">Sys.setlocale</a></span>(<span class="st">"LC_TIME"</span>, lct)</a></code></pre></div>
-<pre><code>## [1] "en_GB.UTF-8"</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/locales">Sys.setlocale</a></span>(<span class="st">"LC_TIME"</span>, lct)</a></code></pre></div>
+<pre><code>## [1] "en_US.UTF-8"</code></pre>
 <div id="installing-the-package" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installing-the-package" class="anchor"></a>Installing the package</h2>
 <p>To benefit from the latest features and bug fixes, install the development, <em>github</em> version of the package using:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"zkamvar/aweek"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"zkamvar/aweek"</span>)</a></code></pre></div>
 <p>Note that this requires the package <em>remotes</em> installed.</p>
 </div>
 </div>

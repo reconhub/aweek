@@ -40,6 +40,8 @@ the ISO 8601 day of the week OR it can be a string representing the day of the
 week in either an English locale or the locale defined on your computer.
 
 ```{r date2week}
+library("aweek")
+
 set.seed(2019-03-03)
 dat <- as.Date("2019-03-03") + sample(-6:7, 10, replace = TRUE)
 dat
@@ -112,4 +114,23 @@ as.POSIXlt(w)
 ```
 
 
+The `aweek` class 
+===============
+
+The `aweek` class is a character that contains the `week_start` attribute. This
+attribute allows it to be easily converted back to a date without the user
+needing to enter the start day every time. It can be created like so:
+
+```{r aweek}
+w <- "2019-W10-1"
+attr(w, "week_start") <- 7 # monday
+class(w) <- "aweek"
+w
+```
+
+If you need to remove the class, you can just use `as.character()`:
+
+```{r ascharacter}
+as.character(w)
+```
 
