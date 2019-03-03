@@ -3,7 +3,10 @@
 #' @param x a [Date], [POSIXt], [character], or any data that can be easily
 #'   converted to a date with [as.POSIXlt()]. 
 #'
-#' @param week_start The start of the week from 1 to 7 where 1 = Monday
+#' @param week_start a number indicating the start of the week based on the ISO
+#'   8601 standard from 1 to 7 where 1 = Monday OR an abbreviation of the
+#'   weekdate in an Enlgish or current locale. _Note: using a non-english locale
+#'   may render your code non-portable._
 #' 
 #' @param floor_day when `TRUE`, the days will be set to the start of the week.
 #'
@@ -65,24 +68,31 @@
 #'
 #' # ISO week definition: Monday -- 1
 #' date2week(dat, 1)
+#' date2week(dat, "Monday")
 #'
 #' # Tuesday -- 2
 #' date2week(dat, 2)
+#' date2week(dat, "Tuesday")
 #'
 #' # Wednesday -- 3
 #' date2week(dat, 3)
+#' date2week(dat, "W") # you can use valid abbreviations
 #'
 #' # Thursday -- 4
 #' date2week(dat, 4)
+#' date2week(dat, "Thursday")
 #'
 #' # Friday -- 5
 #' date2week(dat, 5)
+#' date2week(dat, "Friday")
 #'
 #' # Saturday -- 6
 #' date2week(dat, 6)
+#' date2week(dat, "Saturday")
 #'
 #' # Epiweek definition: Sunday -- 7 
 #' date2week(dat, 7)
+#' date2week(dat, "Sunday")
 date2week <- function(x, week_start = 1, floor_day = FALSE, numeric = FALSE, factor = FALSE, ...) {
 
   x  <- tryCatch(as.POSIXlt(x, ...), error = function(e) e)
@@ -92,6 +102,11 @@ date2week <- function(x, week_start = 1, floor_day = FALSE, numeric = FALSE, fac
     msg <- "%s could not be converted to a date. as.POSIXlt() returned this error:\n%s"
     stop(sprintf(msg, deparse(mc[["x"]]), x$message))
   }
+
+  if (is.character(week_start)) {
+    week_start <- weekday_from_char(week_start)
+  }
+
   wday       <- as.integer(x$wday) + 1L # weekdays in R run 0:6, 0 being Sunday
   week_start <- as.integer(week_start)
 

@@ -33,7 +33,10 @@ converted to a date with \code{\link[=as.POSIXlt]{as.POSIXlt()}}.}
 
 \item{...}{arguments passed to \code{\link[=as.POSIXlt]{as.POSIXlt()}}, unused in all other cases.}
 
-\item{week_start}{The start of the week from 1 to 7 where 1 = Monday}
+\item{week_start}{a number indicating the start of the week based on the ISO
+8601 standard from 1 to 7 where 1 = Monday OR an abbreviation of the
+weekdate in an Enlgish or current locale. \emph{Note: using a non-english locale
+may render your code non-portable.}}
 
 \item{numeric}{if \code{TRUE}, only the numeric week be returned. If \code{FALSE}
 (default), the date in the format "YYYY-Www-d" will be returned.}
@@ -93,24 +96,31 @@ as.Date(iso_dat, floor_day = TRUE, factor = TRUE)
 
 # ISO week definition: Monday -- 1
 date2week(dat, 1)
+date2week(dat, "Monday")
 
 # Tuesday -- 2
 date2week(dat, 2)
+date2week(dat, "Tuesday")
 
 # Wednesday -- 3
 date2week(dat, 3)
+date2week(dat, "W") # you can use valid abbreviations
 
 # Thursday -- 4
 date2week(dat, 4)
+date2week(dat, "Thursday")
 
 # Friday -- 5
 date2week(dat, 5)
+date2week(dat, "Friday")
 
 # Saturday -- 6
 date2week(dat, 6)
+date2week(dat, "Saturday")
 
 # Epiweek definition: Sunday -- 7 
 date2week(dat, 7)
+date2week(dat, "Sunday")
 }
 \author{
 Zhian N. Kamvar
