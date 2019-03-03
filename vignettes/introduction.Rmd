@@ -17,7 +17,7 @@ Introduction
 The day in which a week starts differs depending on context. For countries like
 the UK, the first day of the week is the first working day, which is Monday.
 This definition conforms with the [ISO 8601 standard definition for the
-beginnin of a week](http://en.wikipedia.org/wiki/ISO_week_date), but there are
+begining of a week](http://en.wikipedia.org/wiki/ISO_week_date), but there are
 examples of situations where the first day of the week is different:
 
  - [The US CDC defines an "MMWR" week which starts on a Sunday](https://wwwn.cdc.gov/nndss/document/MMWR_Week_overview.pdf)

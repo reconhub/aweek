@@ -5,7 +5,7 @@
 #'
 #' @param week_start a number indicating the start of the week based on the ISO
 #'   8601 standard from 1 to 7 where 1 = Monday OR an abbreviation of the
-#'   weekdate in an Enlgish or current locale. _Note: using a non-english locale
+#'   weekdate in an English or current locale. _Note: using a non-English locale
 #'   may render your code non-portable._
 #' 
 #' @param floor_day when `TRUE`, the days will be set to the start of the week.
@@ -29,7 +29,7 @@
 #'   example, MSF has varying start dates depending on country in order to
 #'   better coordinate response. 
 #'
-#'   While there are package that conver conversion for ISOweeks and epiweeks,
+#'   While there are packages that provide conversion for ISOweeks and epiweeks,
 #'   these do not provide seamless conversion from dates to epiweeks with 
 #'   non-standard start dates. This package provides a lightweight utility to
 #'   be able to convert each day.

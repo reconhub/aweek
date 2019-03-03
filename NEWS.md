@@ -14,7 +14,7 @@
 
 # aweek 0.0.3.9000
 
-* `date2week()` now properly accounts for dates in december that occur in the
+* `date2week()` now properly accounts for dates in December that occur in the
   first week of the next year. 
 
 # aweek 0.0.2.9000
