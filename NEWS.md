@@ -1,3 +1,7 @@
+# aweek 0.1.0
+
+* First official release of aweek on CRAN
+
 # aweek 0.0.5.9000
 
 * `date2week()` and `week2date()` can now take days represented as characters in
