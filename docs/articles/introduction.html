@@ -94,9 +94,9 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>The day in which a week starts differs depending on context. For countries like the UK, the first day of the week is the first working day, which is Monday. This definition conforms with the ISO 8601 standard definition, but there are examples of situations where the first day of the week is different:</p>
+<p>The day in which a week starts differs depending on context. For countries like the UK, the first day of the week is the first working day, which is Monday. This definition conforms with the <a href="http://en.wikipedia.org/wiki/ISO_week_date">ISO 8601 standard definition for the beginnin of a week</a>, but there are examples of situations where the first day of the week is different:</p>
 <ul>
-<li>The US CDC defines an “epiweek” which starts on a Sunday</li>
+<li><a href="https://wwwn.cdc.gov/nndss/document/MMWR_Week_overview.pdf">The US CDC defines an “MMWR” week which starts on a Sunday</a></li>
 <li>In some regions, MSF will define a week that starts on Saturday</li>
 </ul>
 <p>This package provides tools to convert dates to weeks and back where a week can start on any day. You can use this package for any of the following:</p>
@@ -129,28 +129,55 @@
 <pre><code>## &lt;aweek start: Sunday&gt;
 ##  [1] "2019-W10-1" "2019-W11-1" "2019-W10-5" "2019-W10-5" "2019-W09-5"
 ##  [6] "2019-W10-5" "2019-W10-7" "2019-W10-6" "2019-W11-1" "2019-W10-6"</code></pre>
+<p>What you get back is an <code>aweek</code> class object. It can be converted back to a date with either <code><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date()</a></code> or <code><a href="../reference/date2week.html">week2date()</a></code>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="../reference/date2week.html">week2date</a></span>(w)</a></code></pre></div>
+<pre><code>##  [1] "2019-03-03" "2019-03-10" "2019-03-07" "2019-03-07" "2019-02-28"
+##  [6] "2019-03-07" "2019-03-09" "2019-03-08" "2019-03-10" "2019-03-08"</code></pre>
+<div id="the-aweek-class" class="section level2">
+<h2 class="hasAnchor">
+<a href="#the-aweek-class" class="anchor"></a>The <code>aweek</code> class</h2>
+<p>The result you see above is an object of class “aweek”. The <code>aweek</code> class is a character that contains the <code>week_start</code> attribute. This attribute allows it to be easily converted back to a date without the user needing to enter the start day every time. It can be created like so:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">x &lt;-<span class="st"> "2019-W10-1"</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/attr">attr</a></span>(x, <span class="st">"week_start"</span>) &lt;-<span class="st"> </span><span class="dv">7</span> <span class="co"># monday</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(x) &lt;-<span class="st"> "aweek"</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">x</a></code></pre></div>
+<pre><code>## &lt;aweek start: Sunday&gt;
+## [1] "2019-W10-1"</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(x)</a></code></pre></div>
+<pre><code>## [1] "aweek"</code></pre>
+<p>If you need to remove the class, you can just use <code><a href="https://www.rdocumentation.org/packages/base/topics/character">as.character()</a></code>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/character">as.character</a></span>(x)</a></code></pre></div>
+<pre><code>## [1] "2019-W10-1"</code></pre>
+</div>
 <div id="weekly-aggregation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#weekly-aggregation" class="anchor"></a>Weekly aggregation</h2>
 <p>There are times where you would want to aggregate your days into weeks, you can do this by specifying <code>floor_day = TRUE</code> in <code><a href="../reference/date2week.html">date2week()</a></code>. For example, here we can show the individual weeks:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(wf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/date2week.html">date2week</a></span>(dat, <span class="dt">week_start =</span> <span class="st">"Saturday"</span>, <span class="dt">floor_day =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(wf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/date2week.html">date2week</a></span>(dat, <span class="dt">week_start =</span> <span class="st">"Saturday"</span>, <span class="dt">floor_day =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
 <pre><code>## &lt;aweek start: Saturday&gt;
 ##  [1] "2019-W10" "2019-W11" "2019-W10" "2019-W10" "2019-W09" "2019-W10"
 ##  [7] "2019-W11" "2019-W10" "2019-W11" "2019-W10"</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(wf)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(wf)</a></code></pre></div>
 <pre><code>## wf
 ## 2019-W09 2019-W10 2019-W11 
 ##        1        6        3</code></pre>
+<p>If you convert this to date, then all the dates will represent the beginning of the week:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(dwf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/date2week.html">week2date</a></span>(wf))</a></code></pre></div>
+<pre><code>##  [1] "2019-03-02" "2019-03-09" "2019-03-02" "2019-03-02" "2019-02-23"
+##  [6] "2019-03-02" "2019-03-09" "2019-03-02" "2019-03-09" "2019-03-02"</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/weekday.POSIXt">weekdays</a></span>(dwf)</a></code></pre></div>
+<pre><code>##  [1] "Saturday" "Saturday" "Saturday" "Saturday" "Saturday" "Saturday"
+##  [7] "Saturday" "Saturday" "Saturday" "Saturday"</code></pre>
 </div>
 <div id="factors" class="section level2">
 <h2 class="hasAnchor">
 <a href="#factors" class="anchor"></a>Factors</h2>
 <p>Weeks can be represented as factors, which is useful for tabulations across weeks. You can use <code>factor = TRUE</code> in <code><a href="../reference/date2week.html">date2week()</a></code> and it will automatically fill in any missing days (<code>floor_day = FALSE</code>) or weeks (<code>floor_day = TRUE</code>)</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="../reference/date2week.html">date2week</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.time">Sys.Date</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">15</span>), <span class="dt">week_start =</span> <span class="dv">1</span>, <span class="dt">factor =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw"><a href="../reference/date2week.html">date2week</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.time">Sys.Date</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">15</span>), <span class="dt">week_start =</span> <span class="dv">1</span>, <span class="dt">factor =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## &lt;aweek start: Monday&gt;
 ## [1] 2019-W09-7 2019-W12-1
 ## 16 Levels: 2019-W09-7 2019-W10-1 2019-W10-2 2019-W10-3 ... 2019-W12-1</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="../reference/date2week.html">date2week</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.time">Sys.Date</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">15</span>), <span class="dt">week_start =</span> <span class="dv">1</span>, <span class="dt">factor =</span> <span class="ot">TRUE</span>, <span class="dt">floor_day =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw"><a href="../reference/date2week.html">date2week</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.time">Sys.Date</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">15</span>), <span class="dt">week_start =</span> <span class="dv">1</span>, <span class="dt">factor =</span> <span class="ot">TRUE</span>, <span class="dt">floor_day =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## &lt;aweek start: Monday&gt;
 ## [1] 2019-W09 2019-W12
 ## Levels: 2019-W09 2019-W10 2019-W11 2019-W12</code></pre>
@@ -159,19 +186,19 @@
 <h2 class="hasAnchor">
 <a href="#weeks-to-weeks" class="anchor"></a>Weeks to weeks</h2>
 <p>You can also use <code><a href="../reference/date2week.html">date2week()</a></code> to convert between different week definitions if you have an <code>aweek</code> object:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">w <span class="co"># week starting on Sunday</span></a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">w <span class="co"># week starting on Sunday</span></a></code></pre></div>
 <pre><code>## &lt;aweek start: Sunday&gt;
 ##  [1] "2019-W10-1" "2019-W11-1" "2019-W10-5" "2019-W10-5" "2019-W09-5"
 ##  [6] "2019-W10-5" "2019-W10-7" "2019-W10-6" "2019-W11-1" "2019-W10-6"</code></pre>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw"><a href="../reference/date2week.html">date2week</a></span>(w, <span class="dt">week_start =</span> <span class="st">"wednesday"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw"><a href="../reference/date2week.html">date2week</a></span>(w, <span class="dt">week_start =</span> <span class="st">"wednesday"</span>)</a></code></pre></div>
 <pre><code>## &lt;aweek start: Wednesday&gt;
 ##  [1] "2019-W09-5" "2019-W10-5" "2019-W10-2" "2019-W10-2" "2019-W09-2"
 ##  [6] "2019-W10-2" "2019-W10-4" "2019-W10-3" "2019-W10-5" "2019-W10-3"</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="co"># create a table with all days in the week</span></a>
-<a class="sourceLine" id="cb19-2" data-line-number="2">res &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="st">""</span>, <span class="dt">nrow =</span> <span class="dv">10</span>, <span class="dt">ncol =</span> <span class="dv">7</span>), <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(res) &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Mon"</span>, <span class="st">"Tue"</span>, <span class="st">"Wed"</span>, <span class="st">"Thu"</span>, <span class="st">"Fri"</span>, <span class="st">"Sat"</span>, <span class="st">"Sun"</span>)</a>
-<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(res)) res[[i]] &lt;-<span class="st"> </span><span class="kw"><a href="../reference/date2week.html">date2week</a></span>(w, <span class="dt">week_start =</span> i)</a>
-<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(res)</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="co"># create a table with all days in the week</span></a>
+<a class="sourceLine" id="cb31-2" data-line-number="2">res &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">matrix</a></span>(<span class="st">""</span>, <span class="dt">nrow =</span> <span class="dv">10</span>, <span class="dt">ncol =</span> <span class="dv">7</span>), <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(res) &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Mon"</span>, <span class="st">"Tue"</span>, <span class="st">"Wed"</span>, <span class="st">"Thu"</span>, <span class="st">"Fri"</span>, <span class="st">"Sat"</span>, <span class="st">"Sun"</span>)</a>
+<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(res)) res[[i]] &lt;-<span class="st"> </span><span class="kw"><a href="../reference/date2week.html">date2week</a></span>(w, <span class="dt">week_start =</span> i)</a>
+<a class="sourceLine" id="cb31-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(res)</a></code></pre></div>
 <pre><code>##           Mon        Tue        Wed        Thu        Fri        Sat
 ## 1  2019-W09-7 2019-W09-6 2019-W09-5 2019-W09-4 2019-W09-3 2019-W10-2
 ## 2  2019-W10-7 2019-W10-6 2019-W10-5 2019-W10-4 2019-W10-3 2019-W11-2
@@ -201,32 +228,22 @@
 <a href="#converting-weeks-to-dates-with-week2date" class="anchor"></a>Converting weeks to dates with <code><a href="../reference/date2week.html">week2date()</a></code>
 </h1>
 <p>If you receive data that contains week definitions, you can convert it back to a date if you know where the week starts.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw"><a href="../reference/date2week.html">week2date</a></span>(<span class="st">"2019-W10-1"</span>, <span class="dt">week_start =</span> <span class="st">"Sunday"</span>) <span class="co"># 2019-03-03</span></a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw"><a href="../reference/date2week.html">week2date</a></span>(<span class="st">"2019-W10-1"</span>, <span class="dt">week_start =</span> <span class="st">"Sunday"</span>) <span class="co"># 2019-03-03</span></a></code></pre></div>
 <pre><code>## [1] "2019-03-03"</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw"><a href="../reference/date2week.html">week2date</a></span>(<span class="st">"2019-W10-1"</span>, <span class="dt">week_start =</span> <span class="st">"Monday"</span>) <span class="co"># 2019-03-04</span></a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw"><a href="../reference/date2week.html">week2date</a></span>(<span class="st">"2019-W10-1"</span>, <span class="dt">week_start =</span> <span class="st">"Monday"</span>) <span class="co"># 2019-03-04</span></a></code></pre></div>
 <pre><code>## [1] "2019-03-04"</code></pre>
-<p>You can also use <code><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date()</a></code> and <code>as.POISXlt()</code> if you have an <code>aweek</code> object:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date</a></span>(w)</a></code></pre></div>
+<p>If you have an <code>aweek</code> object, however, it will use the <code>week_start</code> attribute defined in the object:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw"><a href="../reference/date2week.html">week2date</a></span>(w)</a></code></pre></div>
 <pre><code>##  [1] "2019-03-03" "2019-03-10" "2019-03-07" "2019-03-07" "2019-02-28"
 ##  [6] "2019-03-07" "2019-03-09" "2019-03-08" "2019-03-10" "2019-03-08"</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.POSIXlt">as.POSIXlt</a></span>(w)</a></code></pre></div>
+<p>You can also use <code><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date()</a></code> and <code>as.POISXlt()</code> if you have an <code>aweek</code> object:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date</a></span>(w)</a></code></pre></div>
+<pre><code>##  [1] "2019-03-03" "2019-03-10" "2019-03-07" "2019-03-07" "2019-02-28"
+##  [6] "2019-03-07" "2019-03-09" "2019-03-08" "2019-03-10" "2019-03-08"</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.POSIXlt">as.POSIXlt</a></span>(w)</a></code></pre></div>
 <pre><code>##  [1] "2019-03-03 UTC" "2019-03-10 UTC" "2019-03-07 UTC" "2019-03-07 UTC"
 ##  [5] "2019-02-28 UTC" "2019-03-07 UTC" "2019-03-09 UTC" "2019-03-08 UTC"
 ##  [9] "2019-03-10 UTC" "2019-03-08 UTC"</code></pre>
-</div>
-<div id="the-aweek-class" class="section level1">
-<h1 class="hasAnchor">
-<a href="#the-aweek-class" class="anchor"></a>The <code>aweek</code> class</h1>
-<p>The <code>aweek</code> class is a character that contains the <code>week_start</code> attribute. This attribute allows it to be easily converted back to a date without the user needing to enter the start day every time. It can be created like so:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">w &lt;-<span class="st"> "2019-W10-1"</span></a>
-<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/attr">attr</a></span>(w, <span class="st">"week_start"</span>) &lt;-<span class="st"> </span><span class="dv">7</span> <span class="co"># monday</span></a>
-<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(w) &lt;-<span class="st"> "aweek"</span></a>
-<a class="sourceLine" id="cb29-4" data-line-number="4">w</a></code></pre></div>
-<pre><code>## &lt;aweek start: Sunday&gt;
-## [1] "2019-W10-1"</code></pre>
-<p>If you need to remove the class, you can just use <code><a href="https://www.rdocumentation.org/packages/base/topics/character">as.character()</a></code>:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/character">as.character</a></span>(w)</a></code></pre></div>
-<pre><code>## [1] "2019-W10-1"</code></pre>
 </div>
   </div>
 
@@ -238,13 +255,13 @@
 <li><a href="#introduction">Introduction</a></li>
       <li>
 <a href="#converting-dates-to-weeks-with-date2week">Converting dates to weeks with <code><a href="--/reference/date2week-html">date2week()</a></code></a><ul class="nav nav-pills nav-stacked">
-<li><a href="#weekly-aggregation">Weekly aggregation</a></li>
+<li><a href="#the-aweek-class">The <code>aweek</code> class</a></li>
+      <li><a href="#weekly-aggregation">Weekly aggregation</a></li>
       <li><a href="#factors">Factors</a></li>
       <li><a href="#weeks-to-weeks">Weeks to weeks</a></li>
       </ul>
 </li>
       <li><a href="#converting-weeks-to-dates-with-week2date">Converting weeks to dates with <code><a href="--/reference/date2week-html">week2date()</a></code></a></li>
-      <li><a href="#the-aweek-class">The <code>aweek</code> class</a></li>
       </ul>
 </div>
       </div>

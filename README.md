@@ -11,8 +11,8 @@ status](https://travis-ci.org/zkamvar/aweek.svg?branch=master)](https://travis-c
 
 # Welcome to the *aweek* package\!
 
-This package will convert dates to
-[epiweeks](http://www.cmmcp.org/epiweek.htm),
+This package will convert dates to [US CDC
+epiweeks](https://wwwn.cdc.gov/nndss/document/MMWR_Week_overview.pdf),
 [isoweeks](http://en.wikipedia.org/wiki/ISO_week_date), and all others
 in between with minimal overhead. Other packages such as
 [lubridate](https://github.com/tidyverse/lubridate),
@@ -115,8 +115,10 @@ locale, however it is important to be aware that code like this may not
 be portable.
 
 ``` r
+# workaround because of differing locale specifications
+german <- if (grepl("darwin", R.version$os)) "de_DE.UTF-8" else "de_DE.utf8"
 lct <- Sys.getlocale("LC_TIME")
-res <- Sys.setlocale("LC_TIME", "de_DE.utf8")
+res <- Sys.setlocale("LC_TIME", german)
 
 date2week(Sys.Date(), week_start = "Sonntag")
 ```
@@ -135,7 +137,7 @@ date2week(Sys.Date(), week_start = "Sunday")
 Sys.setlocale("LC_TIME", lct)
 ```
 
-    ## [1] "en_US.utf8"
+    ## [1] "en_US.UTF-8"
 
 ## Installing the package
 
@@ -152,7 +154,7 @@ Note that this requires the package *remotes* installed.
 
   - `date2week()` converts dates to a week format (YYYY-Www-d) that can
     start on any day.
-  - `week2date()/as.Date()` does the backwards conversion from
+  - `week2date() / as.Date()` does the backwards conversion from
     (YYYY-Www(-d)) to a numeric date.
   - Dependencies only on R itself.
 
