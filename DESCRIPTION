@@ -16,6 +16,6 @@ Suggests:
     covr
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
-URL: https://github.com/zkamvar/aweek
-BugReports: https://github.com/zkamvar/aweek/issues
+URL: https://github.com/reconhub/aweek
+BugReports: https://github.com/reconhub/aweek/issues
 VignetteBuilder: knitr

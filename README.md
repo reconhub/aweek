@@ -3,9 +3,9 @@
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/aweek)](https://cran.r-project.org/package=aweek)
 [![Codecov test
-coverage](https://codecov.io/gh/zkamvar/aweek/branch/master/graph/badge.svg)](https://codecov.io/gh/zkamvar/aweek?branch=master)
+coverage](https://codecov.io/gh/reconhub/aweek/branch/master/graph/badge.svg)](https://codecov.io/gh/reconhub/aweek?branch=master)
 [![Travis build
-status](https://travis-ci.org/zkamvar/aweek.svg?branch=master)](https://travis-ci.org/zkamvar/aweek)
+status](https://travis-ci.org/reconhub/aweek.svg?branch=master)](https://travis-ci.org/reconhub/aweek)
 
 <!-- badges: end -->
 
@@ -145,7 +145,7 @@ To benefit from the latest features and bug fixes, install the
 development, *github* version of the package using:
 
 ``` r
-remotes::install_github("zkamvar/aweek")
+remotes::install_github("reconhub/aweek")
 ```
 
 Note that this requires the package *remotes* installed.
