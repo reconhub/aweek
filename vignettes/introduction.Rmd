@@ -1,43 +1,115 @@
 ---
-title: "aweek: package overview"
+title: "aweek means 'any week'"
 date: "`r Sys.Date()`"
 output:
    rmarkdown::html_vignette:
      toc: true
      toc_depth: 2
 vignette: >
-  %\VignetteIndexEntry{Overview}
+  %\VignetteIndexEntry{aweek means 'any week'}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-*aweek* provides ...
+Introduction
+============
 
-# Installing the package
+The day in which a week starts differs depending on context. For countries like
+the UK, the first day of the week is the first working day, which is Monday.
+This definition conforms with the ISO 8601 standard definition, but there are
+examples of situations where the first day of the week is different:
 
-To install the current stable, CRAN version of the package, type:
-```{r install, eval=FALSE}
-install.packages("aweek")
+ - The US CDC defines an "epiweek" which starts on a Sunday
+ - In some regions, MSF will define a week that starts on Saturday
+
+This package provides tools to convert dates to weeks and back where a week can
+start on any day. You can use this package for any of the following:
+
+ - convert date to week starting on any day
+ - convert week back to date
+ - convert week to week
+ - create a factor of weeks that contains ordered levels that includes missing
+   weeks. 
+
+Converting dates to weeks with `date2week()`
+==========================================
+
+You can convert dates to weeks starting on any day by using `date2week()` with
+the `week_start` argument. This argument can be a number from 1 to 7 representing
+the ISO 8601 day of the week OR it can be a string representing the day of the
+week in either an English locale or the locale defined on your computer.
+
+```{r date2week}
+set.seed(2019-03-03)
+dat <- as.Date("2019-03-03") + sample(-6:7, 10, replace = TRUE)
+dat
+# Use character days
+print(w <- date2week(dat, week_start = "Sunday"))
+# Use ISO 8601 days
+print(w <- date2week(dat, week_start = 7))
 ```
 
-To benefit from the latest features and bug fixes, install the development, *github* version of the package using:
-```{r install2, eval=FALSE}
-devtools::install_github("reconhub/aweek")
+Weekly aggregation 
+------------------
+
+There are times where you would want to aggregate your days into weeks, you can
+do this by specifying `floor_day = TRUE` in `date2week()`. For example, here we
+can show the individual weeks:
+
+```{r date2week_floor}
+print(wf <- date2week(dat, week_start = "Saturday", floor_day = TRUE))
+table(wf)
 ```
 
-Note that this requires the package *devtools* installed.
+Factors
+-------
 
-# Main visible functions of the package
+Weeks can be represented as factors, which is useful for tabulations across
+weeks. You can use `factor = TRUE` in `date2week()` and it will automatically
+fill in any missing days (`floor_day = FALSE`) or weeks (`floor_day = TRUE`)
 
-The main functions of the package include:
+```{r factors}
+date2week(Sys.Date() + c(0, 15), week_start = 1, factor = TRUE)
+date2week(Sys.Date() + c(0, 15), week_start = 1, factor = TRUE, floor_day = TRUE)
+```
 
-...
 
-Also consider adding some examples.
+Weeks to weeks
+--------------
 
-# Main internal functions
+You can also use `date2week()` to convert between different week definitions if
+you have an `aweek` object:
 
-In case you want to describe internal function as well.
-... 
+
+```{r week2week}
+w # week starting on Sunday
+date2week(w, week_start = "wednesday")
+
+# create a table with all days in the week
+res <- as.data.frame(matrix("", nrow = 10, ncol = 7), stringsAsFactors = FALSE)
+names(res) <- c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+for (i in names(res)) res[[i]] <- date2week(w, week_start = i)
+as.data.frame(res)
+```
+
+
+Converting weeks to dates with `week2date()`
+==========================================
+
+If you receive data that contains week definitions, you can convert it back to 
+a date if you know where the week starts.
+
+```{r week2date}
+week2date("2019-W10-1", week_start = "Sunday") # 2019-03-03
+week2date("2019-W10-1", week_start = "Monday") # 2019-03-04
+```
+
+You can also use `as.Date()` and `as.POISXlt()` if you have an `aweek` object:
+
+```{r asdate}
+as.Date(w)
+as.POSIXlt(w)
+```
+
 
 
