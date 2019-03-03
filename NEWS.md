@@ -1,3 +1,8 @@
+# aweek 0.0.5.9000
+
+* `date2week()` and `week2date()` can now take days represented as characters in
+  the current or English locale. 
+
 # aweek 0.0.4.9000
 
 * `date2week()` gains a `factor` argument, which will automatically compute the

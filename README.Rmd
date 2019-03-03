@@ -35,7 +35,7 @@ onset
 date2week(onset, week_start = 1) # ISO weeks starting on Monday (default)
 date2week(onset, week_start = 7) # EPI week starting on Sunday
 date2week(onset, week_start = 6) # EPI week starting on Saturday
-x <- date2week(onset, week_start = 6, floor_day = TRUE) # truncate to just the weeks
+x <- date2week(onset, week_start = "sat", floor_day = TRUE) # truncate to just the weeks
 table(x)
 table(week2date(x))
 ```
@@ -46,10 +46,26 @@ in tabulating across weeks and including missing values.
 ```{r show_factors}
 set.seed(2019-02-26)
 onset <- Sys.Date() + sort(sample(-48:49, 20, replace = TRUE))
-x <- date2week(onset, week_start = 6, floor_day = TRUE, factor = TRUE)
+x <- date2week(onset, week_start = "sat", floor_day = TRUE, factor = TRUE)
 x
 table(x)
 ```
+
+It's also possible to specify the week_start in terms of the current locale, 
+however it is important to be aware that code like this may not be portable.
+
+```{r locale_dates, error = TRUE}
+
+lct <- Sys.getlocale("LC_TIME")
+res <- Sys.setlocale("LC_TIME", "de_DE.utf8")
+
+date2week(Sys.Date(), week_start = "Sonntag")
+date2week(Sys.Date(), week_start = "Sunday")
+
+Sys.setlocale("LC_TIME", lct)
+
+```
+
 
 ## Installing the package
 
