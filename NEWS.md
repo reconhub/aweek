@@ -4,7 +4,7 @@
 * documentation divided into smaller chunks
 * `as.POSIXlt()` bug where `tz` was not being passed was fixed.
 * `date2week()`: an error is now issued if users specify non-ISO 8601 dates OR
-  don't specify a `format` option.
+  don't specify a `format` option. (found: @scottyaz, #2)
 
 # aweek 0.1.0
 
