@@ -20,6 +20,10 @@
 #'   caution when using this with a large date range as the resulting factor can
 #'   contain all days between dates_.
 #' 
+#' @param format if `x` is a character, this format will be used to convert it
+#'   to a date. Defaults to `YYYY-MM-DD`. An error will be issued if the date
+#'   could not be converted
+#' 
 #' @param ... arguments passed to [as.POSIXlt()], unused in all other cases.
 #' 
 #' @details Weeks differ in their start dates depending on context. The ISO
@@ -95,9 +99,9 @@
 #' # Epiweek definition: Sunday -- 7 
 #' date2week(dat, 7)
 #' date2week(dat, "Sunday")
-date2week <- function(x, week_start = 1, floor_day = FALSE, numeric = FALSE, factor = FALSE, ...) {
+date2week <- function(x, week_start = 1, floor_day = FALSE, numeric = FALSE, factor = FALSE, format = "%Y-%m-%d", ...) {
 
-  x  <- tryCatch(as.POSIXlt(x, ...), error = function(e) e)
+  x  <- tryCatch(as.POSIXlt(x, format = format, ...), error = function(e) e)
 
   if (inherits(x, "error")) {
     mc <- match.call()

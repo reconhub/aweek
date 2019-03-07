@@ -6,7 +6,7 @@
 \title{Convert date to a an arbitrary week definition}
 \usage{
 date2week(x, week_start = 1, floor_day = FALSE, numeric = FALSE,
-  factor = FALSE, ...)
+  factor = FALSE, format = "\%Y-\%m-\%d", ...)
 
 week2date(x, week_start = 1, floor_day = FALSE)
 }
@@ -30,6 +30,10 @@ of days between the first and last date, but if \code{floor_date = TRUE}, then
 the sequence of weeks between the first and last date will be used. \emph{Take
 caution when using this with a large date range as the resulting factor can
 contain all days between dates}.}
+
+\item{format}{if \code{x} is a character, this format will be used to convert it
+to a date. Defaults to \code{YYYY-MM-DD}. An error will be issued if the date
+could not be converted}
 
 \item{...}{arguments passed to \code{\link[=as.POSIXlt]{as.POSIXlt()}}, unused in all other cases.}
 }
