@@ -37,6 +37,7 @@
 #'
 #' @author Zhian N. Kamvar
 #' @export
+#' @seealso [as.Date.aweek()], [print.aweek()]
 #' @examples
 #'
 #' # The same set of days will occur in different weeks depending on the start

@@ -14,6 +14,7 @@
 #'
 #' @export
 #' @rdname aweek-class
+#' @seealso [date2week()], [as.Date.aweek()]
 #' @examples
 #' d <- as.Date("2018-12-20") + 1:40
 #' w <- date2week(d, week_start = "Sunday")

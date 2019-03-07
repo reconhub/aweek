@@ -56,3 +56,6 @@ w2 <- date2week(d[1:5], week_start = "Monday", floor_day = TRUE)
 w2
 c(w[1:5], w2)
 }
+\seealso{
+\code{\link[=date2week]{date2week()}}, \code{\link[=as.Date.aweek]{as.Date.aweek()}}
+}
