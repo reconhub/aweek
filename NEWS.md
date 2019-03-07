@@ -1,3 +1,9 @@
+# aweek 0.2.0.9000
+
+* subsetting and concatenating methods added to the `aweek` class (see #1)
+* documentation divided into smaller chunks
+* bug in `as.POSIXlt()` where `tz` was not being passed was fixed.
+
 # aweek 0.1.0
 
 * First official release of aweek on CRAN
