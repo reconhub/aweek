@@ -30,18 +30,18 @@ test_that("aweek can be converted to character", {
 
 test_that("aweek can be converted to POSIXlt", {
 
-  p <- as.POSIXlt(datw)
-  expect_identical(as.POSIXlt(dat), p)
+  p <- as.POSIXlt(datw, tz = "UTC")
+  expect_identical(as.POSIXlt(dat, tz = "UTC"), p)
 
 })
 
 
 test_that("aweek can be converted to POSIXlt", {
 
-  p <- as.POSIXlt(datw)
+  p <- as.POSIXlt(datw, tz = "UTC")
   expect_identical(as.POSIXlt(dat), p)
 
-  p2 <- as.POSIXlt(datw, floor_day = TRUE)
+  p2 <- as.POSIXlt(datw, tz = "UTC", floor_day = TRUE)
   expect_failure(expect_identical(p, p2))
 
   expect_true(p2 <= p)
