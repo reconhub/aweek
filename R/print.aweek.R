@@ -47,7 +47,7 @@ print.aweek <- function(x, ...) {
   y <- x
   attr(x, "week_start") <- NULL
   class(x) <- class(x)[class(x) != "aweek"]
-  NextMethod()
+  NextMethod("print")
   invisible(y)
 
 }
@@ -58,10 +58,9 @@ print.aweek <- function(x, ...) {
 `[.aweek` <- function(x, i) {
 
   ws <- attr(x, "week_start")
-  x <- NextMethod()
-  class(x) <- "aweek"
-  attr(x, "week_start") <- ws
-  x
+  y  <- NextMethod("[")
+  attr(y, "week_start") <- ws
+  y
 
 }
 
@@ -71,6 +70,7 @@ print.aweek <- function(x, ...) {
 c.aweek <- function(..., recursive = FALSE, use.names = TRUE) {
 
   the_dots   <- list(...)
+  is_factor  <- is.factor(the_dots[[1]])
   week_start <- attr(the_dots[[1]], "week_start")
   aweeks     <- vapply(the_dots, inherits, logical(1), "aweek")
   starts     <- vapply(the_dots[aweeks], attr, integer(1), "week_start")
@@ -80,6 +80,9 @@ c.aweek <- function(..., recursive = FALSE, use.names = TRUE) {
   res        <- unlist(the_dots, recursive = recursive, use.names = TRUE)
   class(res) <- "aweek"
   attr(res, "week_start") <- week_start
+  if (is_factor) {
+    res <- date2week(res, week_start = week_start, factor = TRUE)
+  }
   res
 
 }

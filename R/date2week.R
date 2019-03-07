@@ -20,10 +20,6 @@
 #'   caution when using this with a large date range as the resulting factor can
 #'   contain all days between dates_.
 #' 
-#' @param format if `x` is a character, this format will be used to convert it
-#'   to a date. Defaults to `YYYY-MM-DD`. An error will be issued if the date
-#'   could not be converted
-#' 
 #' @param ... arguments passed to [as.POSIXlt()], unused in all other cases.
 #' 
 #' @details Weeks differ in their start dates depending on context. The ISO
@@ -38,6 +34,13 @@
 #'   these do not provide seamless conversion from dates to epiweeks with 
 #'   non-standard start dates. This package provides a lightweight utility to
 #'   be able to convert each day.
+#'
+#' @note `date2week()` will initially convert the input with [as.POSIXlt()] and
+#'   use that to calculate the week. If the user supplies character input, it
+#'   is expected that the input will be of the format yyyy-mm-dd _unless_ the 
+#'   user explicitly passes the "format" parameter to [as.POSIXlt()]. If the
+#'   input is not in yyyy-mm-dd and the format parameter is not passed, 
+#'   `date2week()` will result in an error.
 #'
 #' @author Zhian N. Kamvar
 #' @export
@@ -99,9 +102,21 @@
 #' # Epiweek definition: Sunday -- 7 
 #' date2week(dat, 7)
 #' date2week(dat, "Sunday")
-date2week <- function(x, week_start = 1, floor_day = FALSE, numeric = FALSE, factor = FALSE, format = "%Y-%m-%d", ...) {
+date2week <- function(x, week_start = 1, floor_day = FALSE, numeric = FALSE, factor = FALSE, ...) {
 
-  x  <- tryCatch(as.POSIXlt(x, format = format, ...), error = function(e) e)
+  format_exists <- !is.null(list(...)$format)
+
+  if (!inherits(x, "aweek") && is.character(x) && !format_exists) {
+    iso_std <- grepl("^[0-9]{4}[^[:alnum:]]+[01][0-9][^[:alnum:]]+[0-3][0-9]$", trimws(x))
+    iso_std[is.na(x)] <- TRUE # prevent false alarms
+    if (!all(iso_std)) {
+      msg <- paste("Not all dates are in ISO 8601 standard format (yyyy-mm-dd).",
+                   "The first incorrect date is %s"
+      )
+      stop(sprintf(msg, x[!iso_std][1]))
+    }
+  }
+  x  <- tryCatch(as.POSIXlt(x, ...), error = function(e) e)
 
   if (inherits(x, "error")) {
     mc <- match.call()
