@@ -71,7 +71,6 @@ print.aweek <- function(x, ...) {
 }
 
 #' @export
-#' @param
 #' @rdname aweek-class
 c.aweek <- function(..., recursive = FALSE, use.names = TRUE) {
 
