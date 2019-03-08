@@ -1,4 +1,4 @@
-This is a re-submission to fix a broken URL
+This submission fixes failing tests (due to mis-placed assumptions -_-)
 
 ## Test environments
 
@@ -10,4 +10,4 @@ This is a re-submission to fix a broken URL
 
 0 errors | 0 warnings | 1 note
 
-* This is a new release.
+* Days since last update: 2
