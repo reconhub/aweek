@@ -60,6 +60,7 @@ print.aweek <- function(x, ...) {
   ws <- attr(x, "week_start")
   y  <- NextMethod("[")
   attr(y, "week_start") <- ws
+  class(y) <- union("aweek", oldClass(y))
   y
 
 }
@@ -72,9 +73,18 @@ c.aweek <- function(..., recursive = FALSE, use.names = TRUE) {
   the_dots   <- list(...)
   is_factor  <- is.factor(the_dots[[1]])
   week_start <- attr(the_dots[[1]], "week_start")
-  aweeks     <- vapply(the_dots, inherits, logical(1), "aweek")
+  aweeks     <- vlogic(the_dots, inherits, "aweek")
   starts     <- vapply(the_dots[aweeks], attr, integer(1), "week_start")
   if (!all(starts == starts[1]) || !all(aweeks)) {
+    # Find all characters that are aweeks without the attributes
+    are_chars  <- !aweeks & vlogic(the_dots, inherits, "character")
+    if (any(are_chars)) {
+      are_weeks <- are_chars & vallgrep(the_dots, "\\d{4}-W\\d{2}-?[1-7]?")
+      if (any(are_weeks)) {
+        # convert the week chars to dates if they exist
+        the_dots[are_weeks] <- lapply(the_dots[are_weeks], week2date, week_start = week_start)
+      }
+    }
     the_dots <- lapply(the_dots, date2week, week_start = week_start)
   }
   res        <- unlist(the_dots, recursive = recursive, use.names = TRUE)
