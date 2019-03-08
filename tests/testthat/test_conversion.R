@@ -1,7 +1,7 @@
 context("conversion tests")
 
 
-dat <- Sys.Date()
+dat  <- as.Date("2019-03-07")
 datw <- date2week(dat, 5)
 
 
