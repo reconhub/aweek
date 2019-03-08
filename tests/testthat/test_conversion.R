@@ -22,7 +22,15 @@ test_that("a character can be converted to a date", {
 
 })
 
-test_that("", {})
+test_that("character can be converted to aweek if in YYYYMMDD format", {
+
+  expect_identical(date2week("2019/03/07", 5), datw)
+  expect_identical(date2week("2019:03:07", 5, format = "%Y:%m:%d"), datw)
+  expect_identical(date2week("3/7/2019", 5, format = "%m/%d/%Y"), datw)
+  expect_identical(date2week("7/3/2019", 5, format = "%d/%m/%Y"), datw)
+  expect_error(date2week(c("2019-07-03", "7/3/2019"), 5), "The first incorrect date is 7/3/2019")
+
+})
 
 test_that("aweek can be converted to character", {
 
