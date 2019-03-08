@@ -14,10 +14,6 @@ matrix:
     - os: osx
       osx_image: xcode8.3
 
-
-r_github_packages:
-  - jimhester/covr
-
 warnings_are_errors: true
 
 notifications:
@@ -27,3 +23,13 @@ notifications:
 
 after_success:
   - if [[ "${R_CODECOV}" ]]; then Rscript -e 'covr::codecov()'; fi
+
+env:
+  global:
+    - NOT_CRAN: true
+    - R_BUILD_ARGS="--resave-data --compact-vignettes=gs+qpdf"
+    - R_CHECK_ARGS="--as-cran --timings"
+    - R_CHECK_TIME="TRUE"
+    - R_CHECK_TESTS="TRUE"
+    - _R_CHECK_TIMINGS_="0"
+    - _R_CHECK_SYSTEM_CLOCK_="0"

@@ -50,6 +50,14 @@ these do not provide seamless conversion from dates to epiweeks with
 non-standard start dates. This package provides a lightweight utility to
 be able to convert each day.
 }
+\note{
+\code{date2week()} will initially convert the input with \code{\link[=as.POSIXlt]{as.POSIXlt()}} and
+use that to calculate the week. If the user supplies character input, it
+is expected that the input will be of the format yyyy-mm-dd \emph{unless} the
+user explicitly passes the "format" parameter to \code{\link[=as.POSIXlt]{as.POSIXlt()}}. If the
+input is not in yyyy-mm-dd and the format parameter is not passed,
+\code{date2week()} will result in an error.
+}
 \examples{
 
 # The same set of days will occur in different weeks depending on the start

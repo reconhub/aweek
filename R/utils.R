@@ -33,3 +33,17 @@ week_in_year <- function(the_date) {
   jan1 <- as.Date(sprintf("%s-01-01", format(the_date, "%Y")))
   1L + (as.numeric(the_date) - as.numeric(jan1)) %/% 7L
 }
+
+
+vlogic <- function(x, FUN, ...) {
+
+  vapply(x, FUN = match.fun(FUN), FUN.VALUE = logical(1), ...)
+
+}
+
+vallgrep <- function(x, PATTERN) {
+
+  FUN <- function(i, PATTERN) all(grepl(PATTERN, i))
+  vapply(x, FUN, logical(1), PATTERN)
+
+}

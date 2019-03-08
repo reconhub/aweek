@@ -11,6 +11,11 @@
 #'
 #' @return an object of class `aweek`
 #'
+#' @description The method `c.aweek()` will always return an `aweek` object with
+#'   the same `week_start` attribute as the first object in the list. If the
+#'   first object is also a factor, then the output will be re-leveled. If
+#'   week-like characters are presented (e.g. "2019-W10-1"), then these are
+#'   assumed to have the same `week_start` as the first object. 
 #'
 #' @export
 #' @rdname aweek-class
@@ -47,7 +52,7 @@ print.aweek <- function(x, ...) {
   y <- x
   attr(x, "week_start") <- NULL
   class(x) <- class(x)[class(x) != "aweek"]
-  NextMethod()
+  NextMethod("print")
   invisible(y)
 
 }
@@ -58,10 +63,10 @@ print.aweek <- function(x, ...) {
 `[.aweek` <- function(x, i) {
 
   ws <- attr(x, "week_start")
-  x <- NextMethod()
-  class(x) <- "aweek"
-  attr(x, "week_start") <- ws
-  x
+  y  <- NextMethod("[")
+  attr(y, "week_start") <- ws
+  class(y) <- union("aweek", oldClass(y))
+  y
 
 }
 
@@ -71,15 +76,33 @@ print.aweek <- function(x, ...) {
 c.aweek <- function(..., recursive = FALSE, use.names = TRUE) {
 
   the_dots   <- list(...)
+  is_factor  <- is.factor(the_dots[[1]])
   week_start <- attr(the_dots[[1]], "week_start")
-  aweeks     <- vapply(the_dots, inherits, logical(1), "aweek")
+  aweeks     <- vlogic(the_dots, inherits, "aweek")
+  factors    <- vlogic(the_dots, inherits, "factor")
+  if (any(factors)) {
+    the_dots[factors] <- lapply(the_dots[factors], date2week, week_start = week_start) 
+  }
   starts     <- vapply(the_dots[aweeks], attr, integer(1), "week_start")
   if (!all(starts == starts[1]) || !all(aweeks)) {
+    # Find all characters that are aweeks without the attributes
+    are_chars  <- !aweeks & vlogic(the_dots, inherits, c("character", "factor"))
+    if (any(are_chars)) {
+      the_dots[are_chars] <- lapply(the_dots[are_chars], as.character)
+      are_weeks <- are_chars & vallgrep(the_dots, "\\d{4}-W\\d{2}-?[1-7]?")
+      if (any(are_weeks)) {
+        # convert the week chars to dates if they exist
+        the_dots[are_weeks] <- lapply(the_dots[are_weeks], week2date, week_start = week_start)
+      }
+    }
     the_dots <- lapply(the_dots, date2week, week_start = week_start)
   }
   res        <- unlist(the_dots, recursive = recursive, use.names = TRUE)
   class(res) <- "aweek"
   attr(res, "week_start") <- week_start
+  if (is_factor) {
+    res <- date2week(res, week_start = week_start, factor = TRUE)
+  }
   res
 
 }
