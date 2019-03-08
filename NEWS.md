@@ -1,10 +1,12 @@
 # aweek 0.2.0.9000
 
-* subsetting and concatenating methods added to the `aweek` class (see #1)
-* documentation divided into smaller chunks
+* Subsetting and concatenating methods added to the `aweek` class (see #1)
+* Documentation divided into smaller chunks
 * `as.POSIXlt()` bug where `tz` was not being passed was fixed.
 * `date2week()`: an error is now issued if users specify non-ISO 8601 dates OR
   don't specify a `format` option. (found: @scottyaz, #2)
+* Best practices added to vignette
+* Fix test that would fail every seven days on CRAN
 
 # aweek 0.1.0
 

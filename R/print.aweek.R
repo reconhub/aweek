@@ -11,6 +11,11 @@
 #'
 #' @return an object of class `aweek`
 #'
+#' @description The method `c.aweek()` will always return an `aweek` object with
+#'   the same `week_start` attribute as the first object in the list. If the
+#'   first object is also a factor, then the output will be re-leveled. If
+#'   week-like characters are presented (e.g. "2019-W10-1"), then these are
+#'   assumed to have the same `week_start` as the first object. 
 #'
 #' @export
 #' @rdname aweek-class

@@ -25,6 +25,13 @@
 an object of class \code{aweek}
 }
 \description{
+The method \code{c.aweek()} will always return an \code{aweek} object with
+the same \code{week_start} attribute as the first object in the list. If the
+first object is also a factor, then the output will be re-leveled. If
+week-like characters are presented (e.g. "2019-W10-1"), then these are
+assumed to have the same \code{week_start} as the first object.
+}
+\details{
 The aweek class is a character or factor in the format YYYY-Www(-d) with a
 "week_start" attribute containing an integer specifying which day of the ISO
 8601 week each week should begin. This documentation shows how to print or

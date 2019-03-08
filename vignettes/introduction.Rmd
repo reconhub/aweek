@@ -59,7 +59,6 @@ with either `as.Date()` or `week2date()`:
 week2date(w)
 ```
 
-
 The `aweek` class 
 ---------------
 
@@ -70,7 +69,7 @@ day every time. It can be created like so:
 
 ```{r aweek}
 x <- "2019-W10-1"
-attr(x, "week_start") <- 7 # monday
+attr(x, "week_start") <- 7 # Sunday 
 class(x) <- "aweek"
 x
 class(x)
@@ -81,6 +80,23 @@ If you need to remove the class, you can just use `as.character()`:
 ```{r ascharacter}
 as.character(x)
 ```
+
+Best practices
+--------------
+
+The `date2week()` function only checks that dates are in ISO 8601 (yyyy-mm-dd)
+format before converting to weeks, *and otherwise assumes that the dates are
+accurate* so it's strongly recommended to make sure your dates are in either
+`Date` or `POISXt` format and accurate before converting to weeks. The 
+[lubridate](https://cran.r-project.org/package=lubridate) can be used for this
+purpose.
+
+Because the `week_start` arguments default to ISO week day 1 (Monday), it's
+recommended to specify `week_start` in `date2week()` and `week2date()` if you
+don't have an `aweek` object.
+
+Before you combine aweek objects, confirm that they are actually aweek objects
+with `inherits(myObject, "aweek")`. 
 
 
 Weekly aggregation 
@@ -111,8 +127,8 @@ weeks. You can use `factor = TRUE` in `date2week()` and it will automatically
 fill in any missing days (`floor_day = FALSE`) or weeks (`floor_day = TRUE`)
 
 ```{r factors}
-date2week(Sys.Date() + c(0, 15), week_start = 1, factor = TRUE)
-date2week(Sys.Date() + c(0, 15), week_start = 1, factor = TRUE, floor_day = TRUE)
+date2week(dat[1] + c(0, 15), week_start = 1, factor = TRUE)
+date2week(dat[1] + c(0, 15), week_start = 1, factor = TRUE, floor_day = TRUE)
 ```
 
 
@@ -123,15 +139,59 @@ You can also use `date2week()` to convert between different week definitions if
 you have an `aweek` object:
 
 
-```{r week2week}
+```{r week2week, R.options=list(width = 100)}
 w # week starting on Sunday
 date2week(w, week_start = "wednesday")
 
 # create a table with all days in the week
-res <- as.data.frame(matrix("", nrow = 10, ncol = 7), stringsAsFactors = FALSE)
-names(res) <- c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
-for (i in names(res)) res[[i]] <- date2week(w, week_start = i)
-as.data.frame(res)
+d <- dat[1] + 0:6
+res <- as.data.frame(matrix("", nrow = 7, ncol = 7), stringsAsFactors = FALSE)
+names(res) <- weekdays(d) # days of the week
+for (i in names(res)) res[[i]] <- date2week(d, week_start = i)
+res
+```
+
+All of these columns contain the same dates:
+
+```{r week2week2date}
+data.frame(lapply(res, as.Date))
+```
+
+
+Combining `aweek` objects
+-----------------------
+
+You can combine aweek objects with different `week_start` attributes. The 
+resulting `aweek` object will have the same `week_start` as the first object.
+
+```{r cweek2week}
+c(res$Sunday[1], res$Wednesday[2], res$Friday[3])
+c(res$Tuesday[1], res$Thursday[2], res$Friday[3])
+```
+
+You can also add dates to aweek objects:
+
+```{r add_dates}
+c(res$Monday, as.Date("2019-04-03"))
+```
+
+### Add characters with caution
+
+You can also add character representation of weeks, but be aware that **it is
+assumed that these have the same `week_start` as the first object.**
+
+```{r add_chars}
+s <- c(res$Saturday, "2019-W14-3")
+s
+m <- c(res$Monday, "2019-W14-3")
+m
+```
+
+**These will translate into different dates**
+
+```{r char2date}
+as.Date(s[7:8])
+as.Date(m[7:8])
 ```
 
 
