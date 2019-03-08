@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">aweek</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -115,16 +115,33 @@
       <small>Source: <a href='https://github.com/reconhub/aweek/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="aweek-0-2-0" class="section level1">
+<h1 class="page-header">
+<a href="#aweek-0-2-0" class="anchor"></a>aweek 0.2.0<small> Unreleased </small>
+</h1>
+<ul>
+<li>Subsetting and concatenating methods added to the <code>aweek</code> class (see <a href='https://github.com/reconhub/aweek/issues/1'>#1</a>)</li>
+<li>Documentation divided into smaller chunks</li>
+<li>
+<code><a href="https://www.rdocumentation.org/packages/base/topics/as.POSIXlt">as.POSIXlt()</a></code> bug where <code>tz</code> was not being passed was fixed.</li>
+<li>
+<code><a href="../reference/date2week.html">date2week()</a></code>: an error is now issued if users specify non-ISO 8601 dates OR don’t specify a <code>format</code> option. (found: <a href='https://github.com/scottyaz'>@scottyaz</a>, <a href='https://github.com/reconhub/aweek/issues/2'>#2</a>)</li>
+<li>Best practices added to vignette</li>
+<li>Fix test that would fail every seven days on CRAN</li>
+</ul>
+</div>
     <div id="aweek-0-1-0" class="section level1">
 <h1 class="page-header">
-<a href="#aweek-0-1-0" class="anchor"></a>aweek 0.1.0</h1>
+<a href="#aweek-0-1-0" class="anchor"></a>aweek 0.1.0<small> 2019-03-06 </small>
+</h1>
 <ul>
 <li>First official release of aweek on CRAN</li>
 </ul>
 </div>
     <div id="aweek-0-0-5-9000" class="section level1">
 <h1 class="page-header">
-<a href="#aweek-0-0-5-9000" class="anchor"></a>aweek 0.0.5.9000</h1>
+<a href="#aweek-0-0-5-9000" class="anchor"></a>aweek 0.0.5.9000<small> Unreleased </small>
+</h1>
 <ul>
 <li>
 <code><a href="../reference/date2week.html">date2week()</a></code> and <code><a href="../reference/date2week.html">week2date()</a></code> can now take days represented as characters in the current or English locale.</li>
@@ -132,7 +149,8 @@
 </div>
     <div id="aweek-0-0-4-9000" class="section level1">
 <h1 class="page-header">
-<a href="#aweek-0-0-4-9000" class="anchor"></a>aweek 0.0.4.9000</h1>
+<a href="#aweek-0-0-4-9000" class="anchor"></a>aweek 0.0.4.9000<small> Unreleased </small>
+</h1>
 <ul>
 <li>
 <code><a href="../reference/date2week.html">date2week()</a></code> gains a <code>factor</code> argument, which will automatically compute the levels within the date range.</li>
@@ -140,7 +158,8 @@
 </div>
     <div id="aweek-0-0-3-9000" class="section level1">
 <h1 class="page-header">
-<a href="#aweek-0-0-3-9000" class="anchor"></a>aweek 0.0.3.9000</h1>
+<a href="#aweek-0-0-3-9000" class="anchor"></a>aweek 0.0.3.9000<small> Unreleased </small>
+</h1>
 <ul>
 <li>
 <code><a href="../reference/date2week.html">date2week()</a></code> now properly accounts for dates in December that occur in the first week of the next year.</li>
@@ -148,15 +167,17 @@
 </div>
     <div id="aweek-0-0-2-9000" class="section level1">
 <h1 class="page-header">
-<a href="#aweek-0-0-2-9000" class="anchor"></a>aweek 0.0.2.9000</h1>
+<a href="#aweek-0-0-2-9000" class="anchor"></a>aweek 0.0.2.9000<small> Unreleased </small>
+</h1>
 <ul>
 <li>
-<code>floor_day</code> now truncates the week instead changing the last digit to 1 for aesthetics. (Thanks to <a href='https://github.com/aspina7'>@aspina7</a> for the suggestion) q <code><a href="../reference/date2week.html">print.aweek()</a></code> now displays the day of the week in the current locale.</li>
+<code>floor_day</code> now truncates the week instead changing the last digit to 1 for aesthetics. (Thanks to <a href='https://github.com/aspina7'>@aspina7</a> for the suggestion) q <code><a href="../reference/aweek-class.html">print.aweek()</a></code> now displays the day of the week in the current locale.</li>
 </ul>
 </div>
     <div id="aweek-0-0-1-9000" class="section level1">
 <h1 class="page-header">
-<a href="#aweek-0-0-1-9000" class="anchor"></a>aweek 0.0.1.9000</h1>
+<a href="#aweek-0-0-1-9000" class="anchor"></a>aweek 0.0.1.9000<small> Unreleased </small>
+</h1>
 <ul>
 <li>First version of package</li>
 <li>
@@ -178,6 +199,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#aweek-0-2-0">0.2.0</a></li>
         <li><a href="#aweek-0-1-0">0.1.0</a></li>
         <li><a href="#aweek-0-0-5-9000">0.0.5.9000</a></li>
         <li><a href="#aweek-0-0-4-9000">0.0.4.9000</a></li>
