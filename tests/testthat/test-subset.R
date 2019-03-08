@@ -38,6 +38,21 @@ test_that("characters can be added", {
 })
 
 
+test_that("factors force factors", {
+
+  xf <- c(date2week(d[1], week_start = "Monday", factor = TRUE), x[-1])
+  expect_is(xf, "factor")
+  expect_identical(levels(xf), as.character(x))
+  expect_identical(as.character(xf), as.character(x))
+
+  yf <- c(date2week(d[1], week_start = "Saturday", factor = TRUE), x[-1])
+  expect_is(yf, "factor")
+  expect_identical(levels(yf), as.character(y))
+  expect_identical(as.character(yf), as.character(y))
+
+})
+
+
 test_that("dates can be added", {
 
   xd <- c(x, as.Date("2019-01-15"))
@@ -64,7 +79,7 @@ test_that("all objects can be added", {
           "2019-01-10", 
           as.Date(c("2019-01-11", "2019-01-12")),
           as.POSIXlt("2019-01-13"),
-          date2week("2019-01-14", week_start = "Tuesday"),
+          date2week("2019-01-14", week_start = "Tuesday", factor = TRUE),
           "2019-W03-2")
 
   expect_identical(xx, dd)
@@ -74,7 +89,7 @@ test_that("all objects can be added", {
           "2019-01-10", 
           as.Date(c("2019-01-11", "2019-01-12")),
           as.POSIXlt("2019-01-13"),
-          date2week("2019-01-14", week_start = "Tuesday"),
+          date2week("2019-01-14", week_start = "Tuesday", factor = TRUE),
           "2019-W03-4")
 
   expect_identical(yy, date2week(dd, week_start = "Saturday"))

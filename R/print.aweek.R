@@ -74,11 +74,16 @@ c.aweek <- function(..., recursive = FALSE, use.names = TRUE) {
   is_factor  <- is.factor(the_dots[[1]])
   week_start <- attr(the_dots[[1]], "week_start")
   aweeks     <- vlogic(the_dots, inherits, "aweek")
+  factors    <- vlogic(the_dots, inherits, "factor")
+  if (any(factors)) {
+    the_dots[factors] <- lapply(the_dots[factors], date2week, week_start = week_start) 
+  }
   starts     <- vapply(the_dots[aweeks], attr, integer(1), "week_start")
   if (!all(starts == starts[1]) || !all(aweeks)) {
     # Find all characters that are aweeks without the attributes
-    are_chars  <- !aweeks & vlogic(the_dots, inherits, "character")
+    are_chars  <- !aweeks & vlogic(the_dots, inherits, c("character", "factor"))
     if (any(are_chars)) {
+      the_dots[are_chars] <- lapply(the_dots[are_chars], as.character)
       are_weeks <- are_chars & vallgrep(the_dots, "\\d{4}-W\\d{2}-?[1-7]?")
       if (any(are_weeks)) {
         # convert the week chars to dates if they exist

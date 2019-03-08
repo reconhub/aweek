@@ -22,6 +22,8 @@ test_that("a character can be converted to a date", {
 
 })
 
+test_that("", {})
+
 test_that("aweek can be converted to character", {
 
   expect_failure(expect_output(print(as.character(datw)), "aweek start: Friday"))
