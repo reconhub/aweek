@@ -1,3 +1,5 @@
+# aweek 0.2.0.9000
+
 # aweek 0.2.0
 
 * Subsetting and concatenating methods added to the `aweek` class (see #1)

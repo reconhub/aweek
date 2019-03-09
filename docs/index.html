@@ -92,76 +92,13 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#welcome-to-the-aweek-package" class="anchor"></a>Welcome to the <em>aweek</em> package!</h1></div>
 <p>This package will convert dates to <a href="https://wwwn.cdc.gov/nndss/document/MMWR_Week_overview.pdf">US CDC epiweeks</a>, <a href="http://en.wikipedia.org/wiki/ISO_week_date">isoweeks</a>, and all others in between with minimal overhead. Other packages such as <a href="https://github.com/tidyverse/lubridate">lubridate</a>, <a href="https://cran.r-project.org/package=ISOweek">ISOweek</a>, and <a href="http://surveillance.r-forge.r-project.org/">surveillance</a> have the ability to define ISOweeks and/or epiweeks have the ability to define ISOweeks and/or epiweeks, the ability to easily switch between day and week intervals is only available for ISOweeks. However, the ability to easily switch between day and week intervals is only available for ISOweeks and all of the packages above have dependencies that require compiled code.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(aweek)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">2019-02-26</span>)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">onset &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.time">Sys.Date</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sort">sort</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="op">-</span><span class="dv">6</span><span class="op">:</span><span class="dv">7</span>, <span class="dv">20</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">onset</a></code></pre></div>
-<pre><code>##  [1] "2019-03-02" "2019-03-02" "2019-03-02" "2019-03-04" "2019-03-05"
-##  [6] "2019-03-05" "2019-03-06" "2019-03-07" "2019-03-07" "2019-03-07"
-## [11] "2019-03-09" "2019-03-10" "2019-03-11" "2019-03-11" "2019-03-12"
-## [16] "2019-03-13" "2019-03-13" "2019-03-14" "2019-03-14" "2019-03-15"</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="reference/date2week.html">date2week</a></span>(onset, <span class="dt">week_start =</span> <span class="dv">1</span>) <span class="co"># ISO weeks starting on Monday (default)</span></a></code></pre></div>
-<pre><code>## &lt;aweek start: Monday&gt;
-##  [1] "2019-W09-6" "2019-W09-6" "2019-W09-6" "2019-W10-1" "2019-W10-2"
-##  [6] "2019-W10-2" "2019-W10-3" "2019-W10-4" "2019-W10-4" "2019-W10-4"
-## [11] "2019-W10-6" "2019-W10-7" "2019-W11-1" "2019-W11-1" "2019-W11-2"
-## [16] "2019-W11-3" "2019-W11-3" "2019-W11-4" "2019-W11-4" "2019-W11-5"</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="reference/date2week.html">date2week</a></span>(onset, <span class="dt">week_start =</span> <span class="dv">7</span>) <span class="co"># EPI week starting on Sunday</span></a></code></pre></div>
-<pre><code>## &lt;aweek start: Sunday&gt;
-##  [1] "2019-W09-7" "2019-W09-7" "2019-W09-7" "2019-W10-2" "2019-W10-3"
-##  [6] "2019-W10-3" "2019-W10-4" "2019-W10-5" "2019-W10-5" "2019-W10-5"
-## [11] "2019-W10-7" "2019-W11-1" "2019-W11-2" "2019-W11-2" "2019-W11-3"
-## [16] "2019-W11-4" "2019-W11-4" "2019-W11-5" "2019-W11-5" "2019-W11-6"</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="reference/date2week.html">date2week</a></span>(onset, <span class="dt">week_start =</span> <span class="dv">6</span>) <span class="co"># EPI week starting on Saturday</span></a></code></pre></div>
-<pre><code>## &lt;aweek start: Saturday&gt;
-##  [1] "2019-W10-1" "2019-W10-1" "2019-W10-1" "2019-W10-3" "2019-W10-4"
-##  [6] "2019-W10-4" "2019-W10-5" "2019-W10-6" "2019-W10-6" "2019-W10-6"
-## [11] "2019-W11-1" "2019-W11-2" "2019-W11-3" "2019-W11-3" "2019-W11-4"
-## [16] "2019-W11-5" "2019-W11-5" "2019-W11-6" "2019-W11-6" "2019-W11-7"</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw"><a href="reference/date2week.html">date2week</a></span>(onset, <span class="dt">week_start =</span> <span class="st">"sat"</span>, <span class="dt">floor_day =</span> <span class="ot">TRUE</span>) <span class="co"># truncate to just the weeks</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(x)</a></code></pre></div>
-<pre><code>## x
-## 2019-W10 2019-W11 
-##       10       10</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(<span class="kw"><a href="reference/date2week.html">week2date</a></span>(x))</a></code></pre></div>
-<pre><code>## 
-## 2019-03-02 2019-03-09 
-##         10         10</code></pre>
-<p>You can also use it to automatically calculate factor levels, which is useful in tabulating across weeks and including missing values.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">2019-02-26</span>)</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2">onset &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.time">Sys.Date</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sort">sort</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="op">-</span><span class="dv">48</span><span class="op">:</span><span class="dv">49</span>, <span class="dv">20</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb13-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw"><a href="reference/date2week.html">date2week</a></span>(onset, <span class="dt">week_start =</span> <span class="st">"sat"</span>, <span class="dt">floor_day =</span> <span class="ot">TRUE</span>, <span class="dt">factor =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb13-4" data-line-number="4">x</a></code></pre></div>
-<pre><code>## &lt;aweek start: Saturday&gt;
-##  [1] 2019-W04 2019-W04 2019-W04 2019-W06 2019-W07 2019-W07 2019-W08
-##  [8] 2019-W09 2019-W09 2019-W09 2019-W11 2019-W12 2019-W13 2019-W13
-## [15] 2019-W14 2019-W15 2019-W15 2019-W16 2019-W16 2019-W17
-## 14 Levels: 2019-W04 2019-W05 2019-W06 2019-W07 2019-W08 ... 2019-W17</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(x)</a></code></pre></div>
-<pre><code>## x
-## 2019-W04 2019-W05 2019-W06 2019-W07 2019-W08 2019-W09 2019-W10 2019-W11 
-##        3        0        1        2        1        3        0        1 
-## 2019-W12 2019-W13 2019-W14 2019-W15 2019-W16 2019-W17 
-##        1        2        1        2        2        1</code></pre>
-<p>It’s also possible to specify the week_start in terms of the current locale, however it is important to be aware that code like this may not be portable.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># workaround because of differing locale specifications</span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2">german &lt;-<span class="st"> </span><span class="cf">if</span> (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/grep">grepl</a></span>(<span class="st">"darwin"</span>, R.version<span class="op">$</span>os)) <span class="st">"de_DE.UTF-8"</span> <span class="cf">else</span> <span class="st">"de_DE.utf8"</span></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3">lct &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/locales">Sys.getlocale</a></span>(<span class="st">"LC_TIME"</span>)</a>
-<a class="sourceLine" id="cb17-4" data-line-number="4">res &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/locales">Sys.setlocale</a></span>(<span class="st">"LC_TIME"</span>, german)</a>
-<a class="sourceLine" id="cb17-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="kw"><a href="reference/date2week.html">date2week</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.time">Sys.Date</a></span>(), <span class="dt">week_start =</span> <span class="st">"Sonntag"</span>)</a></code></pre></div>
-<pre><code>## &lt;aweek start: Sonntag&gt;
-## [1] "2019-W10-6"</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw"><a href="reference/date2week.html">date2week</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.time">Sys.Date</a></span>(), <span class="dt">week_start =</span> <span class="st">"Sunday"</span>)</a></code></pre></div>
-<pre><code>## &lt;aweek start: Sonntag&gt;
-## [1] "2019-W10-6"</code></pre>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/locales">Sys.setlocale</a></span>(<span class="st">"LC_TIME"</span>, lct)</a></code></pre></div>
-<pre><code>## [1] "en_GB.UTF-8"</code></pre>
 <div id="installing-the-package" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installing-the-package" class="anchor"></a>Installing the package</h2>
+<p>To install the stable package version from CRAN, you can use</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"aweek"</span>)</a></code></pre></div>
 <p>To benefit from the latest features and bug fixes, install the development, <em>github</em> version of the package using:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"reconhub/aweek"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"reconhub/aweek"</span>)</a></code></pre></div>
 <p>Note that this requires the package <em>remotes</em> installed.</p>
 </div>
 </div>
@@ -172,9 +109,86 @@
 <li>
 <code><a href="reference/date2week.html">date2week()</a></code> converts dates to a week format (YYYY-Www-d) that can start on any day.</li>
 <li>
-<code>week2date() / as.Date()</code> does the backwards conversion from (YYYY-Www(-d)) to a numeric date.</li>
+<code><a href="reference/date2week.html">week2date()</a></code> / <code><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date()</a></code> does the backwards conversion from (YYYY-Www(-d)) to a numeric date.</li>
 <li>Dependencies only on R itself.</li>
 </ul>
+<!-- --><div id="dates-to-weeks" class="section level2">
+<h2 class="hasAnchor">
+<a href="#dates-to-weeks" class="anchor"></a>Dates to weeks</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(aweek)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">2019-02-26</span>)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">onset &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.time">Sys.Date</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sort">sort</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="op">-</span><span class="dv">6</span><span class="op">:</span><span class="dv">7</span>, <span class="dv">20</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">onset</a></code></pre></div>
+<pre><code>##  [1] "2019-03-03" "2019-03-03" "2019-03-03" "2019-03-05" "2019-03-06"
+##  [6] "2019-03-06" "2019-03-07" "2019-03-08" "2019-03-08" "2019-03-08"
+## [11] "2019-03-10" "2019-03-11" "2019-03-12" "2019-03-12" "2019-03-13"
+## [16] "2019-03-14" "2019-03-14" "2019-03-15" "2019-03-15" "2019-03-16"</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="reference/date2week.html">date2week</a></span>(onset, <span class="dt">week_start =</span> <span class="dv">1</span>) <span class="co"># ISO weeks starting on Monday (default)</span></a></code></pre></div>
+<pre><code>## &lt;aweek start: Monday&gt;
+##  [1] "2019-W09-7" "2019-W09-7" "2019-W09-7" "2019-W10-2" "2019-W10-3"
+##  [6] "2019-W10-3" "2019-W10-4" "2019-W10-5" "2019-W10-5" "2019-W10-5"
+## [11] "2019-W10-7" "2019-W11-1" "2019-W11-2" "2019-W11-2" "2019-W11-3"
+## [16] "2019-W11-4" "2019-W11-4" "2019-W11-5" "2019-W11-5" "2019-W11-6"</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="reference/date2week.html">date2week</a></span>(onset, <span class="dt">week_start =</span> <span class="dv">7</span>) <span class="co"># EPI week starting on Sunday</span></a></code></pre></div>
+<pre><code>## &lt;aweek start: Sunday&gt;
+##  [1] "2019-W10-1" "2019-W10-1" "2019-W10-1" "2019-W10-3" "2019-W10-4"
+##  [6] "2019-W10-4" "2019-W10-5" "2019-W10-6" "2019-W10-6" "2019-W10-6"
+## [11] "2019-W11-1" "2019-W11-2" "2019-W11-3" "2019-W11-3" "2019-W11-4"
+## [16] "2019-W11-5" "2019-W11-5" "2019-W11-6" "2019-W11-6" "2019-W11-7"</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="reference/date2week.html">date2week</a></span>(onset, <span class="dt">week_start =</span> <span class="dv">6</span>) <span class="co"># EPI week starting on Saturday</span></a></code></pre></div>
+<pre><code>## &lt;aweek start: Saturday&gt;
+##  [1] "2019-W10-2" "2019-W10-2" "2019-W10-2" "2019-W10-4" "2019-W10-5"
+##  [6] "2019-W10-5" "2019-W10-6" "2019-W10-7" "2019-W10-7" "2019-W10-7"
+## [11] "2019-W11-2" "2019-W11-3" "2019-W11-4" "2019-W11-4" "2019-W11-5"
+## [16] "2019-W11-6" "2019-W11-6" "2019-W11-7" "2019-W11-7" "2019-W12-1"</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw"><a href="reference/date2week.html">date2week</a></span>(onset, <span class="dt">week_start =</span> <span class="st">"sat"</span>, <span class="dt">floor_day =</span> <span class="ot">TRUE</span>) <span class="co"># truncate to just the weeks</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(x)</a></code></pre></div>
+<pre><code>## x
+## 2019-W10 2019-W11 2019-W12 
+##       10        9        1</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(<span class="kw"><a href="reference/date2week.html">week2date</a></span>(x))</a></code></pre></div>
+<pre><code>## 
+## 2019-03-02 2019-03-09 2019-03-16 
+##         10          9          1</code></pre>
+</div>
+<div id="factors" class="section level2">
+<h2 class="hasAnchor">
+<a href="#factors" class="anchor"></a>Factors</h2>
+<p>You can also use it to automatically calculate factor levels, which is useful in tabulating across weeks and including missing values.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">2019-02-26</span>)</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">onset &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.time">Sys.Date</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sort">sort</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(<span class="op">-</span><span class="dv">48</span><span class="op">:</span><span class="dv">49</span>, <span class="dv">20</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw"><a href="reference/date2week.html">date2week</a></span>(onset, <span class="dt">week_start =</span> <span class="st">"sat"</span>, <span class="dt">floor_day =</span> <span class="ot">TRUE</span>, <span class="dt">factor =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">x</a></code></pre></div>
+<pre><code>## &lt;aweek start: Saturday&gt;
+##  [1] 2019-W04 2019-W04 2019-W04 2019-W06 2019-W07 2019-W07 2019-W08
+##  [8] 2019-W09 2019-W09 2019-W09 2019-W11 2019-W12 2019-W13 2019-W13
+## [15] 2019-W15 2019-W15 2019-W15 2019-W16 2019-W16 2019-W17
+## 14 Levels: 2019-W04 2019-W05 2019-W06 2019-W07 2019-W08 ... 2019-W17</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(x)</a></code></pre></div>
+<pre><code>## x
+## 2019-W04 2019-W05 2019-W06 2019-W07 2019-W08 2019-W09 2019-W10 2019-W11 
+##        3        0        1        2        1        3        0        1 
+## 2019-W12 2019-W13 2019-W14 2019-W15 2019-W16 2019-W17 
+##        1        2        0        3        2        1</code></pre>
+</div>
+<div id="locales" class="section level2">
+<h2 class="hasAnchor">
+<a href="#locales" class="anchor"></a>Locales</h2>
+<p>It’s also possible to specify the week_start in terms of the current locale, however it is important to be aware that code like this may not be portable.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="co"># workaround because of differing locale specifications</span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">german &lt;-<span class="st"> </span><span class="cf">if</span> (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/grep">grepl</a></span>(<span class="st">"darwin"</span>, R.version<span class="op">$</span>os)) <span class="st">"de_DE.UTF-8"</span> <span class="cf">else</span> <span class="st">"de_DE.utf8"</span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">lct &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/locales">Sys.getlocale</a></span>(<span class="st">"LC_TIME"</span>)</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4">res &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/locales">Sys.setlocale</a></span>(<span class="st">"LC_TIME"</span>, german)</a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb19-6" data-line-number="6"><span class="kw"><a href="reference/date2week.html">date2week</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.time">Sys.Date</a></span>(), <span class="dt">week_start =</span> <span class="st">"Sonntag"</span>)</a></code></pre></div>
+<pre><code>## &lt;aweek start: Sonntag&gt;
+## [1] "2019-W10-7"</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw"><a href="reference/date2week.html">date2week</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.time">Sys.Date</a></span>(), <span class="dt">week_start =</span> <span class="st">"Sunday"</span>)</a></code></pre></div>
+<pre><code>## &lt;aweek start: Sonntag&gt;
+## [1] "2019-W10-7"</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/locales">Sys.setlocale</a></span>(<span class="st">"LC_TIME"</span>, lct)</a></code></pre></div>
+<pre><code>## [1] "en_GB.UTF-8"</code></pre>
+</div>
 <div id="getting-help-online" class="section level2">
 <h2 class="hasAnchor">
 <a href="#getting-help-online" class="anchor"></a>Getting help online</h2>
@@ -214,9 +228,11 @@
       <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=aweek"><img src="http://www.r-pkg.org/badges/version/aweek" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://cran.r-project.org/package=aweek"><img src="http://www.r-pkg.org/badges/version-ago/aweek" alt="CRAN_Status_Badge"></a></li>
 <li><a href="https://codecov.io/gh/reconhub/aweek?branch=master"><img src="https://codecov.io/gh/reconhub/aweek/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://travis-ci.org/reconhub/aweek"><img src="https://travis-ci.org/reconhub/aweek.svg?branch=master" alt="Travis build status"></a></li>
+<li><a href="https://cran.r-project.org/package=aweek"><img src="https://cranlogs.r-pkg.org/badges/grand-total/aweek?color=ff69b4" alt="Downloads"></a></li>
+<li><a href="https://zenodo.org/badge/latestdoi/172648833"><img src="https://zenodo.org/badge/172648833.svg" alt="DOI"></a></li>
 </ul>
 </div>
 </div>
