@@ -4,10 +4,13 @@ output: github_document
 
 <!-- badges: start -->
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/aweek)](https://cran.r-project.org/package=aweek) 
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version-ago/aweek)](https://cran.r-project.org/package=aweek) 
 [![Codecov test coverage](https://codecov.io/gh/reconhub/aweek/branch/master/graph/badge.svg)](https://codecov.io/gh/reconhub/aweek?branch=master) 
 [![Travis build status](https://travis-ci.org/reconhub/aweek.svg?branch=master)](https://travis-ci.org/reconhub/aweek)
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/zkamvar/aweek?branch=master&svg=true)](https://ci.appveyor.com/project/zkamvar/aweek)
+[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/aweek?color=ff69b4)](https://cran.r-project.org/package=aweek)
+[![DOI](https://zenodo.org/badge/172648833.svg)](https://zenodo.org/badge/latestdoi/172648833)
+
 <!-- badges: end -->
 
 # Welcome to the *aweek* package!
@@ -25,6 +28,35 @@ available for ISOweeks. However, the ability to easily switch between day and
 week intervals is only available for ISOweeks and all of the packages above
 have dependencies that require compiled code.
 
+## Installing the package
+
+To install the stable package version from CRAN, you can use
+
+```{r install, eval = FALSE}
+install.packages("aweek")
+```
+
+
+To benefit from the latest features and bug fixes, install the development, *github* version of the package using:
+
+```{r install2, eval = FALSE}
+remotes::install_github("reconhub/aweek")
+```
+
+Note that this requires the package *remotes* installed.
+
+
+# Main Features
+
+ - `date2week()` converts dates to a week format (YYYY-Www-d) that can start on 
+   any day. 
+ - `week2date()` / `as.Date()` does the backwards conversion from (YYYY-Www(-d)) to
+   a numeric date. 
+ - Dependencies only on R itself.
+
+<!-- -->
+
+## Dates to weeks
 
 ```{r epiweek}
 
@@ -40,6 +72,9 @@ table(x)
 table(week2date(x))
 ```
 
+
+## Factors
+
 You can also use it to automatically calculate factor levels, which is useful
 in tabulating across weeks and including missing values. 
 
@@ -50,6 +85,8 @@ x <- date2week(onset, week_start = "sat", floor_day = TRUE, factor = TRUE)
 x
 table(x)
 ```
+
+## Locales
 
 It's also possible to specify the week_start in terms of the current locale, 
 however it is important to be aware that code like this may not be portable.
@@ -69,24 +106,6 @@ Sys.setlocale("LC_TIME", lct)
 ```
 
 
-## Installing the package
-
-To benefit from the latest features and bug fixes, install the development, *github* version of the package using:
-
-```{r install2, eval = FALSE}
-remotes::install_github("reconhub/aweek")
-```
-
-Note that this requires the package *remotes* installed.
-
-
-# Main Features
-
- - `date2week()` converts dates to a week format (YYYY-Www-d) that can start on 
-   any day. 
- - `week2date() / as.Date()` does the backwards conversion from (YYYY-Www(-d)) to
-   a numeric date. 
- - Dependencies only on R itself.
 
 ## Getting help online
 
