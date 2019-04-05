@@ -71,6 +71,23 @@ print.aweek <- function(x, ...) {
 }
 
 #' @export
+#' @param value a value to add or replace in an aweek object
+#' @rdname aweek-class
+`[<-.aweek` <- function(x, i, value) {
+
+  y <- x
+  class(y) <- class(y)[-1]
+  ffff <- is.factor(y)
+  flda <- grepl("^\\d{4}-W\\d{2}$", y[1])
+  # TODO: handle char objects
+  # TODO: handle aweek objects (both char and factor :cringe:)
+  y[i] <- date2week(value, attr(x, "week_start"), floor_day = flda, factor = ffff) 
+  class(y) <- "aweek"
+  y
+
+}
+
+#' @export
 #' @rdname aweek-class
 c.aweek <- function(..., recursive = FALSE, use.names = TRUE) {
 

@@ -3,12 +3,15 @@
 \name{print.aweek}
 \alias{print.aweek}
 \alias{[.aweek}
+\alias{[<-.aweek}
 \alias{c.aweek}
 \title{The aweek class}
 \usage{
 \method{print}{aweek}(x, ...)
 
 \method{[}{aweek}(x, i)
+
+\method{[}{aweek}(x, i) <- value
 
 \method{c}{aweek}(..., recursive = FALSE, use.names = TRUE)
 }
@@ -18,6 +21,8 @@
 \item{...}{a series of \code{aweek} objects (unused in \code{print.aweek()})}
 
 \item{i}{index for subsetting an aweek object.}
+
+\item{value}{a value to add or replace in an aweek object}
 
 \item{recursive, use.names}{parameters passed on to \code{\link[=unlist]{unlist()}}}
 }
