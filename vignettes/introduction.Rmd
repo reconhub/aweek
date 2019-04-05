@@ -139,21 +139,22 @@ You can also use `date2week()` to convert between different week definitions if
 you have an `aweek` object:
 
 
-```{r week2week, R.options=list(width = 100)}
+```{r week2week_wednesday}
 w # week starting on Sunday
-date2week(w, week_start = "wednesday")
+date2week(w, week_start = "wednesday") # same dates, starting on Wednesday
+```
 
+```{r week2week, R.options=list(width = 100)}
 # create a table with all days in the week
 d <- dat[1] + 0:6
-res <- as.data.frame(matrix("", nrow = 7, ncol = 7), stringsAsFactors = FALSE)
-names(res) <- weekdays(d) # days of the week
-for (i in names(res)) res[[i]] <- date2week(d, week_start = i)
-res
+res <- lapply(weekdays(d), function(i) date2week(d, week_start = i))
+names(res) <- weekdays(d)
+data.frame(res)
 ```
 
 All of these columns contain the same dates:
 
-```{r week2week2date}
+```{r week2week2date, R.options=list(width = 100)}
 data.frame(lapply(res, as.Date))
 ```
 

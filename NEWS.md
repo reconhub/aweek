@@ -1,5 +1,9 @@
 # aweek 0.2.0.9000
 
+* `as.data.frame.aweek()` will now convert aweek objects to columns of data
+  frames without losing class or attributes
+* The introduction vignette has been updated to reflect this change. 
+
 # aweek 0.2.0
 
 * Subsetting and concatenating methods added to the `aweek` class (see #1)
