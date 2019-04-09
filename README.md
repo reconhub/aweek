@@ -7,7 +7,7 @@ coverage](https://codecov.io/gh/reconhub/aweek/branch/master/graph/badge.svg)](h
 [![Travis build
 status](https://travis-ci.org/reconhub/aweek.svg?branch=master)](https://travis-ci.org/reconhub/aweek)
 [![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/zkamvar/aweek?branch=master&svg=true)](https://ci.appveyor.com/project/zkamvar/aweek)
+ status](https://ci.appveyor.com/api/projects/status/66xj9134ac3yg62l/branch/master?svg=true)](https://ci.appveyor.com/project/zkamvar/aweek)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/aweek?color=ff69b4)](https://cran.r-project.org/package=aweek)
 [![DOI](https://zenodo.org/badge/172648833.svg)](https://zenodo.org/badge/latestdoi/172648833)
 
