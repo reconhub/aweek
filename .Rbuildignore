@@ -13,3 +13,5 @@
 ^cran-comments\.md$
 ^docs/
 ^README.html$
+^tic\.R$
+^*.old
