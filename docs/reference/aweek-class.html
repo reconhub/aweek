@@ -67,7 +67,7 @@ assumed to have the same week_start as the first object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">aweek</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -202,7 +202,7 @@ subset the object.</p>
 <span class='co'># aweek object</span>
 <span class='no'>mon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='date2week.html'>date2week</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.time'>Sys.Date</a></span>(), <span class='kw'>week_start</span> <span class='kw'>=</span> <span class='st'>"Monday"</span>)
 <span class='no'>mon</span></div><div class='output co'>#&gt; &lt;aweek start: Monday&gt;
-#&gt; [1] "2019-W10-6"</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>w</span>, <span class='no'>mon</span>)</div><div class='output co'>#&gt; &lt;aweek start: Sunday&gt;
+#&gt; [1] "2019-W17-3"</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>w</span>, <span class='no'>mon</span>)</div><div class='output co'>#&gt; &lt;aweek start: Sunday&gt;
 #&gt;  [1] "2018-W51-6" "2018-W51-7" "2018-W52-1" "2018-W52-2" "2018-W52-3"
 #&gt;  [6] "2018-W52-4" "2018-W52-5" "2018-W52-6" "2018-W52-7" "2019-W01-1"
 #&gt; [11] "2019-W01-2" "2019-W01-3" "2019-W01-4" "2019-W01-5" "2019-W01-6"
@@ -211,8 +211,8 @@ subset the object.</p>
 #&gt; [26] "2019-W03-3" "2019-W03-4" "2019-W03-5" "2019-W03-6" "2019-W03-7"
 #&gt; [31] "2019-W04-1" "2019-W04-2" "2019-W04-3" "2019-W04-4" "2019-W04-5"
 #&gt; [36] "2019-W04-6" "2019-W04-7" "2019-W05-1" "2019-W05-2" "2019-W05-3"
-#&gt; [41] "2019-W10-7"</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>mon</span>, <span class='no'>w</span>)</div><div class='output co'>#&gt; &lt;aweek start: Monday&gt;
-#&gt;  [1] "2019-W10-6" "2018-W51-5" "2018-W51-6" "2018-W51-7" "2018-W52-1"
+#&gt; [41] "2019-W17-4"</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>mon</span>, <span class='no'>w</span>)</div><div class='output co'>#&gt; &lt;aweek start: Monday&gt;
+#&gt;  [1] "2019-W17-3" "2018-W51-5" "2018-W51-6" "2018-W51-7" "2018-W52-1"
 #&gt;  [6] "2018-W52-2" "2018-W52-3" "2018-W52-4" "2018-W52-5" "2018-W52-6"
 #&gt; [11] "2018-W52-7" "2019-W01-1" "2019-W01-2" "2019-W01-3" "2019-W01-4"
 #&gt; [16] "2019-W01-5" "2019-W01-6" "2019-W01-7" "2019-W02-1" "2019-W02-2"
@@ -231,7 +231,7 @@ subset the object.</p>
 #&gt; [26] "2019-W03-3" "2019-W03-4" "2019-W03-5" "2019-W03-6" "2019-W03-7"
 #&gt; [31] "2019-W04-1" "2019-W04-2" "2019-W04-3" "2019-W04-4" "2019-W04-5"
 #&gt; [36] "2019-W04-6" "2019-W04-7" "2019-W05-1" "2019-W05-2" "2019-W05-3"
-#&gt; [41] "2019-W10-7"</div><div class='input'>
+#&gt; [41] "2019-W17-4"</div><div class='input'>
 <span class='co'># truncated aweek objects will be un-truncated</span>
 <span class='no'>w2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='date2week.html'>date2week</a></span>(<span class='no'>d</span>[<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='kw'>week_start</span> <span class='kw'>=</span> <span class='st'>"Monday"</span>, <span class='kw'>floor_day</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>w2</span></div><div class='output co'>#&gt; &lt;aweek start: Monday&gt;

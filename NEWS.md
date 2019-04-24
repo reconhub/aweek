@@ -1,4 +1,6 @@
-# aweek 0.2.0.9000
+# aweek 0.2.1
+
+* Fix bug where NAs threw errors in the dates (found: @aspina7, #12)
 
 * `as.data.frame.aweek()` will now convert aweek objects to columns of data
   frames without losing class or attributes
