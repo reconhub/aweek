@@ -53,6 +53,7 @@ as.Date.aweek <- function(x, floor_day = FALSE, ...) {
   out <- matrix(NA_integer_, ncol = 3, nrow = length(x))
 
   for (i in seq_along(res)) {
+    if (is.na(x[[i]])) next
     p   <- attributes(res[[i]]) 
     ywd <- substring(x[[i]], 
                      first = p$capture.start, 

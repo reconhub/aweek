@@ -7,7 +7,7 @@ dats <- sprintf("%d-%02d-%02d",
                 01)
 
 
-dats <- as.Date(dats)
+dats <- as.Date(c(dats, NA_character_))
 
 test_that("an error is thrown if something can't be converted to a date", {
                 
@@ -29,14 +29,14 @@ test_that("January first dates can be properly converted", {
   datn    <- date2week(dats, 1, numeric = TRUE)
   datback <- as.Date(datw)
   # isoweeks
-  weeknums <- c(1, 1, 1, 1, 53, 52, 1, 1, 1, 53, 52, 52, 1, 1, 1, 53, 52, 1, 1) 
+  weeknums <- c(1, 1, 1, 1, 53, 52, 1, 1, 1, 53, 52, 52, 1, 1, 1, 53, 52, 1, 1, NA) 
   # epiweeks
-  epiweeks <- c(1, 1, 1, 53, 52, 1, 1, 1, 53, 52, 52, 1, 1, 1, 53, 52, 1, 1, 1) 
+  epiweeks <- c(1, 1, 1, 53, 52, 1, 1, 1, 53, 52, 52, 1, 1, 1, 53, 52, 1, 1, 1, NA) 
   iw       <- c("2001-W01-1", "2002-W01-2", "2003-W01-3", "2004-W01-4",
                 "2004-W53-6", "2005-W52-7", "2007-W01-1", "2008-W01-2",
                 "2009-W01-4", "2009-W53-5", "2010-W52-6", "2011-W52-7",
                 "2013-W01-2", "2014-W01-3", "2015-W01-4", "2015-W53-5",
-                "2016-W52-7", "2018-W01-1", "2019-W01-2")
+                "2016-W52-7", "2018-W01-1", "2019-W01-2", NA)
   class(iw) <- "aweek"
   attr(iw, "week_start") <- 1L
   floored <-gsub("-\\d$", "", iw)
@@ -60,8 +60,8 @@ test_that("January first dates can be properly converted", {
   expect_identical(as.character(datffac), as.character(datf))
 
   # Factor levels are the sequence of dates
-  expect_identical(seq.Date(min(dats), max(dats), by = 1), week2date(levels(datfac), 1))
-  expect_identical(seq.Date(min(dats), max(dats), by = 7), week2date(levels(datffac), 1))
+  expect_identical(seq.Date(min(dats, na.rm = TRUE), max(dats, na.rm = TRUE), by = 1), week2date(levels(datfac), 1))
+  expect_identical(seq.Date(min(dats, na.rm = TRUE), max(dats, na.rm = TRUE), by = 7), week2date(levels(datffac), 1))
 
 })
 
