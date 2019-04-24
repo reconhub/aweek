@@ -105,10 +105,11 @@
 date2week <- function(x, week_start = 1, floor_day = FALSE, numeric = FALSE, factor = FALSE, ...) {
 
   format_exists <- !is.null(list(...)$format)
+  nas <- is.na(x)
 
   if (!inherits(x, "aweek") && is.character(x) && !format_exists) {
     iso_std <- grepl("^[0-9]{4}[^[:alnum:]]+[01][0-9][^[:alnum:]]+[0-3][0-9]$", trimws(x))
-    iso_std[is.na(x)] <- TRUE # prevent false alarms
+    iso_std[nas] <- TRUE # prevent false alarms
     if (!all(iso_std)) {
       msg <- paste("Not all dates are in ISO 8601 standard format (yyyy-mm-dd).",
                    "The first incorrect date is %s"
@@ -131,7 +132,7 @@ date2week <- function(x, week_start = 1, floor_day = FALSE, numeric = FALSE, fac
   wday       <- as.integer(x$wday) + 1L # weekdays in R run 0:6, 0 being Sunday
   week_start <- as.integer(week_start)
 
-  wday <- get_wday(wday, week_start)
+  wday     <- get_wday(wday, week_start)
   the_date <- as.Date(x)
   the_week_bounds <- the_date + (4L - wday)
   the_week <- week_in_year(the_week_bounds)
@@ -154,15 +155,25 @@ date2week <- function(x, week_start = 1, floor_day = FALSE, numeric = FALSE, fac
                    the_week,
                    wday
                    )
+    the_week[nas] <- NA
     if (floor_day) {
       the_week <- gsub("-\\d", "", the_week)
     }
 
     if (factor) {
+      # TODO: find good way of deprcating this feature
+      # if (!floor_day) {
+      #   msg <- "In future versions of aweek, `factor = TRUE` must also include"
+      #   msg <- paste(msg, "`floor_day = TRUE`")
+      #   message(msg)
+      # }
       min_date <- which.min(the_date)
       max_date <- which.max(the_date)
-      drange   <- date2week(range(the_date), week_start = week_start, 
-                            floor_day = floor_day, factor = FALSE, numeric = FALSE)
+      drange   <- date2week(range(the_date, na.rm = TRUE), 
+                            week_start = week_start, 
+                            floor_day = floor_day,
+                            factor = FALSE,
+                            numeric = FALSE)
       drange   <- week2date(drange, week_start = week_start)
       lvls     <- seq.Date(drange[1], drange[2], by = if (floor_day) 7L else 1)
       lvls     <- date2week(lvls, week_start = week_start, floor_day = floor_day)
