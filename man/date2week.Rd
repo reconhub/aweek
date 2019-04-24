@@ -25,11 +25,12 @@ may render your code non-portable.}}
 (default), the date in the format "YYYY-Www-d" will be returned.}
 
 \item{factor}{if \code{TRUE}, a factor will be returned with levels spanning the
-range of dates. If \code{floor_date = FALSE}, then this will use the sequence
-of days between the first and last date, but if \code{floor_date = TRUE}, then
-the sequence of weeks between the first and last date will be used. \emph{Take
-caution when using this with a large date range as the resulting factor can
-contain all days between dates}.}
+range of dates. This should only be used with \code{floor_day = TRUE} to
+produce the sequence of weeks between the first and last date as the
+factor levels.  Currently, \code{floor_date = FALSE} will still work, but will
+produce a message indicating that it is deprecated. \emph{Take caution when
+using this with a large date range as the resulting factor can contain all
+days between dates}.}
 
 \item{...}{arguments passed to \code{\link[=as.POSIXlt]{as.POSIXlt()}}, unused in all other cases.}
 }
