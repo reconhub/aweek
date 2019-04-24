@@ -123,14 +123,16 @@ Factors
 -------
 
 Weeks can be represented as factors, which is useful for tabulations across
-weeks. You can use `factor = TRUE` in `date2week()` and it will automatically
-fill in any missing days (`floor_day = FALSE`) or weeks (`floor_day = TRUE`)
+weeks. You can use `factor = TRUE` in combination with `floor_day = TRUE` in
+`date2week()` and it will automatically fill in any missing weeks.
 
 ```{r factors}
-date2week(dat[1] + c(0, 15), week_start = 1, factor = TRUE)
+dat[1] + c(0, 15)
 date2week(dat[1] + c(0, 15), week_start = 1, factor = TRUE, floor_day = TRUE)
 ```
 
+> CAUTION: Do not use this with `floor_day = FALSE` as this will be deprecated
+> in future versions.
 
 Weeks to weeks
 --------------
@@ -169,7 +171,9 @@ c(res$Sunday[1], res$Wednesday[2], res$Friday[3])
 c(res$Tuesday[1], res$Thursday[2], res$Friday[3])
 ```
 
-You can also add dates to aweek objects:
+### Dates can be appended to aweek objects
+
+Dates combined with aweek objects will will be automatically converted.
 
 ```{r add_dates}
 c(res$Monday, as.Date("2019-04-03"))
