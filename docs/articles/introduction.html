@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">aweek</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -179,15 +179,16 @@
 <div id="factors" class="section level2">
 <h2 class="hasAnchor">
 <a href="#factors" class="anchor"></a>Factors</h2>
-<p>Weeks can be represented as factors, which is useful for tabulations across weeks. You can use <code>factor = TRUE</code> in <code><a href="../reference/date2week.html">date2week()</a></code> and it will automatically fill in any missing days (<code>floor_day = FALSE</code>) or weeks (<code>floor_day = TRUE</code>)</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw"><a href="../reference/date2week.html">date2week</a></span>(dat[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">15</span>), <span class="dt">week_start =</span> <span class="dv">1</span>, <span class="dt">factor =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<pre><code>## &lt;aweek start: Monday&gt;
-## [1] 2019-W09-7 2019-W12-1
-## 16 Levels: 2019-W09-7 2019-W10-1 2019-W10-2 2019-W10-3 ... 2019-W12-1</code></pre>
+<p>Weeks can be represented as factors, which is useful for tabulations across weeks. You can use <code>factor = TRUE</code> in combination with <code>floor_day = TRUE</code> in <code><a href="../reference/date2week.html">date2week()</a></code> and it will automatically fill in any missing weeks.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">dat[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">15</span>)</a></code></pre></div>
+<pre><code>## [1] "2019-03-03" "2019-03-18"</code></pre>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw"><a href="../reference/date2week.html">date2week</a></span>(dat[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>, <span class="dv">15</span>), <span class="dt">week_start =</span> <span class="dv">1</span>, <span class="dt">factor =</span> <span class="ot">TRUE</span>, <span class="dt">floor_day =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## &lt;aweek start: Monday&gt;
 ## [1] 2019-W09 2019-W12
 ## Levels: 2019-W09 2019-W10 2019-W11 2019-W12</code></pre>
+<blockquote>
+<p>CAUTION: Do not use this with <code>floor_day = FALSE</code> as this will be deprecated in future versions.</p>
+</blockquote>
 </div>
 <div id="weeks-to-weeks" class="section level2">
 <h2 class="hasAnchor">
@@ -244,11 +245,15 @@
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(res<span class="op">$</span>Tuesday[<span class="dv">1</span>], res<span class="op">$</span>Thursday[<span class="dv">2</span>], res<span class="op">$</span>Friday[<span class="dv">3</span>])</a></code></pre></div>
 <pre><code>## &lt;aweek start: Tuesday&gt;
 ## [1] "2019-W09-6" "2019-W09-7" "2019-W10-1"</code></pre>
-<p>You can also add dates to aweek objects:</p>
+<div id="dates-can-be-appended-to-aweek-objects" class="section level3">
+<h3 class="hasAnchor">
+<a href="#dates-can-be-appended-to-aweek-objects" class="anchor"></a>Dates can be appended to aweek objects</h3>
+<p>Dates combined with aweek objects will will be automatically converted.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(res<span class="op">$</span>Monday, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.Date">as.Date</a></span>(<span class="st">"2019-04-03"</span>))</a></code></pre></div>
 <pre><code>## &lt;aweek start: Monday&gt;
 ## [1] "2019-W09-7" "2019-W10-1" "2019-W10-2" "2019-W10-3" "2019-W10-4"
 ## [6] "2019-W10-5" "2019-W10-6" "2019-W14-3"</code></pre>
+</div>
 <div id="add-characters-with-caution" class="section level3">
 <h3 class="hasAnchor">
 <a href="#add-characters-with-caution" class="anchor"></a>Add characters with caution</h3>
