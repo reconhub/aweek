@@ -1,4 +1,4 @@
-# aweek 0.2.0.9000
+# aweek 0.2.1
 
 * Fix bug where NAs threw errors in the dates (found: @aspina7, #12)
 
