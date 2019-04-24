@@ -61,34 +61,40 @@ input is not in yyyy-mm-dd and the format parameter is not passed,
 }
 \examples{
 
+## Dates to weeks -----------------------------------------------------------
+
 # The same set of days will occur in different weeks depending on the start
 # date. Here we can define a week before and after today
 
-print(dat <- Sys.Date() + -6:7)
+print(dat <- as.Date("2018-12-31") + -6:7)
 
 # By default, the weeks are defined as ISO weeks, which start on Monday
 print(iso_dat <- date2week(dat))
 
 # If you want lubridate-style numeric-only weeks, you need look no further
 # than the "numeric" argument
-date2week(dat, 1, numeric = TRUE)
+date2week(dat, numeric = TRUE)
 
-# You can also convert to factor and include all of the missing dates, but
-# beware that this may result in a very large factor due to the number of
-# levels present
-date2week(Sys.Date() + c(0, 10), factor = TRUE)
+# To aggregate weeks, you can use `floor_day = TRUE`
+date2week(dat, floor_day = TRUE)
 
+# If you want aggregations into factors that include missing weeks, use
+# `floor_day = TRUE, factor = TRUE`:
+date2week(dat[c(1, 14)], floor_day = TRUE, factor = TRUE)
+
+## Weeks to dates -----------------------------------------------------------
 
 # The aweek class can be converted back to a date with `as.Date()`
 as.Date(iso_dat)
 
-# If you want to show only the first day of the week, you can use the 
+# If you don't have an aweek class, you can use week2date():
+week2date("2019-W01-1", week_start = "Monday")
+
+# If you want to convert to the first day of the week, you can use the 
 # `floor_day` argument
 as.Date(iso_dat, floor_day = TRUE)
 
-# This also works with `factor`:
-as.Date(iso_dat, floor_day = TRUE, factor = TRUE)
-
+## The same two week timespan starting on different days --------------------
 # ISO week definition: Monday -- 1
 date2week(dat, 1)
 date2week(dat, "Monday")
