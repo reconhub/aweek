@@ -1,13 +1,10 @@
-This submission fixes failing tests (due to mis-placed assumptions -_-)
-
 ## Test environments
 
-* local OS X install, R 3.5.2
-* ubuntu 14.04 (on travis-ci), R 3.5.2
+* local OS X install, R 3.5.3
+* ubuntu 14.04 (on travis-ci), R 3.5.3, R devel, R old release
 * win-builder (devel and release)
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 0 note
 
-* Days since last update: 2
