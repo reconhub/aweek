@@ -1,3 +1,13 @@
+# aweek 0.3.0
+
+* The `week_start` argument now defaults to the global option `aweek.week_start`,
+  which will be a number from 1 to 7, representing the days of the week in the
+  ISO 8601 standard.
+* `set_week_start()` is a convenience allowing the user to set the default 
+  `aweek.week_start` option via integer or character input.
+* `get_week_start()` is a wrapper for `getOption("aweek.week_start", 1L)` and
+  `attr(w, "week_start")` for aweek objects.
+
 # aweek 0.2.2
 
 * Simplified conversion to factors.

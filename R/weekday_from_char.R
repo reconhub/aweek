@@ -23,9 +23,9 @@
 #' Sys.setlocale("LC_TIME", lct)
 weekday_from_char <- function(x) {
 
-  # get all the days of the week
-  d <- date2week(Sys.Date(), week_start = 1, floor_day = TRUE)
-  w <- week2date(paste(d, 1:7, sep = "-"))
+  # get all the days of the week, in ISO order
+  d <- date2week(Sys.Date(), week_start = 1L, floor_day = TRUE)
+  w <- week2date(paste(d, 1:7, sep = "-"), week_start = 1L)
 
   # find their definitions in the current locale
   w        <- weekdays(w)

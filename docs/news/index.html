@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">aweek</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -110,6 +110,18 @@
       
     </div>
 
+    <div id="aweek-0-3-0" class="section level1">
+<h1 class="page-header">
+<a href="#aweek-0-3-0" class="anchor"></a>aweek 0.3.0<small> Unreleased </small>
+</h1>
+<ul>
+<li>The <code>week_start</code> argument now defaults to the global option <code>aweek.week_start</code>, which will be a number from 1 to 7, representing the days of the week in the ISO 8601 standard.</li>
+<li>
+<code><a href="../reference/week_start.html">set_week_start()</a></code> is a convenience allowing the user to set the default <code>aweek.week_start</code> option via integer or character input.</li>
+<li>
+<code><a href="../reference/week_start.html">get_week_start()</a></code> is a wrapper for <code><a href="https://www.rdocumentation.org/packages/base/topics/options">getOption("aweek.week_start", 1L)</a></code> and <code><a href="https://www.rdocumentation.org/packages/base/topics/attr">attr(w, "week_start")</a></code> for aweek objects.</li>
+</ul>
+</div>
     <div id="aweek-0-2-2" class="section level1">
 <h1 class="page-header">
 <a href="#aweek-0-2-2" class="anchor"></a>aweek 0.2.2<small> 2019-04-26 </small>
@@ -211,6 +223,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#aweek-0-3-0">0.3.0</a></li>
         <li><a href="#aweek-0-2-2">0.2.2</a></li>
         <li><a href="#aweek-0-2-1">0.2.1</a></li>
         <li><a href="#aweek-0-2-0">0.2.0</a></li>

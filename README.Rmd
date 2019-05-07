@@ -58,12 +58,29 @@ Note that this requires the package *remotes* installed.
 
 ## Dates to weeks
 
-```{r epiweek}
 
-library(aweek)
+With the *aweek* package, converting dates to weeks is simple. All you need to
+know is what weekday represents the beginning of your week and a vector of 
+dates.
+
+```{r epiweek}
+# generate dates
 set.seed(2019-02-26)
 onset <- as.Date("2019-02-26") + sort(sample(-6:7, 20, replace = TRUE))
 onset
+
+# load aweek
+library("aweek")
+set_week_start("Monday") # set the default start of the week
+
+date2week(onset) # convert dates to weeks
+```
+
+If you want to override the default, you can use the `week_start` attribute of
+`date2week()`:
+
+
+```{r epiweek_options}
 date2week(onset, week_start = 1) # ISO weeks starting on Monday (default)
 date2week(onset, week_start = 7) # EPI week starting on Sunday
 date2week(onset, week_start = 6) # EPI week starting on Saturday
