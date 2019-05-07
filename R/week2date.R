@@ -1,6 +1,6 @@
 #' @export
 #' @rdname date2week
-week2date <- function(x, week_start = 1, floor_day = FALSE) {
+week2date <- function(x, week_start = get_week_start(), floor_day = FALSE) {
 
   if (!inherits(x, "aweek")) {
     class(x) <- "aweek"
