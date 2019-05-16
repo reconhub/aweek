@@ -130,6 +130,8 @@ date2week <- function(x, week_start = get_week_start(), floor_day = FALSE, numer
   nas  <- is.na(x)
   nams <- names(x)
 
+  if (length(week_start) != 1) stop("week_start must be a vector of length 1")
+
   if (!inherits(x, "aweek") && is.character(x) && !format_exists) {
     iso_std <- grepl("^[0-9]{4}[^[:alnum:]]+[01][0-9][^[:alnum:]]+[0-3][0-9]$", trimws(x))
     iso_std[nas] <- TRUE # prevent false alarms
@@ -154,6 +156,9 @@ date2week <- function(x, week_start = get_week_start(), floor_day = FALSE, numer
 
   wday       <- as.integer(x$wday) + 1L # weekdays in R run 0:6, 0 being Sunday
   week_start <- as.integer(week_start)
+
+  stop_if_not_weekday(wday)
+  stop_if_not_weekday(week_start)
 
   wday     <- get_wday(wday, week_start)
   the_date <- as.Date(x)
@@ -200,10 +205,10 @@ date2week <- function(x, week_start = get_week_start(), floor_day = FALSE, numer
       lvls   <- seq.Date(drange[1], drange[2], by = if (floor_day) 7L else 1)
       # convert to weeks to use for levels
       lvls   <- date2week(lvls, 
-                            week_start = week_start, 
-                            floor_day = floor_day,
-                            factor = FALSE,
-                            numeric = FALSE)
+                          week_start = week_start, 
+                          floor_day = floor_day,
+                          factor = FALSE,
+                          numeric = FALSE)
       # convert to factor
       the_week <- factor(the_week, levels = lvls)
     }

@@ -15,7 +15,26 @@ get_wday <- function(x, s) {
   if (inherits(x, c("Date", "POSIXt"))) {
     x <- as.integer(as.POSIXlt(x, tz = "UTC")$wday + 1L)
   }
-  if (s != 7L) 1L + (x + (6L - s)) %% 7L else x
+
+  fullx <- !is.na(x)
+  fulls <- !is.na(x)
+
+  ifelse(fullx & fulls & s != 7L, 
+         yes = 1L + (x + (6L - s)) %% 7L, 
+         no = x)
+}
+
+stop_if_not_weekday <- function(x) {
+
+  if (inherits(x, c("Date", "POSIXt"))) {
+    x <- as.integer(as.POSIXlt(x, tz = "UTC")$wday + 1L)
+  }
+  
+  if (any(!is.na(x) & (x < 1L | x > 7L))) {
+    stop("Weekdays must be between 1 and 7")
+  }
+  invisible(NULL)
+
 }
 
 #' Retrieve the week in the year
