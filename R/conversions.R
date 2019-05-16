@@ -33,8 +33,9 @@ as.POSIXlt.aweek <- function(x, tz = "", floor_day = FALSE, ...) {
 #' @rdname aweek-conversions
 as.character.aweek <- function(x, ...) {
 
-  attr(x, "week_start") <- NULL
-  NextMethod()
+  # attr(x, "week_start") <- NULL
+  xx <- NextMethod("as.character", x)
+  setNames(xx, names(x))
 
 }
 
@@ -73,7 +74,7 @@ as.Date.aweek <- function(x, floor_day = FALSE, ...) {
   weeks_as_days <- (out[, "week"] - j1_is_first) * 7L
   first_week <- january_1 - j1_day
 
-  unname(first_week + (weeks_as_days + out[, "day"] - 1L))
+  setNames(first_week + (weeks_as_days + out[, "day"] - 1L), names(x))
 
 }
 

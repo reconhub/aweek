@@ -127,7 +127,8 @@
 date2week <- function(x, week_start = get_week_start(), floor_day = FALSE, numeric = FALSE, factor = FALSE, ...) {
 
   format_exists <- !is.null(list(...)$format)
-  nas <- is.na(x)
+  nas  <- is.na(x)
+  nams <- names(x)
 
   if (!inherits(x, "aweek") && is.character(x) && !format_exists) {
     iso_std <- grepl("^[0-9]{4}[^[:alnum:]]+[01][0-9][^[:alnum:]]+[0-3][0-9]$", trimws(x))
@@ -210,6 +211,6 @@ date2week <- function(x, week_start = get_week_start(), floor_day = FALSE, numer
     class(the_week) <- c("aweek", oldClass(the_week))
     attr(the_week, "week_start") <- week_start 
   }
-  the_week
+  setNames(the_week, names(x))
 }
 
