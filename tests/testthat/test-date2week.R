@@ -25,7 +25,13 @@ test_that("January first dates can be properly converted", {
   datf    <- date2week(dats, 1, floor_day = TRUE)
   # Factors
   datffac <- date2week(dats, 1, floor_day = TRUE, factor = TRUE)
-  datfac  <- date2week(dats, 1, floor_day = FALSE, factor = TRUE)
+
+  msg <- "In future versions of aweek, `factor = TRUE` must also include"
+  msg <- paste(msg, "`floor_day = TRUE`")
+  expect_message({
+    datfac  <- date2week(dats, 1, floor_day = FALSE, factor = TRUE)
+  }, msg)
+
   datn    <- date2week(dats, 1, numeric = TRUE)
   datback <- as.Date(datw)
   # isoweeks

@@ -5,10 +5,10 @@
 \alias{week2date}
 \title{Convert date to a an arbitrary week definition}
 \usage{
-date2week(x, week_start = 1, floor_day = FALSE, numeric = FALSE,
-  factor = FALSE, ...)
+date2week(x, week_start = get_week_start(), floor_day = FALSE,
+  numeric = FALSE, factor = FALSE, ...)
 
-week2date(x, week_start = 1, floor_day = FALSE)
+week2date(x, week_start = get_week_start(), floor_day = FALSE)
 }
 \arguments{
 \item{x}{a \link{Date}, \link{POSIXt}, \link{character}, or any data that can be easily
@@ -17,7 +17,8 @@ converted to a date with \code{\link[=as.POSIXlt]{as.POSIXlt()}}.}
 \item{week_start}{a number indicating the start of the week based on the ISO
 8601 standard from 1 to 7 where 1 = Monday OR an abbreviation of the
 weekdate in an English or current locale. \emph{Note: using a non-English locale
-may render your code non-portable.}}
+may render your code non-portable.} Defaults to the value of
+\code{\link[=get_week_start]{get_week_start()}}}
 
 \item{floor_day}{when \code{TRUE}, the days will be set to the start of the week.}
 
@@ -25,11 +26,12 @@ may render your code non-portable.}}
 (default), the date in the format "YYYY-Www-d" will be returned.}
 
 \item{factor}{if \code{TRUE}, a factor will be returned with levels spanning the
-range of dates. If \code{floor_date = FALSE}, then this will use the sequence
-of days between the first and last date, but if \code{floor_date = TRUE}, then
-the sequence of weeks between the first and last date will be used. \emph{Take
-caution when using this with a large date range as the resulting factor can
-contain all days between dates}.}
+range of dates. This should only be used with \code{floor_day = TRUE} to
+produce the sequence of weeks between the first and last date as the
+factor levels.  Currently, \code{floor_date = FALSE} will still work, but will
+produce a message indicating that it is deprecated. \emph{Take caution when
+using this with a large date range as the resulting factor can contain all
+days between dates}.}
 
 \item{...}{arguments passed to \code{\link[=as.POSIXlt]{as.POSIXlt()}}, unused in all other cases.}
 }
@@ -60,34 +62,54 @@ input is not in yyyy-mm-dd and the format parameter is not passed,
 }
 \examples{
 
+## Dates to weeks -----------------------------------------------------------
+
 # The same set of days will occur in different weeks depending on the start
 # date. Here we can define a week before and after today
 
-print(dat <- Sys.Date() + -6:7)
+print(dat <- as.Date("2018-12-31") + -6:7)
 
 # By default, the weeks are defined as ISO weeks, which start on Monday
 print(iso_dat <- date2week(dat))
 
+# This can be changed by setting the global default with set_week_start()
+
+set_week_start("Sunday")
+
+date2week(dat)
+
 # If you want lubridate-style numeric-only weeks, you need look no further
 # than the "numeric" argument
-date2week(dat, 1, numeric = TRUE)
+date2week(dat, numeric = TRUE)
 
-# You can also convert to factor and include all of the missing dates, but
-# beware that this may result in a very large factor due to the number of
-# levels present
-date2week(Sys.Date() + c(0, 10), factor = TRUE)
+# To aggregate weeks, you can use `floor_day = TRUE`
+date2week(dat, floor_day = TRUE)
 
+# If you want aggregations into factors that include missing weeks, use
+# `floor_day = TRUE, factor = TRUE`:
+date2week(dat[c(1, 14)], floor_day = TRUE, factor = TRUE)
+
+
+## Weeks to dates -----------------------------------------------------------
 
 # The aweek class can be converted back to a date with `as.Date()`
 as.Date(iso_dat)
 
-# If you want to show only the first day of the week, you can use the 
+# If you don't have an aweek class, you can use week2date(). Note that the
+# week_start variable is set by the "aweek.week_start" option, which we will
+# set to Monday:
+
+set_week_start("Monday")
+week2date("2019-W01-1") # 2018-12-31
+
+# This can be overidden by the week_start argument;
+week2date("2019-W01-1", week_start = "Sunday") # 2018-12-30
+
+# If you want to convert to the first day of the week, you can use the 
 # `floor_day` argument
 as.Date(iso_dat, floor_day = TRUE)
 
-# This also works with `factor`:
-as.Date(iso_dat, floor_day = TRUE, factor = TRUE)
-
+## The same two week timespan starting on different days --------------------
 # ISO week definition: Monday -- 1
 date2week(dat, 1)
 date2week(dat, "Monday")
@@ -117,7 +139,7 @@ date2week(dat, 7)
 date2week(dat, "Sunday")
 }
 \seealso{
-\code{\link[=as.Date.aweek]{as.Date.aweek()}}, \code{\link[=print.aweek]{print.aweek()}}
+\code{\link[=set_week_start]{set_week_start()}}, \code{\link[=as.Date.aweek]{as.Date.aweek()}}, \code{\link[=print.aweek]{print.aweek()}}
 }
 \author{
 Zhian N. Kamvar

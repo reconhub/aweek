@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">aweek</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -93,12 +93,7 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/reconhub/aweek">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -112,15 +107,36 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/reconhub/aweek/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+      
     </div>
 
+    <div id="aweek-0-3-0" class="section level1">
+<h1 class="page-header">
+<a href="#aweek-0-3-0" class="anchor"></a>aweek 0.3.0<small> Unreleased </small>
+</h1>
+<ul>
+<li>The <code>week_start</code> argument now defaults to the global option <code>aweek.week_start</code>, which will be a number from 1 to 7, representing the days of the week in the ISO 8601 standard.</li>
+<li>
+<code><a href="../reference/week_start.html">set_week_start()</a></code> is a convenience allowing the user to set the default <code>aweek.week_start</code> option via integer or character input.</li>
+<li>
+<code><a href="../reference/week_start.html">get_week_start()</a></code> is a wrapper for <code><a href="https://www.rdocumentation.org/packages/base/topics/options">getOption("aweek.week_start", 1L)</a></code> and <code><a href="https://www.rdocumentation.org/packages/base/topics/attr">attr(w, "week_start")</a></code> for aweek objects.</li>
+</ul>
+</div>
+    <div id="aweek-0-2-2" class="section level1">
+<h1 class="page-header">
+<a href="#aweek-0-2-2" class="anchor"></a>aweek 0.2.2<small> 2019-04-26 </small>
+</h1>
+<ul>
+<li>Simplified conversion to factors.</li>
+<li>Using <code>factor = TRUE</code> without <code>floor_day = TRUE</code> will now issue a message indicating that this is deprecated in future versions of aweek (see #13).</li>
+</ul>
+</div>
     <div id="aweek-0-2-1" class="section level1">
 <h1 class="page-header">
 <a href="#aweek-0-2-1" class="anchor"></a>aweek 0.2.1<small> Unreleased </small>
 </h1>
 <ul>
-<li>Fix bug where NAs threw errors in the dates (found: <a href='https://github.com/aspina7'>@aspina7</a>, <a href='https://github.com/reconhub/aweek/issues/12'>#12</a>)</li>
+<li>Fix bug where NAs threw errors in the dates (found: <a href='https://github.com/aspina7'>@aspina7</a>, #12)</li>
 </ul>
 </div>
     <div id="aweek-0-2-0" class="section level1">
@@ -128,12 +144,12 @@
 <a href="#aweek-0-2-0" class="anchor"></a>aweek 0.2.0<small> 2019-03-08 </small>
 </h1>
 <ul>
-<li>Subsetting and concatenating methods added to the <code>aweek</code> class (see <a href='https://github.com/reconhub/aweek/issues/1'>#1</a>)</li>
+<li>Subsetting and concatenating methods added to the <code>aweek</code> class (see #1)</li>
 <li>Documentation divided into smaller chunks</li>
 <li>
 <code><a href="https://www.rdocumentation.org/packages/base/topics/as.POSIXlt">as.POSIXlt()</a></code> bug where <code>tz</code> was not being passed was fixed.</li>
 <li>
-<code><a href="../reference/date2week.html">date2week()</a></code>: an error is now issued if users specify non-ISO 8601 dates OR don’t specify a <code>format</code> option. (found: <a href='https://github.com/scottyaz'>@scottyaz</a>, <a href='https://github.com/reconhub/aweek/issues/2'>#2</a>)</li>
+<code><a href="../reference/date2week.html">date2week()</a></code>: an error is now issued if users specify non-ISO 8601 dates OR don’t specify a <code>format</code> option. (found: <a href='https://github.com/scottyaz'>@scottyaz</a>, #2)</li>
 <li>Best practices added to vignette</li>
 <li>Fix test that would fail every seven days on CRAN</li>
 </ul>
@@ -207,6 +223,8 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#aweek-0-3-0">0.3.0</a></li>
+        <li><a href="#aweek-0-2-2">0.2.2</a></li>
         <li><a href="#aweek-0-2-1">0.2.1</a></li>
         <li><a href="#aweek-0-2-0">0.2.0</a></li>
         <li><a href="#aweek-0-1-0">0.1.0</a></li>

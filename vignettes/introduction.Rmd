@@ -38,18 +38,34 @@ Converting dates to weeks with `date2week()`
 You can convert dates to weeks starting on any day by using `date2week()` with
 the `week_start` argument. This argument can be a number from 1 to 7 representing
 the ISO 8601 day of the week OR it can be a string representing the day of the
-week in either an English locale or the locale defined on your computer.
+week in either an English locale or the locale defined on your computer. The 
+default of this argument is the value of `get_week_start()`, which is a thin
+wrapper around `options("aweek.week_start", 1L)`. Unless you have specified a
+default `aweek.week_start` option with `set_week_start()`, this will always be 
+set to "Monday".
+
+> It is **highly recommended** that you set the default `aweek.week_start` either
+> in the beginning of your Rscript, Rmarkdown document, or in your .Rprofile.
 
 ```{r date2week}
 library("aweek")
 
+set_week_start("Sunday") # setting the default week_start to Sunday
+
 set.seed(2019-03-03)
 dat <- as.Date("2019-03-03") + sample(-6:7, 10, replace = TRUE)
 dat
+print(w <-date2week(dat))
+```
+
+If you need a different day on the fly, you can supply an integer or character
+day to the `week_start` argument.
+
+```{r date2week_week_start}
 # Use character days
-print(w <- date2week(dat, week_start = "Sunday"))
+date2week(dat, week_start = "Monday")
 # Use ISO 8601 days
-print(w <- date2week(dat, week_start = 7))
+date2week(dat, week_start = 1)
 ```
 
 What you get back is an `aweek` class object. It can be converted back to a date
@@ -91,7 +107,12 @@ accurate* so it's strongly recommended to make sure your dates are in either
 [lubridate](https://cran.r-project.org/package=lubridate) can be used for this
 purpose.
 
-Because the `week_start` arguments default to ISO week day 1 (Monday), it's
+Use `set_week_start()` at the beginning of all your scripts to explicitly define
+the day on wich your weeks start. This can be overridden if need be in specific
+parts of your scripts. Otherwise, the default will be dependent on the value of
+`getOption("aweek.week_start", 1L)`.
+
+Because the `week_start` arguments default to `get_week_start()`, it's
 recommended to specify `week_start` in `date2week()` and `week2date()` if you
 don't have an `aweek` object.
 
@@ -123,14 +144,16 @@ Factors
 -------
 
 Weeks can be represented as factors, which is useful for tabulations across
-weeks. You can use `factor = TRUE` in `date2week()` and it will automatically
-fill in any missing days (`floor_day = FALSE`) or weeks (`floor_day = TRUE`)
+weeks. You can use `factor = TRUE` in combination with `floor_day = TRUE` in
+`date2week()` and it will automatically fill in any missing weeks.
 
 ```{r factors}
-date2week(dat[1] + c(0, 15), week_start = 1, factor = TRUE)
+dat[1] + c(0, 15)
 date2week(dat[1] + c(0, 15), week_start = 1, factor = TRUE, floor_day = TRUE)
 ```
 
+> CAUTION: Do not use this with `floor_day = FALSE` as this will be deprecated
+> in future versions.
 
 Weeks to weeks
 --------------
@@ -170,7 +193,9 @@ c(res$Sunday[1], res$Wednesday[2], res$Friday[3])
 c(res$Tuesday[1], res$Thursday[2], res$Friday[3])
 ```
 
-You can also add dates to aweek objects:
+### Dates can be appended to aweek objects
+
+Dates combined with aweek objects will will be automatically converted.
 
 ```{r add_dates}
 c(res$Monday, as.Date("2019-04-03"))
@@ -208,10 +233,14 @@ week2date("2019-W10-1", week_start = "Monday") # 2019-03-04
 ```
 
 If you have an `aweek` object, however, it will use the `week_start` attribute
-defined in the object:
+defined in the object, even if the default `week_start` attribute is different:
 
 ```{r week2date_aweek}
+set_week_start("Monday") # Set the default week_start to ISO week
+get_week_start(w)        # show the default week_start for w
 week2date(w)
+identical(week2date(w), dat)               # TRUE
+identical(week2date(as.character(w)), dat) # FALSE
 ```
 
 

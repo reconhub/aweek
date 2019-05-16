@@ -58,12 +58,29 @@ Note that this requires the package *remotes* installed.
 
 ## Dates to weeks
 
-```{r epiweek}
 
-library(aweek)
+With the *aweek* package, converting dates to weeks is simple. All you need to
+know is what weekday represents the beginning of your week and a vector of 
+dates.
+
+```{r epiweek}
+# generate dates
 set.seed(2019-02-26)
-onset <- Sys.Date() + sort(sample(-6:7, 20, replace = TRUE))
+onset <- as.Date("2019-02-26") + sort(sample(-6:7, 20, replace = TRUE))
 onset
+
+# load aweek
+library("aweek")
+set_week_start("Monday") # set the default start of the week
+
+date2week(onset) # convert dates to weeks
+```
+
+If you want to override the default, you can use the `week_start` attribute of
+`date2week()`:
+
+
+```{r epiweek_options}
 date2week(onset, week_start = 1) # ISO weeks starting on Monday (default)
 date2week(onset, week_start = 7) # EPI week starting on Sunday
 date2week(onset, week_start = 6) # EPI week starting on Saturday
@@ -80,7 +97,7 @@ in tabulating across weeks and including missing values.
 
 ```{r show_factors}
 set.seed(2019-02-26)
-onset <- Sys.Date() + sort(sample(-48:49, 20, replace = TRUE))
+onset <- as.Date("2019-02-26") + sort(sample(-48:49, 20, replace = TRUE))
 x <- date2week(onset, week_start = "sat", floor_day = TRUE, factor = TRUE)
 x
 table(x)
@@ -98,8 +115,8 @@ german <- if (grepl("darwin", R.version$os)) "de_DE.UTF-8" else "de_DE.utf8"
 lct <- Sys.getlocale("LC_TIME")
 res <- Sys.setlocale("LC_TIME", german)
 
-date2week(Sys.Date(), week_start = "Sonntag")
-date2week(Sys.Date(), week_start = "Sunday")
+date2week(as.Date("2019-02-26"), week_start = "Sonntag")
+date2week(as.Date("2019-02-26"), week_start = "Sunday")
 
 Sys.setlocale("LC_TIME", lct)
 
