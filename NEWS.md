@@ -1,3 +1,9 @@
+# aweek 0.4.0
+
+* conversions will now retain the names of the object.
+* `as.data.frame.aweek()` is a new function that allows aweek objects to be
+  directly incorporated into data frames.
+
 # aweek 0.3.0
 
 * The `week_start` argument now defaults to the global option `aweek.week_start`,
