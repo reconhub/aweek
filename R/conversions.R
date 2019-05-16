@@ -47,19 +47,6 @@ as.Date.aweek <- function(x, floor_day = FALSE, ...) {
   # with the additional information of the starting day of the week, represented
   # as the weekdays 1--7 starting on Monday.
   #
-  # Steps:
-  #
-  # 1. create a matrix with three columns representing the year, week, and day
-  #
-  # 2. find the weekday (relative to week_start) that represents 1 January.
-  #
-  # 3. subtract a week if the weekday is before the 4th day because that means
-  #    that the previous year was included in the week counts
-  #    
-  # 4. determine the first date of the year by subtracting the weekday (relative
-  #    to week_start) from 1 January
-  #
-  # 5. add the weeks_as_days plus the number of days minus one to get the dates
   #
   week_start <- attr(x, "week_start")
   x          <- as.character(x)
@@ -97,7 +84,11 @@ as.Date.aweek <- function(x, floor_day = FALSE, ...) {
   # [1] "year" "week" "day" 
   # 
   res <- gregexpr(pat, x, perl = TRUE)
-  out <- matrix(NA_integer_, ncol = 3, nrow = length(x))
+  out <- matrix(NA_integer_, ncol = 4, nrow = length(x))
+  colnames(out) <- c("year", "week", "day", "week_start")
+  out[, "week_start"] <- week_start
+
+  ywdnames <- c("year", "week", "day")
 
   for (i in seq_along(res)) {
     if (is.na(x[[i]])) next # skip if x[[i]] is nothing
@@ -106,25 +97,10 @@ as.Date.aweek <- function(x, floor_day = FALSE, ...) {
                      first = p$capture.start, 
                      last  = p$capture.start + p$capture.length - 1)
     names(ywd) <- p$capture.names
-    out[i, ] <- as.integer(ywd[c("year", "week", "day")])
+    out[i, ywdnames] <- as.integer(ywd[ywdnames])
   }
 
-  colnames(out) <- c("year", "week", "day")
-
-  # replace any truncated aweeks with the first day of the week
-  out[, "day"] <- ifelse(is.na(out[, "day"]), 1L, out[, "day"])
-
-  # missing years are set to NA 
-  january_1 <- ifelse(is.na(out[, "year"]), NA, sprintf("%s-01-01", out[, "year"]))
-  january_1 <- as.Date(january_1, tz = "UTC")
-  j1_day    <- get_wday(january_1, week_start) - 1L
-
-  # If the previous year is included in this year's first date, subtract a week
-  j1_is_first <- as.integer(j1_day < 4)
-  weeks_as_days <- (out[, "week"] - j1_is_first) * 7L
-  first_week <- january_1 - j1_day
-
-  the_dates <- first_week + (weeks_as_days + out[, "day"] - 1L)
+  the_dates <- date_from_week_matrix(out)
   names(the_dates) <- names(x)
   the_dates
 

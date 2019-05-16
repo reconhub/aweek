@@ -83,3 +83,11 @@ test_that("dates can be co back and forth no matter the start day", {
   }
 
 })
+
+test_that("invalid weekdays throw an error", {
+  
+  expect_error(week2date("2019-W20-8"), "Weekdays must be between 1 and 7")
+  expect_error(date2week(Sys.Date(), week_start = 1:7), "week_start must be a vector of length 1")
+  expect_error(date2week(Sys.Date(), week_start = 8), "Weekdays must be between 1 and 7")
+
+})

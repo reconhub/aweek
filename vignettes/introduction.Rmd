@@ -55,7 +55,7 @@ set_week_start("Sunday") # setting the default week_start to Sunday
 set.seed(2019-03-03)
 dat <- as.Date("2019-03-03") + sample(-6:7, 10, replace = TRUE)
 dat
-print(w <-date2week(dat))
+print(w <- date2week(dat))
 ```
 
 If you need a different day on the fly, you can supply an integer or character
