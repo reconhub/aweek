@@ -211,6 +211,7 @@ date2week <- function(x, week_start = get_week_start(), floor_day = FALSE, numer
     class(the_week) <- c("aweek", oldClass(the_week))
     attr(the_week, "week_start") <- week_start 
   }
-  setNames(the_week, names(x))
+  names(the_week) <- names(x)
+  the_week
 }
 

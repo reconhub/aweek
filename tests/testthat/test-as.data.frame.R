@@ -51,8 +51,8 @@ test_that("data frames can be combined", {
   # wdcd <- rbind(wd, cd)
 
   expect_identical(wdwd, wddw)
-  expect_identical(dwwd$d, c(d, d))
-  expect_identical(dwwd$w, c(d, d))
+  expect_identical(ddwd$d, c(d, d))
+  expect_identical(ddwd$w, c(d, d))
   expect_is(wdwd$w, "aweek")
   expect_identical(wdwd$w, c(w, w))
   expect_identical(wdwd$d, c(d, d))
