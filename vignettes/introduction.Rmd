@@ -40,9 +40,9 @@ the `week_start` argument. This argument can be a number from 1 to 7 representin
 the ISO 8601 day of the week OR it can be a string representing the day of the
 week in either an English locale or the locale defined on your computer. The 
 default of this argument is the value of `get_week_start()`, which is a thin
-wrapper around `options("aweek.week_start", 1L)`. Unless you have specified a
+wrapper around `options("aweek.week_start", 1L)`. **Unless you have specified a
 default `aweek.week_start` option with `set_week_start()`, this will always be 
-set to "Monday".
+set to 1 (Monday).**
 
 > It is **highly recommended** that you set the default `aweek.week_start` either
 > in the beginning of your Rscript, Rmarkdown document, or in your .Rprofile.
@@ -68,11 +68,19 @@ date2week(dat, week_start = "Monday")
 date2week(dat, week_start = 1)
 ```
 
+If you want to save two extra keystrokes, you can also use the `as.aweek()`
+method for dates, which wraps `date2week()`:
+
+```{r as.aweek.Date}
+as.aweek(dat, week_start = 1)
+```
+
 What you get back is an `aweek` class object. It can be converted back to a date
 with either `as.Date()` or `week2date()`:
 
 ```{r date2week2date}
 week2date(w)
+as.Date(w)
 ```
 
 The `aweek` class 
@@ -81,15 +89,22 @@ The `aweek` class
 The result you see above is an object of class "aweek". The `aweek` class is a
 character that contains the `week_start` attribute. This attribute allows it to
 be easily converted back to a date without the user needing to enter the start
-day every time. It can be created like so: 
+day every time. You can convert a character that matches the `YYYY-Www-d`
+pattern to an `aweek` class object with `as.aweek()`:
 
-```{r aweek}
-x <- "2019-W10-1"
-attr(x, "week_start") <- 7 # Sunday 
-class(x) <- "aweek"
+
+```{r as.aweek.character}
+x <- as.aweek("2019-W10-1")
 x
-class(x)
 ```
+
+> Under the hood, it checks the validity of the week string and then add the
+> attribute and class:
+> 
+>     x <- "2019-W10-1"
+>     attr(x, "week_start") <- 7 # Sunday 
+>     class(x) <- "aweek"
+>
 
 If you need to remove the class, you can just use `as.character()`:
 
@@ -140,31 +155,45 @@ print(dwf <- week2date(wf))
 weekdays(dwf)
 ```
 
+If you want to aggregate your `aweek` objects after you created them, you can
+always use the `trunc()` function:
+
+```{r trunc}
+w
+trunc(w)
+```
+
+
 Factors
 -------
 
 Weeks can be represented as factors, which is useful for tabulations across
-weeks. You can use `factor = TRUE` in combination with `floor_day = TRUE` in
-`date2week()` and it will automatically fill in any missing weeks.
+weeks. You can use `factor = TRUE` in `date2week()` and it will automatically
+fill in any missing weeks.
 
 ```{r factors}
 dat[1] + c(0, 15)
-date2week(dat[1] + c(0, 15), week_start = 1, factor = TRUE, floor_day = TRUE)
+date2week(dat[1] + c(0, 15), week_start = 1, factor = TRUE)
 ```
 
-> CAUTION: Do not use this with `floor_day = FALSE` as this will be deprecated
+> CAUTION: Do not use this with `floor_day = FALSE` as this will be removed
 > in future versions.
+
+Be careful when combining factors with other dates or aweek objects as they will
+force the other objects to be truncated as well.
 
 Weeks to weeks
 --------------
 
-You can also use `date2week()` to convert between different week definitions if
-you have an `aweek` object:
+You can use `change_week_start()` to convert between different week definitions
+if you have an `aweek` object:
 
 
 ```{r week2week_wednesday}
 w # week starting on Sunday
-date2week(w, week_start = "wednesday") # same dates, starting on Wednesday
+ww <- change_week_start(w, week_start = "wednesday") # same dates, starting on Wednesday
+ww
+identical(as.Date(w), as.Date(ww))
 ```
 
 ```{r week2week, R.options=list(width = 100)}

@@ -27,6 +27,7 @@ as.aweek.character <- function(x, week_start = get_week_start(), ...) {
   test_aweek_string(x)
   .dots <- list(...)
 
+  # TODO: change this so that it accepts multiple week_start variables
   if (length(week_start) != 1) stop("week_start must be a vector of length 1")
 
   if (is.character(week_start)) {

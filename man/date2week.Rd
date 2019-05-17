@@ -5,7 +5,7 @@
 \alias{week2date}
 \title{Convert date to a an arbitrary week definition}
 \usage{
-date2week(x, week_start = get_week_start(), floor_day = FALSE,
+date2week(x, week_start = get_week_start(), floor_day = factor,
   numeric = FALSE, factor = FALSE, ...)
 
 week2date(x, week_start = get_week_start(), floor_day = FALSE)
@@ -139,7 +139,8 @@ date2week(dat, 7)
 date2week(dat, "Sunday")
 }
 \seealso{
-\code{\link[=set_week_start]{set_week_start()}}, \code{\link[=as.Date.aweek]{as.Date.aweek()}}, \code{\link[=print.aweek]{print.aweek()}}
+\code{\link[=set_week_start]{set_week_start()}}, \code{\link[=as.Date.aweek]{as.Date.aweek()}}, \code{\link[=print.aweek]{print.aweek()}}, \code{\link[=as.aweek]{as.aweek()}},
+\code{\link[=make_aweek]{make_aweek()}}
 }
 \author{
 Zhian N. Kamvar

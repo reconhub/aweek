@@ -76,13 +76,15 @@ test_that("factors force factors", {
 
   xf <- c(date2week(d[1], week_start = "Monday", factor = TRUE), x[-1])
   expect_is(xf, "factor")
-  expect_identical(levels(xf), as.character(x))
-  expect_identical(as.character(xf), as.character(x))
+  expect_identical(as.Date(xf), as.Date(x, floor_day = TRUE))
+  # expect_identical(levels(xf), as.character(x))
+  # expect_identical(as.character(xf), as.character(x))
 
   yf <- c(date2week(d[1], week_start = "Saturday", factor = TRUE), x[-1])
   expect_is(yf, "factor")
-  expect_identical(levels(yf), as.character(y))
-  expect_identical(as.character(yf), as.character(y))
+  expect_identical(as.Date(yf), as.Date(y, floor_day = TRUE))
+  # expect_identical(levels(yf), as.character(y))
+  # expect_identical(as.character(yf), as.character(y))
 
 })
 
@@ -112,8 +114,8 @@ test_that("all objects can be added", {
           y[6:10], 
           "2019-01-10", 
           as.Date(c("2019-01-11", "2019-01-12")),
-          as.POSIXlt("2019-01-13"),
-          date2week("2019-01-14", week_start = "Tuesday", factor = TRUE),
+          date2week("2019-01-13", week_start = "Sunday", factor = TRUE),
+          as.POSIXlt("2019-01-14"),
           "2019-W03-2")
 
   expect_identical(xx, dd)
@@ -122,10 +124,29 @@ test_that("all objects can be added", {
           x[6:10], 
           "2019-01-10", 
           as.Date(c("2019-01-11", "2019-01-12")),
-          as.POSIXlt("2019-01-13"),
-          date2week("2019-01-14", week_start = "Tuesday", factor = TRUE),
+          # 13 January, 2019 is a Sunday, so that allows the truncation to work.
+          date2week("2019-01-13", week_start = "Sunday", factor = TRUE),
+          as.POSIXlt("2019-01-14"),
           "2019-W03-4")
 
   expect_identical(yy, date2week(dd, week_start = "Saturday"))
+
+})
+
+
+test_that("factor force truncates everything", {
+
+
+  ff <- c(date2week(y[2], week_start = "Saturday", factor = TRUE),
+          y[2:5],
+          x[6:10], 
+          "2019-01-10", 
+          as.Date(c("2019-01-11", "2019-01-12")),
+          # 13 January, 2019 is a Sunday, so that allows the truncation to work.
+          date2week("2019-01-13", week_start = "Sunday", factor = TRUE),
+          as.POSIXlt("2019-01-14"),
+          "2019-W03-4")
+
+  expect_identical(ff, date2week(dd, factor = TRUE, week_start = "Saturday"))
 
 })

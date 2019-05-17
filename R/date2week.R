@@ -46,7 +46,8 @@
 #'
 #' @author Zhian N. Kamvar
 #' @export
-#' @seealso [set_week_start()], [as.Date.aweek()], [print.aweek()]
+#' @seealso [set_week_start()], [as.Date.aweek()], [print.aweek()], [as.aweek()],
+#'   [make_aweek()]
 #' @examples
 #'
 #' ## Dates to weeks -----------------------------------------------------------
@@ -124,7 +125,7 @@
 #' # Epiweek definition: Sunday -- 7 
 #' date2week(dat, 7)
 #' date2week(dat, "Sunday")
-date2week <- function(x, week_start = get_week_start(), floor_day = FALSE, numeric = FALSE, factor = FALSE, ...) {
+date2week <- function(x, week_start = get_week_start(), floor_day = factor, numeric = FALSE, factor = FALSE, ...) {
 
   format_exists <- !is.null(list(...)$format)
   nas  <- is.na(x)
