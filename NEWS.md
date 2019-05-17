@@ -1,8 +1,25 @@
 # aweek 0.4.0
 
-* conversions will now retain the names of the object.
+## NEW FUNCTIONS
+
+* `make_aweek()` can generate aweek objects from a vector of week numbers. It has
+  the ability to take into account different week start times. 
+* `as.aweek()` allows users to create aweek object directly from characters with
+  validation. It also allows for dates by passing to `date2week()`.
 * `as.data.frame.aweek()` is a new function that allows aweek objects to be
   directly incorporated into data frames.
+* `as.list.aweek()` will now preserve the aweek structure in lists
+* `trunc.aweek()` will truncate the day to the first day of the week. 
+* `rep.aweek()` allows repeating aweek characters.
+
+## BUG FIX
+
+* conversions will now retain the names of the object.
+
+## MISC
+
+* More checks that weekdays and weeks are within the correct bounds have been
+  added. 
 
 # aweek 0.3.0
 
