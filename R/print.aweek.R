@@ -143,12 +143,19 @@ rep.aweek <- function(x, ...) {
 
 }
 
+
+# TODO: simplify this:
+#
+#  - only accept week starts of the same type. 
+#  - always return a basic aweek object (read: not factor)
+#  - always return non-truncated aweek objects
+#
 #' @export
 #' @rdname aweek-class
 c.aweek <- function(..., recursive = FALSE, use.names = TRUE) {
 
   the_dots   <- list(...)
-  is_factor  <- is.factor(the_dots[[1]])
+  is_factor  <- is.factor(the_dots[[1]]) ## this can go
   week_start <- attr(the_dots[[1]], "week_start")
   aweeks     <- vlogic(the_dots, inherits, "aweek")
   factors    <- vlogic(the_dots, inherits, "factor")
@@ -156,6 +163,8 @@ c.aweek <- function(..., recursive = FALSE, use.names = TRUE) {
     the_dots[factors] <- lapply(the_dots[factors], date2week, week_start = week_start) 
   }
   starts     <- vapply(the_dots[aweeks], attr, integer(1), "week_start")
+
+  # This part can go
   if (!all(starts == starts[1]) || !all(aweeks)) {
     # Find all characters that are aweeks without the attributes
     are_chars  <- !aweeks & vlogic(the_dots, inherits, c("character", "factor"))
@@ -169,9 +178,11 @@ c.aweek <- function(..., recursive = FALSE, use.names = TRUE) {
     }
     the_dots <- lapply(the_dots, date2week, week_start = week_start)
   }
+
   res        <- unlist(the_dots, recursive = recursive, use.names = TRUE)
   class(res) <- "aweek"
   attr(res, "week_start") <- week_start
+  ## this can also go
   if (is_factor) {
     res <- date2week(res, week_start = week_start, factor = TRUE)
   }
