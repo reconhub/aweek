@@ -83,16 +83,24 @@ get_wday <- function(x, s) {
 
 stop_if_not_weekday <- function(x) {
 
-  if (inherits(x, c("Date", "POSIXt"))) {
-    x <- as.integer(as.POSIXlt(x, tz = "UTC")$wday + 1L)
-  }
-  
-  if (any(!is.na(x) & (x < 1L | x > 7L))) {
+  not_date <- !inherits(x, c("Date", "POSIXt"))
+
+  if (not_date && any(!is.na(x) & (x < 1L | x > 7L))) {
     stop("Weekdays must be between 1 and 7")
   }
+
   invisible(NULL)
 
 }
+
+stop_if_not_valid_week <- function(x) {
+
+  if (any(!is.na(x) & (x > 53 | x < 1))) {
+    stop("Weeks must be between 1 and 53")
+  }
+
+}
+
 
 #' Retrieve the week in the year
 #'
@@ -106,7 +114,7 @@ stop_if_not_weekday <- function(x) {
 #' @noRd
 #'
 week_in_year <- function(the_date) {
-  jan1 <- as.Date(sprintf("%s-01-01", format(the_date, "%Y")))
+  jan1 <- as.Date(sprintf("%s-01-01", format(the_date, "%Y")), format = "%Y-%m-%d")
   1L + (as.numeric(the_date) - as.numeric(jan1)) %/% 7L
 }
 
