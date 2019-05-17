@@ -186,7 +186,7 @@ date2week <- function(x, week_start = get_week_start(), floor_day = FALSE, numer
     # set the missing data back to missing
     the_week[nas] <- NA
     if (floor_day) {
-      the_week <- gsub("-\\d", "", the_week)
+      the_week <- gsub("\\-\\d", "", the_week)
     }
 
     if (factor) {
