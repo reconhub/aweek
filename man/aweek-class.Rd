@@ -7,6 +7,7 @@
 \alias{[<-.aweek}
 \alias{as.list.aweek}
 \alias{trunc.aweek}
+\alias{rep.aweek}
 \alias{c.aweek}
 \title{The aweek class}
 \usage{
@@ -21,6 +22,8 @@
 \method{as.list}{aweek}(x, ...)
 
 \method{trunc}{aweek}(x, ...)
+
+\method{rep}{aweek}(x, ...)
 
 \method{c}{aweek}(..., recursive = FALSE, use.names = TRUE)
 }

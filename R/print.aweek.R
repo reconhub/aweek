@@ -119,7 +119,27 @@ as.list.aweek <- function(x, ...) {
 #' @rdname aweek-class
 trunc.aweek <- function(x, ...) {
 
-  gsub("\\-\\d", "", x)
+  if (inherits(x, "factor")) {
+    levels(x) <- gsub("\\-\\d", "", levels(x))
+  } else {
+    x <- gsub("\\-\\d", "", x)
+  }
+
+  x
+
+}
+
+
+#' @export
+#' @rdname aweek-class
+rep.aweek <- function(x, ...) {
+
+  ws <- attr(x, "week_start")
+  cl <- class(x)
+  xx <- NextMethod("rep")
+  attr(xx, "week_start") <- ws
+  class(xx) <- cl
+  xx
 
 }
 

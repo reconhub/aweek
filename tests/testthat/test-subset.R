@@ -48,9 +48,18 @@ test_that("concatenation returns aweek object with the correct week_start attrib
 test_that("truncation works", {
 
   expect_identical(trunc(x), date2week(d, week_start = 1, floor_day = TRUE))
+  expect_identical(trunc(y), date2week(d, week_start = 6, floor_day = TRUE))
+  expect_identical(trunc(f), date2week(d, week_start = 1, floor_day = TRUE, factor = TRUE))
 
 })
 
+test_that("rep works", {
+
+  expect_identical(as.Date(rep(y, each = 2)), rep(d, each = 2))
+  expect_identical(as.Date(rep(x, each = 2)), rep(d, each = 2))
+  expect_true(all(as.Date(rep(f, each = 2)) <= rep(d, each = 2)))
+
+})
 
 test_that("characters can be added", {
 
