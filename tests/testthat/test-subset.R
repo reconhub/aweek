@@ -2,6 +2,7 @@ context("subsetting tests")
 
 d <- as.Date("2018-12-31") + 0:14
 x <- date2week(d, week_start = "Monday")
+f <- date2week(d, week_start = "Monday", factor = TRUE, floor_day = TRUE)
 y <- date2week(d, week_start = "Saturday")
 dd <- date2week(c(d, as.Date("2019-01-15")), week_start = "Monday")
 
@@ -11,8 +12,25 @@ test_that("subsetting returns an aweek object", {
   expect_identical(x[], x)
   expect_is(x[1], "aweek")
   expect_is(y[1], "aweek")
+  expect_is(f[1], "aweek")
   expect_identical(as.Date(x[1]), d[1])
   expect_identical(as.Date(y[1]), d[1])
+  expect_identical(as.Date(f[1]), d[1])
+
+  expect_is(as.list(x)[[1]], "aweek")
+  expect_is(as.list(y)[[1]], "aweek")
+  expect_is(as.list(f)[[1]], "aweek")
+  expect_is(as.list(f)[[1]], "factor")
+  expect_identical(as.Date(as.list(x)[[1]]), d[1])
+  expect_identical(as.Date(as.list(y)[[1]]), d[1])
+  expect_identical(as.Date(as.list(f)[[1]]), d[1])
+
+  expect_is(x[[1]], "aweek")
+  expect_is(y[[1]], "aweek")
+  expect_is(f[[1]], "aweek")
+  expect_identical(as.Date(x[[1]]), d[1])
+  expect_identical(as.Date(y[[1]]), d[1])
+  expect_identical(as.Date(f[[1]]), d[1])
 
 })
 
@@ -26,6 +44,13 @@ test_that("concatenation returns aweek object with the correct week_start attrib
   expect_identical(attr(yx, "week_start"), 6L)
 
 })
+
+test_that("truncation works", {
+
+  expect_identical(trunc(x), date2week(d, week_start = 1, floor_day = TRUE))
+
+})
+
 
 test_that("characters can be added", {
 

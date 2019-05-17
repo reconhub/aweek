@@ -71,6 +71,18 @@ print.aweek <- function(x, ...) {
 }
 
 #' @export
+#' @rdname aweek-class
+`[[.aweek` <- function(x, i) {
+
+  ws <- attr(x, "week_start")
+  y  <- NextMethod("[[")
+  attr(y, "week_start") <- ws
+  class(y) <- union("aweek", oldClass(y))
+  y
+
+}
+
+#' @export
 #' @param value a value to add or replace in an aweek object
 #' @rdname aweek-class
 `[<-.aweek` <- function(x, i, value) {
@@ -84,6 +96,30 @@ print.aweek <- function(x, ...) {
   y[i] <- date2week(value, attr(x, "week_start"), floor_day = flda, factor = ffff) 
   class(y) <- "aweek"
   y
+
+}
+
+
+#' @export
+#' @rdname aweek-class
+as.list.aweek <- function(x, ...) {
+
+  xx <- NextMethod("as.list")
+  xx <- lapply(xx, function(i, ws, cl){
+                attr(i, "week_start") <- ws
+                class(i) <- cl
+                i
+  }, ws = attr(x, "week_start"), cl = class(x))
+
+  xx
+}
+
+
+#' @export
+#' @rdname aweek-class
+trunc.aweek <- function(x, ...) {
+
+  gsub("\\-\\d", "", x)
 
 }
 

@@ -3,7 +3,10 @@
 \name{print.aweek}
 \alias{print.aweek}
 \alias{[.aweek}
+\alias{[[.aweek}
 \alias{[<-.aweek}
+\alias{as.list.aweek}
+\alias{trunc.aweek}
 \alias{c.aweek}
 \title{The aweek class}
 \usage{
@@ -11,7 +14,13 @@
 
 \method{[}{aweek}(x, i)
 
+\method{[[}{aweek}(x, i)
+
 \method{[}{aweek}(x, i) <- value
+
+\method{as.list}{aweek}(x, ...)
+
+\method{trunc}{aweek}(x, ...)
 
 \method{c}{aweek}(..., recursive = FALSE, use.names = TRUE)
 }
