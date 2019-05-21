@@ -105,10 +105,3 @@ vlogic <- function(x, FUN, ...) {
   vapply(x, FUN = match.fun(FUN), FUN.VALUE = logical(1), ...)
 
 }
-
-vallgrep <- function(x, PATTERN) {
-
-  FUN <- function(i, PATTERN) all(grepl(PATTERN, i))
-  vapply(x, FUN, logical(1), PATTERN)
-
-}
