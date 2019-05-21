@@ -34,6 +34,28 @@ test_that("subsetting returns an aweek object", {
 
 })
 
+test_that("aweek objects can be ammended", {
+
+  xx <- rev(x)
+  xx[1] <- x[1]
+  expect_identical(xx[1], x[1])
+  xx[2] <- as.Date(x[2])
+  expect_identical(xx[2], x[2])
+  xx[3] <- as.character(x[3])
+  expect_identical(xx[3], x[3])
+
+  expect_error(y[1] <- x[1], "aweek objects must have the same week_start attribute")
+
+})
+
+test_that("change_week_start() only works on aweek objects", {
+
+  expect_error(change_week_start("2018-W01-1"), "x must be an aweek object")
+  expect_identical(change_week_start(x, get_week_start(x)), x)
+  expect_identical(change_week_start(x, "Saturday"), y)
+
+})
+
 
 test_that("concatenation returns aweek object with the correct week_start attribute", {
 
