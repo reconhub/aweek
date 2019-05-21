@@ -1,7 +1,20 @@
 # aweek 0.4.0
 
+## BREAKING CHANGES
+
+There are a couple of breaking changes coming to aweek that will improve
+stability by removing unclear coercion methods
+(see https://github.com/reconhub/aweek/issues/20).
+
+* It is no longer possible to combine aweek objects if they do not share the
+  same `week_start` attribute. This will result in an error informing the user
+  to adjust the `week_start` attribute with the `change_week_start()` function.
+* Factors will no longer coerce factors when combining aweek objects. 
+
 ## NEW FUNCTIONS
 
+* `change_week_start()` allows the user to change the `week_start` attribute of
+  an aweek object, adjusting the weeks to match the new attribute accordingly.
 * `make_aweek()` can generate aweek objects from a vector of week numbers. It has
   the ability to take into account different week start times. 
 * `as.aweek()` allows users to create aweek object directly from characters with
