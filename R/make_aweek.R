@@ -98,6 +98,7 @@ make_aweek <- function(
   week <- as.integer(week)
   year <- as.integer(year)
   day  <- as.integer(day)
+  week_start <- as.integer(week_start)
 
   stop_if_not_weekday(day)
   stop_if_not_weekday(week_start)
