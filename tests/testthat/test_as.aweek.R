@@ -14,7 +14,7 @@ test_that("as.aweek rejects invalid weeks", {
 
 test_that("as.aweek takes into account the length of week_start", {
 
-  expect_error(as.aweek("2018-W10-1", week_start = 1:2), "week_start must be a vector of length 1")
+  expect_failure(expect_error(as.aweek("2018-W10-1", week_start = 1:2), "week_start must be a vector of length 1"))
 
 })
 

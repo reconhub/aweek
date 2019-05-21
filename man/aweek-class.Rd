@@ -42,11 +42,8 @@
 an object of class \code{aweek}
 }
 \description{
-The method \code{c.aweek()} will always return an \code{aweek} object with
-the same \code{week_start} attribute as the first object in the list. If the
-first object is also a factor, then the output will be re-leveled. If
-week-like characters are presented (e.g. "2019-W10-1"), then these are
-assumed to have the same \code{week_start} as the first object.
+The methods for combining or modifying aweek objects require
+that any aweek obe
 }
 \details{
 The aweek class is a character or factor in the format YYYY-Www(-d) with a
@@ -62,21 +59,20 @@ print(w)
 # subsetting acts as normal
 w[1:10]
 
-# Combining multiple aweek objects
-c(w[1], w[3], w[5])
+# Combining multiple aweek objects will only work if they have the same
+# week_start day
+c(w[1], w[3], w[5], as.aweek(as.Date("2018-12-01"), week_start = "Sunday"))
 
-# differing week_start days will default to the attribute of the first 
-# aweek object
-mon <- date2week(Sys.Date(), week_start = "Monday")
+# differing week_start days will throw an error
+mon <- date2week(as.Date("2018-12-01"), week_start = "Monday")
 mon
-c(w, mon)
-c(mon, w)
+try(c(w, mon))
 
 # combining Dates will be coerced to aweek objects under the same rules
 c(w, Sys.Date())
 
 # truncated aweek objects will be un-truncated
-w2 <- date2week(d[1:5], week_start = "Monday", floor_day = TRUE)
+w2 <- date2week(d[1:5], week_start = "Sunday", floor_day = TRUE)
 w2
 c(w[1:5], w2)
 }

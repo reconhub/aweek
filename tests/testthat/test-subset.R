@@ -37,8 +37,11 @@ test_that("subsetting returns an aweek object", {
 
 test_that("concatenation returns aweek object with the correct week_start attribute", {
 
-  xy <- c(x, y)
-  yx <- c(y, x)
+  expect_error(xy <- c(x, y), "All aweek objects must have the same week_start attribute.")
+  expect_error(yx <- c(y, x), "All aweek objects must have the same week_start attribute.")
+  xy <- c(x, change_week_start(y, get_week_start(x)))
+  yx <- c(y, change_week_start(x, get_week_start(y)))
+
   
   expect_identical(attr(xy, "week_start"), 1L)
   expect_identical(attr(yx, "week_start"), 6L)
@@ -64,27 +67,19 @@ test_that("rep works", {
 test_that("characters can be added", {
 
   xw <- c(x, "2019-W03-2")
-  xd <- c(x, "2019-01-15")
+  expect_error(xd <- c(x, "2019-01-15"), "aweek strings must match the pattern 'YYYY-Www-d'. The first incorrect string was: '2019-01-15'")
 
-  expect_identical(xw, xd)
   expect_identical(xw, dd)
 
 })
 
 
-test_that("factors force factors", {
+test_that("factors don't force factors", {
 
   xf <- c(date2week(d[1], week_start = "Monday", factor = TRUE), x[-1])
-  expect_is(xf, "factor")
-  expect_identical(as.Date(xf), as.Date(x, floor_day = TRUE))
-  # expect_identical(levels(xf), as.character(x))
-  # expect_identical(as.character(xf), as.character(x))
-
-  yf <- c(date2week(d[1], week_start = "Saturday", factor = TRUE), x[-1])
-  expect_is(yf, "factor")
-  expect_identical(as.Date(yf), as.Date(y, floor_day = TRUE))
-  # expect_identical(levels(yf), as.character(y))
-  # expect_identical(as.character(yf), as.character(y))
+  expect_is(xf, "aweek")
+  expect_failure(expect_is(xf, "factor"))
+  expect_true(all(as.Date(xf) <= as.Date(x)))
 
 })
 
@@ -106,47 +101,3 @@ test_that("POSIXt objects can be added", {
 
 })
 
-
-test_that("all objects can be added", {
-
-
-  xx <- c(x[1:5],
-          y[6:10], 
-          "2019-01-10", 
-          as.Date(c("2019-01-11", "2019-01-12")),
-          date2week("2019-01-13", week_start = "Sunday", factor = TRUE),
-          as.POSIXlt("2019-01-14"),
-          "2019-W03-2")
-
-  expect_identical(xx, dd)
-
-  yy <- c(y[1:5],
-          x[6:10], 
-          "2019-01-10", 
-          as.Date(c("2019-01-11", "2019-01-12")),
-          # 13 January, 2019 is a Sunday, so that allows the truncation to work.
-          date2week("2019-01-13", week_start = "Sunday", factor = TRUE),
-          as.POSIXlt("2019-01-14"),
-          "2019-W03-4")
-
-  expect_identical(yy, date2week(dd, week_start = "Saturday"))
-
-})
-
-
-test_that("factor force truncates everything", {
-
-
-  ff <- c(date2week(y[2], week_start = "Saturday", factor = TRUE),
-          y[2:5],
-          x[6:10], 
-          "2019-01-10", 
-          as.Date(c("2019-01-11", "2019-01-12")),
-          # 13 January, 2019 is a Sunday, so that allows the truncation to work.
-          date2week("2019-01-13", week_start = "Sunday", factor = TRUE),
-          as.POSIXlt("2019-01-14"),
-          "2019-W03-4")
-
-  expect_identical(ff, date2week(dd, factor = TRUE, week_start = "Saturday"))
-
-})

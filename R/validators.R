@@ -20,17 +20,20 @@ stop_if_not_valid_week <- function(x) {
 
 }
 
-test_aweek_string <- function(x) {
+stop_if_not_aweek_string <- function(x) {
 
-  nas  <- is.na(x)
-  okay <- grepl("[0-9]{4}-W(?=[0-5])[0-9]-?[1-7]?", x, perl = TRUE)
-  if (!all(okay[!nas])) {
+  okay <- test_aweek_string(x)
+  if (!all(okay)) {
     stop(sprintf(
          "aweek strings must match the pattern 'YYYY-Www-d'. The first incorrect string was: '%s'",
-         x[!nas & !okay][1]
+         x[!okay][1]
         ))
   }
 
   invisible(NULL)
  
+}
+
+test_aweek_string <- function(x) {
+  grepl("[0-9]{4}-W(?=[0-5])[0-9]-?[1-7]?", x, perl = TRUE) | is.na(x)
 }

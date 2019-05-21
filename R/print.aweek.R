@@ -11,11 +11,8 @@
 #'
 #' @return an object of class `aweek`
 #'
-#' @description The method `c.aweek()` will always return an `aweek` object with
-#'   the same `week_start` attribute as the first object in the list. If the
-#'   first object is also a factor, then the output will be re-leveled. If
-#'   week-like characters are presented (e.g. "2019-W10-1"), then these are
-#'   assumed to have the same `week_start` as the first object. 
+#' @description The methods for combining or modifying aweek objects require
+#'   that any aweek obe
 #'
 #' @export
 #' @rdname aweek-class
@@ -28,21 +25,20 @@
 #' # subsetting acts as normal
 #' w[1:10]
 #' 
-#' # Combining multiple aweek objects
-#' c(w[1], w[3], w[5])
+#' # Combining multiple aweek objects will only work if they have the same
+#' # week_start day
+#' c(w[1], w[3], w[5], as.aweek(as.Date("2018-12-01"), week_start = "Sunday"))
 #'
-#' # differing week_start days will default to the attribute of the first 
-#' # aweek object
-#' mon <- date2week(Sys.Date(), week_start = "Monday")
+#' # differing week_start days will throw an error
+#' mon <- date2week(as.Date("2018-12-01"), week_start = "Monday")
 #' mon
-#' c(w, mon)
-#' c(mon, w)
+#' try(c(w, mon))
 #'
 #' # combining Dates will be coerced to aweek objects under the same rules
 #' c(w, Sys.Date())
 #'
 #' # truncated aweek objects will be un-truncated
-#' w2 <- date2week(d[1:5], week_start = "Monday", floor_day = TRUE)
+#' w2 <- date2week(d[1:5], week_start = "Sunday", floor_day = TRUE)
 #' w2
 #' c(w[1:5], w2)
 print.aweek <- function(x, ...) {
@@ -62,11 +58,12 @@ print.aweek <- function(x, ...) {
 #' @rdname aweek-class
 `[.aweek` <- function(x, i) {
 
+  cl <- oldClass(x)
   ws <- attr(x, "week_start")
-  y  <- NextMethod("[")
-  attr(y, "week_start") <- ws
-  class(y) <- union("aweek", oldClass(y))
-  y
+  xx  <- NextMethod("[")
+  attr(xx, "week_start") <- ws
+  oldClass(xx) <- cl
+  xx
 
 }
 
@@ -74,11 +71,12 @@ print.aweek <- function(x, ...) {
 #' @rdname aweek-class
 `[[.aweek` <- function(x, i) {
 
+  cl <- oldClass(x)
   ws <- attr(x, "week_start")
-  y  <- NextMethod("[[")
-  attr(y, "week_start") <- ws
-  class(y) <- union("aweek", oldClass(y))
-  y
+  xx  <- NextMethod("[[")
+  attr(xx, "week_start") <- ws
+  oldClass(xx) <- cl
+  xx
 
 }
 
@@ -87,15 +85,24 @@ print.aweek <- function(x, ...) {
 #' @rdname aweek-class
 `[<-.aweek` <- function(x, i, value) {
 
-  y <- x
-  class(y) <- class(y)[-1]
-  ffff <- is.factor(y)
-  flda <- grepl("^\\d{4}-W\\d{2}$", y[1])
-  # TODO: handle char objects
-  # TODO: handle aweek objects (both char and factor :cringe:)
-  y[i] <- date2week(value, attr(x, "week_start"), floor_day = flda, factor = ffff) 
-  class(y) <- "aweek"
-  y
+  ws <- attr(x, "week_start")
+  cl <- oldClass(x)
+
+  if (inherits(value, "aweek")) {
+    if (ws != attr(value, "week_start")) {
+      stop("aweek objects must have the same week_start attribute")
+    }
+  }
+
+  if (inherits(value, c("Date", "POSIXt"))) {
+    value <- date2week(value, week_start = ws)
+  }
+
+  xx <- NextMethod("[")
+
+  attr(xx, "week_start") <- ws
+  oldClass(xx) <- cl
+  xx
 
 }
 
@@ -107,9 +114,9 @@ as.list.aweek <- function(x, ...) {
   xx <- NextMethod("as.list")
   xx <- lapply(xx, function(i, ws, cl){
                 attr(i, "week_start") <- ws
-                class(i) <- cl
+                oldClass(i) <- cl
                 i
-  }, ws = attr(x, "week_start"), cl = class(x))
+  }, ws = attr(x, "week_start"), cl = oldClass(x))
 
   xx
 }
@@ -135,57 +142,38 @@ trunc.aweek <- function(x, ...) {
 rep.aweek <- function(x, ...) {
 
   ws <- attr(x, "week_start")
-  cl <- class(x)
+  cl <- oldClass(x)
   xx <- NextMethod("rep")
   attr(xx, "week_start") <- ws
-  class(xx) <- cl
+  oldClass(xx) <- cl
   xx
 
 }
 
 
-# TODO: simplify this:
-#
-#  - only accept week starts of the same type. 
-#  - always return a basic aweek object (read: not factor)
-#  - always return non-truncated aweek objects
-#
 #' @export
 #' @rdname aweek-class
 c.aweek <- function(..., recursive = FALSE, use.names = TRUE) {
 
+  # Find all the aweek objects and test that they all have the same week_start
+  # attribute. Throw an error if this isn't true
   the_dots   <- list(...)
-  is_factor  <- is.factor(the_dots[[1]]) ## this can go
-  week_start <- attr(the_dots[[1]], "week_start")
+  week_start <- get_week_start(the_dots[[1]])
   aweeks     <- vlogic(the_dots, inherits, "aweek")
-  factors    <- vlogic(the_dots, inherits, "factor")
-  if (any(factors)) {
-    the_dots[factors] <- lapply(the_dots[factors], date2week, week_start = week_start) 
-  }
-  starts     <- vapply(the_dots[aweeks], attr, integer(1), "week_start")
+  identical_week_starts <- vapply(the_dots[aweeks], get_week_start, integer(1)) == week_start
 
-  # This part can go
-  if (!all(starts == starts[1]) || !all(aweeks)) {
-    # Find all characters that are aweeks without the attributes
-    are_chars  <- !aweeks & vlogic(the_dots, inherits, c("character", "factor"))
-    if (any(are_chars)) {
-      the_dots[are_chars] <- lapply(the_dots[are_chars], as.character)
-      are_weeks <- are_chars & vallgrep(the_dots, "\\d{4}-W\\d{2}-?[1-7]?")
-      if (any(are_weeks)) {
-        # convert the week chars to dates if they exist
-        the_dots[are_weeks] <- lapply(the_dots[are_weeks], week2date, week_start = week_start)
-      }
-    }
-    the_dots <- lapply(the_dots, date2week, week_start = week_start)
+  if (!all(identical_week_starts)) {
+    stop("All aweek objects must have the same week_start attribute. Please use change_week_start() to adjust the week_start attribute if you wish to combine these objects.")
   }
 
-  res        <- unlist(the_dots, recursive = recursive, use.names = TRUE)
-  class(res) <- "aweek"
-  attr(res, "week_start") <- week_start
-  ## this can also go
-  if (is_factor) {
-    res <- date2week(res, week_start = week_start, factor = TRUE)
-  }
-  res
+  # Find all the dates and convert them to aweek objects
+  dates            <- vlogic(the_dots, inherits, c("Date", "POSIXt"))
+  the_dots[dates]  <- lapply(the_dots[dates], date2week, week_start = week_start)
+
+  # convert everything to characters and unlist them
+  res <- unlist(lapply(the_dots, as.character), recursive = recursive, use.names = TRUE)
+  
+  # convert the characters to aweek objects
+  as.aweek(res, week_start = week_start)
 
 }

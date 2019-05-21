@@ -24,22 +24,43 @@ as.aweek <- function(x, ...) UseMethod("as.aweek")
 #' @rdname as.aweek
 as.aweek.character <- function(x, week_start = get_week_start(), ...) {
   
-  test_aweek_string(x)
+  stop_if_not_aweek_string(x)
   .dots <- list(...)
 
-  # TODO: change this so that it accepts multiple week_start variables
-  if (length(week_start) != 1) stop("week_start must be a vector of length 1")
+  # if the week_start is length one, then we can just add it as a week
+  # attribute and be done with it. Otherwise, we will have to convert to date
+  # and then back to week.
+  easy_week <- length(week_start) == 1
 
   if (is.character(week_start)) {
-    week_start <- weekday_from_char(week_start)
+    if (easy_week) {
+      week_start <- weekday_from_char(week_start)
+    } else {
+      week_start <- vapply(week_start, weekday_from_char, integer(1))
+    }
   }
 
-  attr(x, "week_start") <- week_start
-  class(x) <- "aweek"
-  if (length(.dots) > 0) {
-    do.call("date2week", c(list(x = x, week_start = week_start), .dots))
+  if (easy_week) {
+    # There's only one week_start, so we can handle it from here ^_^
+    attr(x, "week_start") <- week_start
+    class(x) <- "aweek"
   } else {
-    x
+    # each of these characters represents a different week, so they need to be
+    # converted separately.
+    x <- make_aweek(week = substr(x, 7, 8), 
+                    year = substr(x, 1, 4),
+                    day  = substr(x, 10, 11),
+                    week_start = week_start
+                    )
+
+  }
+
+  # return the aweek object 
+  if (length(.dots) > 0) {
+    # if the user specified options like "factor" or "floor_day"
+    return(do.call("date2week", c(list(x = x, week_start = week_start), .dots)))
+  } else {
+    return(x)
   }
 
 }

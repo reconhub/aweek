@@ -106,6 +106,7 @@ x
 >     class(x) <- "aweek"
 >
 
+
 If you need to remove the class, you can just use `as.character()`:
 
 ```{r ascharacter}
@@ -214,13 +215,31 @@ data.frame(lapply(res, as.Date))
 Combining `aweek` objects
 -----------------------
 
-You can combine aweek objects with different `week_start` attributes. The 
-resulting `aweek` object will have the same `week_start` as the first object.
+You can add dates, aweek objects, or characters to aweek objects:
 
-```{r cweek2week}
-c(res$Sunday[1], res$Wednesday[2], res$Friday[3])
-c(res$Tuesday[1], res$Thursday[2], res$Friday[3])
+```{r caweekdate}
+c(as.aweek("2010-W10-1"), 
+  res$Sunday, 
+  "2010-W12-1", 
+  as.Date(res$Monday[1]) + 14)
 ```
+
+However, you *can not* combine aweek objects with different `week_start` 
+attributes.
+
+```{r cweek2week_err}
+try(c(res$Sunday[1], res$Wednesday[2], res$Friday[3]))
+```
+
+If you want to combine different aweek objects, you must first change their 
+`week_start` attribute:
+
+```{r cweekweek}
+wed <- change_week_start(res$Wednesday)
+fri <- change_week_start(res$Friday)
+c(res$Sunday[1], wed[2], fri[3])
+```
+
 
 ### Dates can be appended to aweek objects
 
