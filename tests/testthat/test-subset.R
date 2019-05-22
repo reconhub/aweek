@@ -37,6 +37,8 @@ test_that("subsetting returns an aweek object", {
 test_that("aweek objects can be ammended", {
 
   xx <- rev(x)
+  xx[1] <- NA
+  expect_identical(xx[1], as.aweek(NA_character_, week_start = get_week_start(xx)))
   xx[1] <- x[1]
   expect_identical(xx[1], x[1])
   xx[2] <- as.Date(x[2])
