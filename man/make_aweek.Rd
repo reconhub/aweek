@@ -5,7 +5,7 @@
 \title{Create an aweek object from an integer vector of weeks}
 \usage{
 make_aweek(week = 1L, year = format(Sys.Date(), "\%Y"), day = 1L,
-  week_start = get_week_start(), ...)
+  start = get_week_start(), week_start = get_week_start(), ...)
 }
 \arguments{
 \item{week}{an integer vector, defaults to 1, representing the first week of the year.}
@@ -15,8 +15,14 @@ make_aweek(week = 1L, year = format(Sys.Date(), "\%Y"), day = 1L,
 \item{day}{an integer vector, defaults to 1, representing the first day of
 the first week of the year.}
 
-\item{week_start}{an integer (or character) vector of days that the weeks
-start on}
+\item{start}{an integer (or character) vector of days that the weeks
+start on. Defaults to the value of \code{get_week_start()}}
+
+\item{week_start}{a number indicating the start of the week based on the ISO
+8601 standard from 1 to 7 where 1 = Monday OR an abbreviation of the
+weekdate in an English or current locale. \emph{Note: using a non-English locale
+may render your code non-portable.} Defaults to the value of
+\code{\link[=get_week_start]{get_week_start()}}}
 
 \item{...}{parameters passed on to \code{\link[=date2week]{date2week()}}}
 }
@@ -25,20 +31,14 @@ This is a vectorized function that takes in integer vectors and returns
 an aweek object, making it easier to convert bare weeks to dates.
 }
 \note{
-The aweek objects can only have one \code{week_start} attribute, which will
-default to the first one observed. If there is more than one \code{week_start},
-then the weeks are first converted to dates with their respective
-\code{week_start} variables and then converted to aweek objects with the first
-\code{week_start} variable. This allows for standardisation within a single data
-set.
-
 Any missing weeks, years, or week_start variables will result in a missing
 element in the resulting aweek vector. Any missing days will revert to the
 first day of the week.
 }
 \examples{
 
-# The default results in the first week of the year
+# The default results in the first week of the year using the default
+# default week_start (from get_week_start())
 
 make_aweek()
 as.Date(make_aweek())
@@ -61,15 +61,15 @@ mat <- matrix(c(
   2019, 11, 6, 7,
   2019, 11, 7, 7
 ), ncol = 4, byrow = TRUE)
-colnames(mat) <- c("year", "week", "day", "week_start")
+colnames(mat) <- c("year", "week", "day", "start")
 m <- as.data.frame(mat)
 m
-sun <- with(m, make_aweek(week, year, day, week_start))
+sun <- with(m, make_aweek(week, year, day, start, week_start = 7))
 sun
 as.Date(sun)
 
 # You can also change starts
-mon <- with(m, make_aweek(week, year, day, "Monday"))
+mon <- with(m, make_aweek(week, year, day, "Monday", week_start = "Monday"))
 mon
 as.Date(mon)
 
@@ -77,7 +77,7 @@ as.Date(mon)
 # the correct week, so it won't appear to match up with the original
 # data frame.
 
-sft <- with(m, make_aweek(week, year, day, 7:1))
+sft <- with(m, make_aweek(week, year, day, 7:1, week_start = "Sunday"))
 sft
 as.Date(sft)
 

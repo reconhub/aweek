@@ -8,7 +8,8 @@
 \usage{
 as.aweek(x, ...)
 
-\method{as.aweek}{character}(x, week_start = get_week_start(), ...)
+\method{as.aweek}{character}(x, start = get_week_start(),
+  week_start = get_week_start(), ...)
 
 \method{as.aweek}{Date}(x, ...)
 }
@@ -16,6 +17,9 @@ as.aweek(x, ...)
 \item{x}{a correctly formated character or date vector}
 
 \item{...}{(for the \code{Date} method) arguments passed on to \code{\link[=date2week]{date2week()}}}
+
+\item{start}{an integer (or character) vector of days that the weeks
+start on. Defaults to the value of \code{get_week_start()}}
 
 \item{week_start}{a number indicating the start of the week based on the ISO
 8601 standard from 1 to 7 where 1 = Monday OR an abbreviation of the
@@ -33,13 +37,13 @@ Convert characters or dates to aweek objects
 
 # aweek objects can only be created from valid weeks:
 
-as.aweek("2018-W10-5", week_start = 7) # works!
+as.aweek("2018-W10-5", start = 7, week_start = 7) # works!
 try(as.aweek("2018-10-5", week_start = 7)) # doesn't work :(
 
 # you can also convert dates
 as.aweek(as.Date("2018-03-09"))
 
 # all functions get passed to date2week, so you can use any of its arguments:
-as.aweek("2018-W10-5", week_start = 7, floor_day = TRUE, factor = TRUE) 
+as.aweek("2018-W10-5", start = 7, week_start = 7, floor_day = TRUE, factor = TRUE) 
 as.aweek(as.Date("2018-03-09"), floor_day = TRUE, factor = TRUE)
 }

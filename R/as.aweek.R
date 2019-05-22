@@ -2,6 +2,7 @@
 #'
 #' @param x a correctly formated character or date vector
 #' @param ... (for the `Date` method) arguments passed on to [date2week()]
+#' @inheritParams make_aweek
 #' @inheritParams date2week
 #' @return an aweek object
 #' @export
@@ -9,47 +10,67 @@
 #'
 #' # aweek objects can only be created from valid weeks:
 #'
-#' as.aweek("2018-W10-5", week_start = 7) # works!
+#' as.aweek("2018-W10-5", start = 7, week_start = 7) # works!
 #' try(as.aweek("2018-10-5", week_start = 7)) # doesn't work :(
 #' 
 #' # you can also convert dates
 #' as.aweek(as.Date("2018-03-09"))
 #'
 #' # all functions get passed to date2week, so you can use any of its arguments:
-#' as.aweek("2018-W10-5", week_start = 7, floor_day = TRUE, factor = TRUE) 
+#' as.aweek("2018-W10-5", start = 7, week_start = 7, floor_day = TRUE, factor = TRUE) 
 #' as.aweek(as.Date("2018-03-09"), floor_day = TRUE, factor = TRUE)
 as.aweek <- function(x, ...) UseMethod("as.aweek")
 
 #' @export
 #' @rdname as.aweek
-as.aweek.character <- function(x, week_start = get_week_start(), ...) {
+as.aweek.character <- function(x, start = get_week_start(), week_start = get_week_start(), ...) {
   
   stop_if_not_aweek_string(x)
+
+  if (length(week_start) != 1) {
+    stop("week_start must be length 1")
+  }
+
+  if (is.na(week_start)) {
+    stop("week_start must not be missing")
+  }
+
   .dots <- list(...)
 
   # if the week_start is length one, then we can just add it as a week
   # attribute and be done with it. Otherwise, we will have to convert to date
   # and then back to week.
-  easy_week <- length(week_start) == 1
+  easy_week <- length(start) == 1
 
-  if (is.character(week_start)) {
+  if (is.character(start)) {
     if (easy_week) {
-      week_start <- weekday_from_char(week_start)
+      start <- weekday_from_char(start)
     } else {
-      week_start <- vapply(week_start, weekday_from_char, integer(1))
+      start <- vapply(start, weekday_from_char, integer(1))
     }
   }
 
+  if (is.character(week_start)) {
+    week_start <- weekday_from_char(week_start)
+  }
+
+  stop_if_not_weekday(start)
+  stop_if_not_weekday(week_start)
+
   if (easy_week) {
-    # There's only one week_start, so we can handle it from here ^_^
-    attr(x, "week_start") <- week_start
+    # There's only one start, so we can handle it from here ^_^
+    attr(x, "week_start") <- start
     class(x) <- "aweek"
+    if (week_start != start) {
+      x <- change_week_start(x, week_start)
+    }
   } else {
     # each of these characters represents a different week, so they need to be
     # converted separately.
     x <- make_aweek(week = substr(x, 7, 8), 
                     year = substr(x, 1, 4),
                     day  = substr(x, 10, 11),
+                    start = start,
                     week_start = week_start
                     )
 

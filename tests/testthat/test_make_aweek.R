@@ -26,15 +26,16 @@ test_that("make_aweek() will always default to the first weekday of the year", {
 
 test_that("make_aweek() can use vectors", {
 
-  w <- make_aweek(week = m$week, year = m$year, day = m$day, week_start = m$week_start)
+  w <- make_aweek(week = m$week, year = m$year, day = m$day, start = m$week_start, week_start = 7L)
   expect_is(w, "aweek")
   expect_equal(get_week_start(w), 7L)
   expect_identical(sprintf("%04d-W%02d-%d", m$year, m$week, m$day), as.character(w))
-  expect_identical(w, make_aweek(week = m$week, year = m$year, day = m$day, week_start = "Sunday"))
-  expect_identical(w, make_aweek(week = m$week, year = m$year, day = m$day, week_start = rep("Sunday", 7)))
+  expect_identical(w, make_aweek(week = m$week, year = m$year, day = m$day, start = "Sunday", week_start = "Sunday"))
+  expect_identical(w, make_aweek(week = m$week, year = m$year, day = m$day, start = rep("Sunday", 7), week_start = 7L))
   expect_identical(as.Date(w), ex_dat)
 
 })
+
 
 
 test_that("make_aweek() can handle missing data", {
@@ -44,7 +45,7 @@ test_that("make_aweek() can handle missing data", {
     mm[1, i] <- NA
     lab <- sprintf("make_aweek() couldn't handle missing [%s].", i)
     expect_is({
-      w <- try(with(mm, make_aweek(week = week, year = year, day = day, week_start = week_start)))
+      w <- try(with(mm, make_aweek(week = week, year = year, day = day, start = week_start, week_start = "Sunday")))
     }, "aweek", label = paste("(gen)", lab))
     expect_identical(as.Date(w), c(as.Date(NA_character_), ex_dat[-1]),
                      label = paste("(acc)", lab))
@@ -63,7 +64,7 @@ test_that("make_aweek() can handle several missing random data", {
   cc <- stats::complete.cases(mm)
 
   expect_is({
-    w <- try(with(mm, make_aweek(week = week, year = year, day = day, week_start = week_start)))
+    w <- try(with(mm, make_aweek(week = week, year = year, day = day, start = week_start, week_start = 7L)))
   }, "aweek")
 
   expect_identical(!cc, is.na(w))
@@ -76,15 +77,22 @@ test_that("missing days revert to day 1", {
 
   mm <- m
   mm[1, "day"] <- NA
-  w <- try(with(mm, make_aweek(week = week, year = year, day = day, week_start = week_start)))
+  w <- try(with(mm, make_aweek(week = week, year = year, day = day, start = week_start, week_start = 7L)))
   expect_identical(as.Date(w), ex_dat)
 
   mm[, "day"] <- NA
-  w <- try(with(mm, make_aweek(week = week, year = year, day = day, week_start = week_start)))
+  w <- try(with(mm, make_aweek(week = week, year = year, day = day, start = week_start, week_start = 7L)))
   expect_identical(as.Date(w), rep(ex_dat[1], 7))
 
 })
 
+test_that("make_aweek() needs a scalar for week_start", {
+
+  expect_error(make_aweek(week_start = 1:2), "week_start must be length 1")
+  expect_error(make_aweek(week_start = NA),  "week_start must not be missing")
+  expect_error(make_aweek(week_start = 8),   "Weekdays must be between 1 and 7")
+  
+})
 test_that("invalid weeks will throw an error", {
 
   expect_error(make_aweek(week = 69), "Weeks must be between 1 and 53")
@@ -93,11 +101,11 @@ test_that("invalid weeks will throw an error", {
 
 })
 
-test_that("invalid week_starts will throw an error", {
+test_that("invalid starts will throw an error", {
 
-  expect_error(make_aweek(week_start = 69), "Weekdays must be between 1 and 7")
-  expect_error(make_aweek(week_start = 0),  "Weekdays must be between 1 and 7")
-  expect_error(make_aweek(week_start = -9), "Weekdays must be between 1 and 7")
+  expect_error(make_aweek(start = 69), "Weekdays must be between 1 and 7")
+  expect_error(make_aweek(start = 0),  "Weekdays must be between 1 and 7")
+  expect_error(make_aweek(start = -9), "Weekdays must be between 1 and 7")
 
 })
 
@@ -114,6 +122,7 @@ test_that("null arguments throw an error", {
   expect_error(make_aweek(week = NULL), "all arguments must not be NULL")
   expect_error(make_aweek(year = NULL), "all arguments must not be NULL")
   expect_error(make_aweek(day = NULL), "all arguments must not be NULL")
+  expect_error(make_aweek(start = NULL), "all arguments must not be NULL")
   expect_error(make_aweek(week_start = NULL), "all arguments must not be NULL")
 
 })

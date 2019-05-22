@@ -174,6 +174,6 @@ c.aweek <- function(..., recursive = FALSE, use.names = TRUE) {
   res <- unlist(lapply(the_dots, as.character), recursive = recursive, use.names = TRUE)
   
   # convert the characters to aweek objects
-  as.aweek(res, week_start = week_start)
+  as.aweek(res, start = week_start, week_start = week_start)
 
 }
