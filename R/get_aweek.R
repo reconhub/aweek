@@ -8,18 +8,17 @@
 #' @param day  an integer vector, defaults to 1, representing the first day of
 #'   the first week of the year.
 #' @param start an integer (or character) vector of days that the weeks
-#'   start on. Defaults to the value of `get_week_start()`
+#'   start on for each corresponding week. Defaults to the value of 
+#'   [get_week_start()]. Note that these will not determine the final week. 
 #' @inheritParams date2week
 #' @param ... parameters passed on to [date2week()] 
 #' @return
 #'  - get_aweek(): an aweek object
 #'  - get_date(): a Date object
 #'
-#' @note 
-#'   Any missing weeks, years, or week_start variables will result in a missing
-#'   element in the resulting aweek vector. Any missing days will revert to the
-#'   first day of the week. 
-#'
+#' @note Any missing weeks, years, or start elements will result in a 
+#'   missing element in the resulting vector. Any missing days will
+#'   revert to the first day of the week.
 #'   
 #' @seealso [as.aweek()] [date2week()] [week2date()]
 #' @export
@@ -29,9 +28,16 @@
 #' # default week_start (from get_week_start())
 #'
 #' get_aweek()
-#' get_date() 
+#' get_date() # this is equivalent to as.Date(get_week()), but faster 
+#' 
+#' # Some years, like 2015, have 53 weeks
 #'
-#' as.Date(get_aweek())
+#' get_aweek(53, 2015)
+#'
+#' # If you specify 53 weeks for a year that doesn't have 53 weeks, aweek will
+#' # happily correct it for you
+#'
+#' get_aweek(53, 2014) # this will be 2015-W01-1
 #' 
 #' # you can use this to quickly make a week without worrying about formatting
 #' # here, you can define an observation interval of 20 weeks

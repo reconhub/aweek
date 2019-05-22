@@ -2,6 +2,7 @@
 % Please edit documentation in R/aweek-methods.R
 \name{print.aweek}
 \alias{print.aweek}
+\alias{aweek-class}
 \alias{[.aweek}
 \alias{[[.aweek}
 \alias{[<-.aweek}

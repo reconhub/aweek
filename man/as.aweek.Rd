@@ -22,7 +22,8 @@ as.aweek(x, ...)
 \item{...}{(for the \code{Date} method) arguments passed on to \code{\link[=date2week]{date2week()}}}
 
 \item{start}{an integer (or character) vector of days that the weeks
-start on. Defaults to the value of \code{get_week_start()}}
+start on for each corresponding week. Defaults to the value of
+\code{\link[=get_week_start]{get_week_start()}}. Note that these will not determine the final week.}
 
 \item{week_start}{a number indicating the start of the week based on the ISO
 8601 standard from 1 to 7 where 1 = Monday OR an abbreviation of the
