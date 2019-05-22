@@ -40,3 +40,10 @@ test_that("as.aweek correctly converts dates", {
   expect_is(as.aweek(Sys.Date()), "aweek")
 
 })
+
+test_that("as.aweek will act like change_week_start", {
+
+  x <- as.aweek("2019-W10-1", week_start = 5)
+
+  expect_identical(x, as.aweek(x))
+})

@@ -54,3 +54,29 @@ get_week_start <- function(w = NULL) {
     stop("w must be an 'aweek' object or NULL")
   }
 }
+
+#' Parse the week_start scalar
+#'
+#' This will check the length and enforce integers and non-missing
+#'
+#' @noRd
+parse_week_start <- function(w) {
+
+  if (length(w) != 1) {
+    stop("week_start must be length 1")
+  }
+
+  if (is.na(w)) {
+    stop("week_start must not be missing")
+  }
+
+  if (is.character(w)) {
+    w <- weekday_from_char(w)
+  } else {
+    w <- as.integer(w)
+  }
+
+  stop_if_not_weekday(w)
+
+  return(w)
+}

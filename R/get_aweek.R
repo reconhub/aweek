@@ -55,9 +55,10 @@
 #' colnames(mat) <- c("year", "week", "day", "start")
 #' m <- as.data.frame(mat)
 #' m
-#' sun <- with(m, get_aweek(week, year, day, start, week_start = 7))
+#' sun <- with(m, get_date(week, year, day, start))
 #' sun
-#' as.Date(sun)
+#' as.aweek(sun) # convert to aweek starting on the global week_start 
+#' as.aweek(sun, week_start = "Sunday") # convert to aweek starting on Sunday
 #' 
 #' # You can also change starts
 #' mon <- with(m, get_aweek(week, year, day, "Monday", week_start = "Monday"))
@@ -75,26 +76,12 @@ get_aweek <- function(
                       week = 1L,
                       year = format(Sys.Date(), "%Y"),
                       day = 1L,
-                      start = get_week_start(),
+                      start = week_start,
                       week_start = get_week_start(),
                       ...
                      ) {
 
-  if (length(week_start) != 1) {
-    stop("week_start must be length 1")
-  }
-
-  if (is.na(week_start)) {
-    stop("week_start must not be missing")
-  }
-
-  if (is.character(week_start)) {
-    week_start <- weekday_from_char(week_start)
-  } else {
-    week_start <- as.integer(week_start)
-  }
-
-  stop_if_not_weekday(week_start)
+  week_start <- parse_week_start(week_start)
 
   date2week(get_date(week = week, year = year, day = day, start = start), 
             week_start = week_start, ...)

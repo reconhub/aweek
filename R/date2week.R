@@ -131,7 +131,7 @@ date2week <- function(x, week_start = get_week_start(), floor_day = factor, nume
   nas  <- is.na(x)
   nams <- names(x)
 
-  if (length(week_start) != 1) stop("week_start must be a vector of length 1")
+  week_start <- parse_week_start(week_start)
 
   if (!inherits(x, "aweek") && is.character(x) && !format_exists) {
     iso_std <- grepl("^[0-9]{4}[^[:alnum:]]+[01][0-9][^[:alnum:]]+[0-3][0-9]$", trimws(x))
@@ -151,15 +151,9 @@ date2week <- function(x, week_start = get_week_start(), floor_day = factor, nume
     stop(sprintf(msg, deparse(mc[["x"]]), x$message))
   }
 
-  if (is.character(week_start)) {
-    week_start <- weekday_from_char(week_start)
-  }
-
   wday       <- as.integer(x$wday) + 1L # weekdays in R run 0:6, 0 being Sunday
-  week_start <- as.integer(week_start)
 
   stop_if_not_weekday(wday)
-  stop_if_not_weekday(week_start)
 
   wday     <- get_wday(wday, week_start)
   the_date <- as.Date(x)

@@ -1,10 +1,7 @@
 context("conversion to aweek tests")
 
 
-dats <- sprintf("%d-%02d-%02d",
-                2001:2019,
-                01,
-                01)
+dats <- sprintf("%d-01-01", 2001:2019)
 
 
 dats <- as.Date(c(dats, NA_character_))
@@ -45,7 +42,7 @@ test_that("January first dates can be properly converted", {
                 "2016-W52-7", "2018-W01-1", "2019-W01-2", NA)
   class(iw) <- "aweek"
   attr(iw, "week_start") <- 1L
-  floored <-gsub("-\\d$", "", iw)
+  floored <- gsub("-\\d$", "", iw)
 
   # conversions are reversible
   expect_identical(as.character(dats), as.character(datback))
@@ -61,6 +58,8 @@ test_that("January first dates can be properly converted", {
 
   # floored weeks are handled as expected
   expect_identical(datf, floored)
+
+  expect_identical(trunc(datw), floored)
 
   # Factors are handled as expected
   expect_identical(as.character(datffac), as.character(datf))
@@ -87,7 +86,7 @@ test_that("dates can be co back and forth no matter the start day", {
 test_that("invalid weekdays throw an error", {
   
   expect_error(week2date("2019-W20-8"), "Weekdays must be between 1 and 7")
-  expect_error(date2week(Sys.Date(), week_start = 1:7), "week_start must be a vector of length 1")
+  expect_error(date2week(Sys.Date(), week_start = 1:7), "week_start must be length 1")
   expect_error(date2week(Sys.Date(), week_start = 8), "Weekdays must be between 1 and 7")
 
 })

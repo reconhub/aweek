@@ -27,7 +27,8 @@ This package provides tools to convert dates to weeks and back where a week can
 start on any day. You can use this package for any of the following:
 
  - convert date to week starting on any day
- - convert week back to date
+ - convert week numbers and years to dates
+ - convert week to date
  - convert week to week
  - create a factor of weeks that contains ordered levels that includes missing
    weeks. 

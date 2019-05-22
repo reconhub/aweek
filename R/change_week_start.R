@@ -8,6 +8,7 @@
 #' @param ... parameters passed to [date2week()]
 #'
 #' @export
+#' @seealso [as.aweek()], which wraps this function.
 #' @examples
 #' # New Year's 2019 is the third day of the week starting on a Sunday
 #' s <- date2week(as.Date("2019-01-01"), week_start = "Sunday")
@@ -29,6 +30,9 @@ change_week_start <- function(x, week_start = get_week_start(), ...) {
   if (!inherits(x, "aweek")) {
     stop("x must be an aweek object")
   }
+
+  if (length(week_start) != 1)
+
   if (get_week_start(x) == week_start) {
     return(x)
   }

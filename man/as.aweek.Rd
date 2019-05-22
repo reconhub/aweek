@@ -4,14 +4,17 @@
 \alias{as.aweek}
 \alias{as.aweek.character}
 \alias{as.aweek.Date}
+\alias{as.aweek.aweek}
 \title{Convert characters or dates to aweek objects}
 \usage{
 as.aweek(x, ...)
 
-\method{as.aweek}{character}(x, start = get_week_start(),
+\method{as.aweek}{character}(x, start = week_start,
   week_start = get_week_start(), ...)
 
 \method{as.aweek}{Date}(x, ...)
+
+\method{as.aweek}{aweek}(x, week_start = NULL, ...)
 }
 \arguments{
 \item{x}{a correctly formated character or date vector}
@@ -46,4 +49,9 @@ as.aweek(as.Date("2018-03-09"))
 # all functions get passed to date2week, so you can use any of its arguments:
 as.aweek("2018-W10-5", start = 7, week_start = 7, floor_day = TRUE, factor = TRUE) 
 as.aweek(as.Date("2018-03-09"), floor_day = TRUE, factor = TRUE)
+
+# you can convert aweek objects to aweek objects:
+x <- get_aweek()
+as.aweek(x)
+as.aweek(x, week_start = 7)
 }

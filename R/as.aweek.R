@@ -19,21 +19,20 @@
 #' # all functions get passed to date2week, so you can use any of its arguments:
 #' as.aweek("2018-W10-5", start = 7, week_start = 7, floor_day = TRUE, factor = TRUE) 
 #' as.aweek(as.Date("2018-03-09"), floor_day = TRUE, factor = TRUE)
+#'
+#' # you can convert aweek objects to aweek objects:
+#' x <- get_aweek()
+#' as.aweek(x)
+#' as.aweek(x, week_start = 7)
 as.aweek <- function(x, ...) UseMethod("as.aweek")
 
 #' @export
 #' @rdname as.aweek
-as.aweek.character <- function(x, start = get_week_start(), week_start = get_week_start(), ...) {
+as.aweek.character <- function(x, start = week_start, week_start = get_week_start(), ...) {
   
   stop_if_not_aweek_string(x)
 
-  if (length(week_start) != 1) {
-    stop("week_start must be length 1")
-  }
-
-  if (is.na(week_start)) {
-    stop("week_start must not be missing")
-  }
+  week_start <- parse_week_start(week_start)
 
   .dots <- list(...)
 
@@ -50,12 +49,7 @@ as.aweek.character <- function(x, start = get_week_start(), week_start = get_wee
     }
   }
 
-  if (is.character(week_start)) {
-    week_start <- weekday_from_char(week_start)
-  }
-
   stop_if_not_weekday(start)
-  stop_if_not_weekday(week_start)
 
   if (easy_week) {
     # There's only one start, so we can handle it from here ^_^
@@ -68,11 +62,11 @@ as.aweek.character <- function(x, start = get_week_start(), week_start = get_wee
     # each of these characters represents a different week, so they need to be
     # converted separately.
     x <- get_aweek(week = substr(x, 7, 8), 
-                    year = substr(x, 1, 4),
-                    day  = substr(x, 10, 11),
-                    start = start,
-                    week_start = week_start
-                    )
+                   year = substr(x, 1, 4),
+                   day  = substr(x, 10, 11),
+                   start = start,
+                   week_start = week_start
+                  )
 
   }
 
@@ -93,5 +87,13 @@ as.aweek.Date <- function(x, ...) {
 
   date2week(x, ...)
 
+}
+
+#' @export
+#' @rdname as.aweek
+as.aweek.aweek <- function(x, week_start = NULL, ...) {
+
+  if (is.null(week_start)) return(x)
+  change_week_start(x, parse_week_start(week_start), ...)
 }
 
