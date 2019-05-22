@@ -52,7 +52,7 @@ date_from_week_matrix <- function(mat) {
   weeks_as_days <- (mat[, "week"] - j1_is_first) * 7L
   first_week <- january_1 - j1_day
 
-  first_week + (weeks_as_days + mat[, "day"] - 1L)
+  unname(first_week + (weeks_as_days + mat[, "day"] - 1L))
 
 }
 

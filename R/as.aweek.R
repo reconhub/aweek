@@ -2,7 +2,7 @@
 #'
 #' @param x a correctly formated character or date vector
 #' @param ... (for the `Date` method) arguments passed on to [date2week()]
-#' @inheritParams make_aweek
+#' @inheritParams get_aweek
 #' @inheritParams date2week
 #' @return an aweek object
 #' @export
@@ -67,7 +67,7 @@ as.aweek.character <- function(x, start = get_week_start(), week_start = get_wee
   } else {
     # each of these characters represents a different week, so they need to be
     # converted separately.
-    x <- make_aweek(week = substr(x, 7, 8), 
+    x <- get_aweek(week = substr(x, 7, 8), 
                     year = substr(x, 1, 4),
                     day  = substr(x, 10, 11),
                     start = start,

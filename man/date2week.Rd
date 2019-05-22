@@ -140,7 +140,7 @@ date2week(dat, "Sunday")
 }
 \seealso{
 \code{\link[=set_week_start]{set_week_start()}}, \code{\link[=as.Date.aweek]{as.Date.aweek()}}, \code{\link[=print.aweek]{print.aweek()}}, \code{\link[=as.aweek]{as.aweek()}},
-\code{\link[=make_aweek]{make_aweek()}}
+\code{\link[=get_aweek]{get_aweek()}}
 }
 \author{
 Zhian N. Kamvar

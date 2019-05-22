@@ -30,7 +30,7 @@ weekday_from_char <- function(x) {
 
   if (length(weekdate) == 0) {
     # find the definitions of the weekdays in the current locale
-    w        <- weekdays(as.Date(make_aweek(day = 1:7, week_start = 1L)))
+    w        <- weekdays(as.Date(get_aweek(day = 1:7, week_start = 1L)))
     weekdate <- grep(x, w, ignore.case = TRUE)
   }
 

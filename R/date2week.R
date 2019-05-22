@@ -47,7 +47,7 @@
 #' @author Zhian N. Kamvar
 #' @export
 #' @seealso [set_week_start()], [as.Date.aweek()], [print.aweek()], [as.aweek()],
-#'   [make_aweek()]
+#'   [get_aweek()]
 #' @examples
 #'
 #' ## Dates to weeks -----------------------------------------------------------
