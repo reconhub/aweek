@@ -31,11 +31,7 @@ change_week_start <- function(x, week_start = get_week_start(), ...) {
     stop("x must be an aweek object")
   }
 
-  if (length(week_start) != 1)
-
-  if (get_week_start(x) == week_start) {
-    return(x)
-  }
+  week_start <- parse_week_start(week_start)
 
   d <- as.Date(x)
   date2week(d, week_start = week_start, ...) 

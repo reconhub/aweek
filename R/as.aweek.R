@@ -49,6 +49,8 @@ as.aweek.character <- function(x, start = week_start, week_start = get_week_star
     }
   }
 
+  start <- as.integer(start)
+
   stop_if_not_weekday(start)
 
   if (easy_week) {

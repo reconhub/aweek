@@ -16,9 +16,10 @@ test_that("as.aweek takes into account the length of week_start", {
 
   x <- as.aweek("2018-W10-1", start = 1:2)
   y <- as.aweek("2018-W10-1", start = c("Mon", "Tue"))
+  z <- as.aweek(c("2018-W09-7", "2018-W10-1"), start = "Tuesday", week_start = 1)
 
   expect_identical(x, y)
-  expect_identical(as.character(x), c("2018-W10-1", "2018-W10-2"))
+  expect_identical(y, z)
 
 
 })
@@ -44,6 +45,12 @@ test_that("as.aweek correctly converts dates", {
 test_that("as.aweek will act like change_week_start", {
 
   x <- as.aweek("2019-W10-1", week_start = 5)
+  y <- as.aweek(as.Date(x), week_Start = 1)
+
+  expect_is(x, "aweek")
+  expect_is(y, "aweek")
 
   expect_identical(x, as.aweek(x))
+  expect_identical(x, as.aweek(y, 5L))
+
 })

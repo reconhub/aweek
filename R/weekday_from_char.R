@@ -41,6 +41,6 @@ weekday_from_char <- function(x) {
          call. = FALSE)
   }
 
-  return(weekdate)
+  return(as.integer(weekdate))
 
 }
