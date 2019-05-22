@@ -44,7 +44,7 @@ date_from_week_matrix <- function(mat) {
 
   # missing years are set to NA 
   january_1 <- ifelse(is.na(mat[, "year"]), NA, sprintf("%s-01-01", mat[, "year"]))
-  january_1 <- as.Date(january_1, tz = "UTC")
+  january_1 <- iso_date(january_1)
   j1_day    <- get_wday(january_1, mat[, "week_start"]) - 1L
 
   # If the previous year is included in this year's first date, subtract a week
@@ -74,12 +74,21 @@ get_wday <- function(x, s) {
     x <- as.integer(as.POSIXlt(x, tz = "UTC")$wday + 1L)
   }
 
+  # avoid missing values that mess up the ifelse
   fullx <- !is.na(x)
-  fulls <- !is.na(x)
+  fulls <- !is.na(s)
 
-  ifelse(fullx & fulls & s != 7L, 
-         yes = 1L + (x + (6L - s)) %% 7L, 
-         no = x)
+  # if the week_start is 7, then just return the weekday since it will already
+  # be relative. 
+  res   <- ifelse(fullx & fulls & s != 7L, 
+                  yes = 1L + (x + (6L - s)) %% 7L, 
+                  no = x)
+
+  # ensure that the missing values are represented as missing since they might
+  # leak through here.
+  res[!fullx | !fulls] <- NA
+  res
+
 }
 
 
@@ -95,9 +104,19 @@ get_wday <- function(x, s) {
 #' @noRd
 #'
 week_in_year <- function(the_date) {
-  jan1 <- as.Date(sprintf("%s-01-01", format(the_date, "%Y")), format = "%Y-%m-%d")
+  jan1 <- iso_date(sprintf("%s-01-01", format(the_date, "%Y")))
   1L + (as.numeric(the_date) - as.numeric(jan1)) %/% 7L
 }
+
+#' Convert ISO date strings to a date, quickly
+#' 
+#' This is basically the quick version of as.Date()
+#'
+#' @param d a date string in ISO 8601 format
+#' @return a Date object
+#'
+#' @noRd
+iso_date <- function(d) as.Date(strptime(d, format = "%Y-%m-%d", tz = "UTC"))
 
 
 vlogic <- function(x, FUN, ...) {
