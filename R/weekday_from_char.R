@@ -23,25 +23,24 @@
 #' Sys.setlocale("LC_TIME", lct)
 weekday_from_char <- function(x) {
 
-  # get all the days of the week, in ISO order
-  d <- date2week(Sys.Date(), week_start = 1L, floor_day = TRUE)
-  w <- week2date(paste(d, 1:7, sep = "-"), week_start = 1L)
-
-  # find their definitions in the current locale
-  w        <- weekdays(w)
+  # First try with an English locale
+  w        <- c("monday", "tuesday", "wednesday", "thursday", "friday",
+                "saturday", "sunday")
   weekdate <- grep(x, w, ignore.case = TRUE)
+
   if (length(weekdate) == 0) {
-    # Try with an English locale
-    weekdate <- grep(x, 
-                     c("monday", "tuesday", "wednesday", "thursday", 
-                       "friday", "saturday", "sunday"),
-                     ignore.case = TRUE)
+    # find the definitions of the weekdays in the current locale
+    w        <- weekdays(as.Date(make_aweek(day = 1:7, week_start = 1L)))
+    weekdate <- grep(x, w, ignore.case = TRUE)
   }
+
   if (length(weekdate) != 1) {
-    msg <- "The weekday '%s' did not match any of the valid weekdays in the current locale ('%s') or an English locale:\n  %s"
+    msg <- paste("The weekday '%s' did not match any of the valid weekdays in", 
+                 "the current locale ('%s') or an English locale:\n  %s")
     stop(sprintf(msg, x, Sys.getlocale('LC_TIME'), paste(w, collapse = ", ")), 
          call. = FALSE)
   }
+
   return(weekdate)
 
 }
