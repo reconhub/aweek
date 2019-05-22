@@ -91,9 +91,10 @@ test_that("rep works", {
 test_that("characters can be added", {
 
   xw <- c(x, "2019-W03-2")
-  expect_error(xd <- c(x, "2019-01-15"), "aweek strings must match the pattern 'YYYY-Www-d'. The first incorrect string was: '2019-01-15'")
+  xd <- c(x, "2019-01-15")
 
   expect_identical(xw, dd)
+  expect_identical(xw, xd)
 
 })
 

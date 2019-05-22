@@ -37,6 +37,15 @@
 #'   non-standard start dates. This package provides a lightweight utility to
 #'   be able to convert each day.
 #'
+#' @return
+#'  - `date2week()` an [aweek][print.aweek] object which represents dates in
+#'    `YYYY-Www-d` format where `YYYY` is the year (associated with the week,
+#'    not necessarily the day), `Www` is the week number prepended by a "W" that
+#'    ranges from 01-53 and `d` is the day of the week from 1 to 7 where 1
+#'    represents the first day of the week (as defined by the `week_start`
+#'    attribute).
+#'  - `week2date()` a [Date][Date] object.  
+#' 
 #' @note `date2week()` will initially convert the input with [as.POSIXlt()] and
 #'   use that to calculate the week. If the user supplies character input, it
 #'   is expected that the input will be of the format yyyy-mm-dd _unless_ the 
@@ -151,12 +160,12 @@ date2week <- function(x, week_start = get_week_start(), floor_day = factor, nume
     stop(sprintf(msg, deparse(mc[["x"]]), x$message))
   }
 
-  wday       <- as.integer(x$wday) + 1L # weekdays in R run 0:6, 0 being Sunday
+  wday     <- as.integer(x$wday) + 1L # weekdays in R run 0:6, 0 being Sunday
 
   stop_if_not_weekday(wday)
 
   wday     <- get_wday(wday, week_start)
-  the_date <- as.Date(x)
+  the_date <- as.Date.POSIXlt(x)
   the_week_bounds <- the_date + (4L - wday)
   the_week <- week_in_year(the_week_bounds)
 
@@ -180,36 +189,18 @@ date2week <- function(x, week_start = get_week_start(), floor_day = factor, nume
                        )
     # set the missing data back to missing
     the_week[nas] <- NA
+
+    class(the_week) <- c("aweek", oldClass(the_week))
+    attr(the_week, "week_start") <- week_start 
+
     if (floor_day) {
-      the_week <- gsub("\\-\\d", "", the_week)
+      the_week <- trunc(the_week)
     }
 
     if (factor) {
-      if (!floor_day) {
-        msg <- "In future versions of aweek, `factor = TRUE` must also include"
-        msg <- paste(msg, "`floor_day = TRUE`")
-        message(msg)
-      }
-      # find the minimum and maximum dates
-      dmin   <- which.min(the_date)
-      dmax   <- which.max(the_date)
-      drange <- the_week[c(dmin, dmax)]
-      # convert back to dates to get the first days of the week
-      drange <- week2date(drange, week_start = week_start)
-      # create the sequence from the first week to the last week
-      lvls   <- seq.Date(drange[1], drange[2], by = if (floor_day) 7L else 1)
-      # convert to weeks to use for levels
-      lvls   <- date2week(lvls, 
-                          week_start = week_start, 
-                          floor_day = floor_day,
-                          factor = FALSE,
-                          numeric = FALSE)
-      # convert to factor
-      the_week <- factor(the_week, levels = lvls)
+      the_week <- factor_aweek(the_week)
     }
-    # add the class attributes
-    class(the_week) <- c("aweek", oldClass(the_week))
-    attr(the_week, "week_start") <- week_start 
+
   }
   names(the_week) <- names(x)
   the_week

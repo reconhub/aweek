@@ -15,6 +15,7 @@
 #'   that any aweek obe
 #'
 #' @export
+#' @aliases aweek-class
 #' @rdname aweek-class
 #' @seealso [date2week()], [as.Date.aweek()]
 #' @examples
@@ -171,9 +172,18 @@ c.aweek <- function(..., recursive = FALSE, use.names = TRUE) {
   the_dots[dates]  <- lapply(the_dots[dates], date2week, week_start = week_start)
 
   # convert everything to characters and unlist them
-  res <- unlist(lapply(the_dots, as.character), recursive = recursive, use.names = TRUE)
+  res <- unlist(lapply(the_dots, as.character), recursive = recursive, use.names = FALSE)
   
+  date_chars <- grepl("[0-9]{4}-[0-9]{2}-[0-9]{2}", res, perl = TRUE)
+  res[date_chars] <- as.character(date2week(res[date_chars], week_start = week_start))
   # convert the characters to aweek objects
-  as.aweek(res, start = week_start, week_start = week_start)
+  out <- get_aweek(week = substr(res, 7, 8), 
+                   year = substr(res, 1, 4),
+                   day  = substr(res, 10, 11),
+                   start = week_start,
+                   week_start = week_start
+                   ) 
+  names(out) <- names(res)
+  out
 
 }

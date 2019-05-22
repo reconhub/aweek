@@ -35,6 +35,17 @@ days between dates}.}
 
 \item{...}{arguments passed to \code{\link[=as.POSIXlt]{as.POSIXlt()}}, unused in all other cases.}
 }
+\value{
+\itemize{
+\item \code{date2week()} an \link[=print.aweek]{aweek} object which represents dates in
+\code{YYYY-Www-d} format where \code{YYYY} is the year (associated with the week,
+not necessarily the day), \code{Www} is the week number prepended by a "W" that
+ranges from 01-53 and \code{d} is the day of the week from 1 to 7 where 1
+represents the first day of the week (as defined by the \code{week_start}
+attribute).
+\item \code{week2date()} a \link{Date} object.
+}
+}
 \description{
 Convert date to a an arbitrary week definition
 }

@@ -23,13 +23,8 @@ test_that("January first dates can be properly converted", {
   # Factors
   datffac <- date2week(dats, 1, floor_day = TRUE, factor = TRUE)
 
-  msg <- "In future versions of aweek, `factor = TRUE` must also include"
-  msg <- paste(msg, "`floor_day = TRUE`")
-  expect_message({
-    datfac  <- date2week(dats, 1, floor_day = FALSE, factor = TRUE)
-  }, msg)
-
   datn    <- date2week(dats, 1, numeric = TRUE)
+
   datback <- as.Date(datw)
   # isoweeks
   weeknums <- c(1, 1, 1, 1, 53, 52, 1, 1, 1, 53, 52, 52, 1, 1, 1, 53, 52, 1, 1, NA) 
@@ -46,7 +41,6 @@ test_that("January first dates can be properly converted", {
 
   # conversions are reversible
   expect_identical(as.character(dats), as.character(datback))
-  expect_identical(as.character(dats), as.character(as.Date(datfac)))
 
   # weeks print as expected
   expect_identical(datw, iw)
@@ -65,8 +59,8 @@ test_that("January first dates can be properly converted", {
   expect_identical(as.character(datffac), as.character(datf))
 
   # Factor levels are the sequence of dates
-  expect_identical(seq.Date(min(dats, na.rm = TRUE), max(dats, na.rm = TRUE), by = 1), week2date(levels(datfac), 1))
-  expect_identical(seq.Date(min(dats, na.rm = TRUE), max(dats, na.rm = TRUE), by = 7), week2date(levels(datffac), 1))
+  expect_identical(seq.Date(min(dats, na.rm = TRUE), max(dats, na.rm = TRUE), by = 7), 
+                   week2date(levels(datffac), 1))
 
 })
 
