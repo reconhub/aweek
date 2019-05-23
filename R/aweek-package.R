@@ -83,6 +83,9 @@
 #' d <- as.Date(c("2014-02-11", "2014-03-04"))
 #' w <- as.aweek(d) 
 #' w
+#' 
+#' # get the week numbers
+#' date2week(d, numeric = TRUE)
 #'
 #' # convert back to date
 #' as.Date(w)

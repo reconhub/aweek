@@ -10,9 +10,6 @@ The aweek package is a lightweight solution for converting dates to weeks
 that can start on any weekday. It implements the \link[=aweek-class]{aweek class},
 which can easily be converted to date and weeks that start on different days.
 }
-\details{
-This is a brief introduction to the
-}
 \section{Before you begin}{
 
 
@@ -102,6 +99,9 @@ ow <- set_week_start("Sunday")
 d <- as.Date(c("2014-02-11", "2014-03-04"))
 w <- as.aweek(d) 
 w
+
+# get the week numbers
+date2week(d, numeric = TRUE)
 
 # convert back to date
 as.Date(w)
