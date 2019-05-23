@@ -38,7 +38,7 @@
 #'   be able to convert each day.
 #'
 #' @return
-#'  - `date2week()` an [aweek][print.aweek] object which represents dates in
+#'  - `date2week()` an [aweek][aweek-class] object which represents dates in
 #'    `YYYY-Www-d` format where `YYYY` is the year (associated with the week,
 #'    not necessarily the day), `Www` is the week number prepended by a "W" that
 #'    ranges from 01-53 and `d` is the day of the week from 1 to 7 where 1
@@ -160,9 +160,9 @@ date2week <- function(x, week_start = get_week_start(), floor_day = factor, nume
     stop(sprintf(msg, deparse(mc[["x"]]), x$message))
   }
 
-  wday     <- as.integer(x$wday) + 1L # weekdays in R run 0:6, 0 being Sunday
+  wday     <- as.integer(x$wday)# + 1L # weekdays in R run 0:6, 0 being Sunday
 
-  stop_if_not_weekday(wday)
+  # stop_if_not_weekday(wday)
 
   wday     <- get_wday(wday, week_start)
   the_date <- as.Date.POSIXlt(x)

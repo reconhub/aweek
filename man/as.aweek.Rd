@@ -2,57 +2,102 @@
 % Please edit documentation in R/as.aweek.R
 \name{as.aweek}
 \alias{as.aweek}
+\alias{as.aweek.default}
+\alias{as.aweek.NULL}
 \alias{as.aweek.character}
 \alias{as.aweek.Date}
+\alias{as.aweek.POSIXt}
 \alias{as.aweek.aweek}
 \title{Convert characters or dates to aweek objects}
 \usage{
-as.aweek(x, ...)
+as.aweek(x, week_start = get_week_start(), ...)
 
-\method{as.aweek}{character}(x, start = week_start,
-  week_start = get_week_start(), ...)
+\method{as.aweek}{default}(x, week_start = NULL, ...)
 
-\method{as.aweek}{Date}(x, ...)
+\method{as.aweek}{NULL}(x, week_start = NULL, ...)
+
+\method{as.aweek}{character}(x, week_start = get_week_start(),
+  start = week_start, ...)
+
+\method{as.aweek}{Date}(x, week_start = get_week_start(), ...)
+
+\method{as.aweek}{POSIXt}(x, week_start = get_week_start(), ...)
 
 \method{as.aweek}{aweek}(x, week_start = NULL, ...)
 }
 \arguments{
-\item{x}{a correctly formated character or date vector}
-
-\item{...}{(for the \code{Date} method) arguments passed on to \code{\link[=date2week]{date2week()}}}
-
-\item{start}{an integer (or character) vector of days that the weeks
-start on for each corresponding week. Defaults to the value of
-\code{\link[=get_week_start]{get_week_start()}}. Note that these will not determine the final week.}
+\item{x}{a \link{Date}, \link{POSIXct}, \link{POSIXlt}, or a
+correctly formatted (YYYY-Www-d) character string that represents the year,
+week, and weekday.}
 
 \item{week_start}{a number indicating the start of the week based on the ISO
 8601 standard from 1 to 7 where 1 = Monday OR an abbreviation of the
 weekdate in an English or current locale. \emph{Note: using a non-English locale
 may render your code non-portable.} Defaults to the value of
 \code{\link[=get_week_start]{get_week_start()}}}
+
+\item{...}{arguments passed on to \code{\link[=date2week]{date2week()}} and \code{\link[=as.POSIXlt]{as.POSIXlt()}}}
+
+\item{start}{an integer (or character) vector of days that the weeks
+start on for each corresponding week. Defaults to the value of
+\code{\link[=get_week_start]{get_week_start()}}. Note that these will not determine the final week.}
 }
 \value{
-an aweek object
+an \link[=aweek-class]{aweek} object
 }
 \description{
 Convert characters or dates to aweek objects
+}
+\details{
+The \code{as.aweek()} will coerce character, dates, and datetime objects
+to aweek objects. Dates are trivial to convert to weeks because there is
+only one correct way to convert them with any given \code{week_start}.
+
+There is a bit of nuance to be aware of when converting
+characters to aweek objects:
+\itemize{
+\item The characters must be correctly formatted as \code{YYYY-Www-d}, where YYYY
+is the year relative to the week, Www is the week number (ww) prepended
+by a W, and d (optional) is the day of the week from 1 to 7 where 1
+represents the week_start. This means that characters formatted as
+dates will be rejected.
+\item By default, the \code{week_start} and \code{start} parameters are identical. If
+your data contains heterogeneous weeks (e.g. some dates will have the
+week start on Monday and some will have the week start on Sunday), then
+you should use the \code{start} parameter to reflect this. Internally, the
+weeks will first be converted to dates with their respective starts and
+then converted back to weeks, unified under the \code{week_start} parameter.
+}
 }
 \examples{
 
 # aweek objects can only be created from valid weeks:
 
-as.aweek("2018-W10-5", start = 7, week_start = 7) # works!
+as.aweek("2018-W10-5", week_start = 7) # works!
 try(as.aweek("2018-10-5", week_start = 7)) # doesn't work :(
 
-# you can also convert dates
-as.aweek(as.Date("2018-03-09"))
+# you can also convert dates or datetimes
+as.aweek(Sys.Date())
+as.aweek(Sys.time())
 
 # all functions get passed to date2week, so you can use any of its arguments:
-as.aweek("2018-W10-5", start = 7, week_start = 7, floor_day = TRUE, factor = TRUE) 
+as.aweek("2018-W10-5", week_start = 7, floor_day = TRUE, factor = TRUE) 
 as.aweek(as.Date("2018-03-09"), floor_day = TRUE, factor = TRUE)
+
+# If you have a character vector where different elements begin on different
+# days of the week, you can use the "start" argument to ensure they are
+# correctly converted.
+as.aweek(c(mon = "2018-W10-1", tue = "2018-W10-1"), 
+         week_start = "Monday", 
+         start = c("Monday", "Tuesday"))
 
 # you can convert aweek objects to aweek objects:
 x <- get_aweek()
 as.aweek(x)
 as.aweek(x, week_start = 7)
+}
+\seealso{
+\code{\link[=get_aweek]{get_aweek()}} for converting numeric weeks to weeks or dates,
+\code{\link[=date2week]{date2week()}} for converting dates to weeks, \code{\link[=week2date]{week2date()}} for converting
+weeks to dates.
 }

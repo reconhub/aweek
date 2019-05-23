@@ -12,6 +12,13 @@ test_that("an error is thrown if something can't be converted to a date", {
                 
 })
 
+test_that("an error will be thrown if a date is NULL", {
+
+  expect_error(date2week(NULL), "NULL could not be converted to a date.")
+
+})
+
+
 test_that("January first dates can be properly converted", {
 
   # ISO week

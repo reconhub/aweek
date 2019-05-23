@@ -37,7 +37,7 @@ days between dates}.}
 }
 \value{
 \itemize{
-\item \code{date2week()} an \link[=print.aweek]{aweek} object which represents dates in
+\item \code{date2week()} an \link[=aweek-class]{aweek} object which represents dates in
 \code{YYYY-Www-d} format where \code{YYYY} is the year (associated with the week,
 not necessarily the day), \code{Www} is the week number prepended by a "W" that
 ranges from 01-53 and \code{d} is the day of the week from 1 to 7 where 1

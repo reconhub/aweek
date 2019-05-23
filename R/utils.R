@@ -58,36 +58,43 @@ date_from_week_matrix <- function(mat) {
 
 #' Get the weekday given an integer/date and a start date
 #'
-#' @param x an integer day or a Date where 1 represents Monday
+#' @param x a Date or an integer day relative to the ISO week
 #' 
 #' @param s an integer representing the day to start the week
 #'
 #' @return the day of the week for x relative to s
 #'
+#' @note R stores its dates on a Sunday -- Saturday week where the numbering
+#'   starts with 0 to 6. Happily, this doesn't affect the calculation since
+#'   1 + (0 + 6) %% 7 is the same as 1 + (7 + 6) %% 7
 #' @noRd
 #'
 #' @examples
 #'
-#' get_wday(1, 5) # Monday is the third day in a Friday - Saturday week
+#' get_wday(1:7, 1) # The isoweekdays get returned
+#' get_wday(as.Date("2007-01-01"), 1) # this is a Monday
+#' get_wday(as.Date("2007-01-01"), 7) 
+#' get_wday(1, 5) # Monday is the fourth day in a Friday - Saturday week
 get_wday <- function(x, s) { 
   if (inherits(x, c("Date", "POSIXt"))) {
-    x <- as.integer(as.POSIXlt(x, tz = "UTC")$wday + 1L)
+    x <- as.integer(as.POSIXlt(x, tz = "UTC")$wday) # + 1L)
   }
 
-  # avoid missing values that mess up the ifelse
-  fullx <- !is.na(x)
-  fulls <- !is.na(s)
+  # # avoid missing values that mess up the ifelse
+  # fullx <- !is.na(x)
+  # fulls <- !is.na(s)
 
+  return(1L + (x + (7L - s)) %% 7L)
   # if the week_start is 7, then just return the weekday since it will already
   # be relative. 
-  res   <- ifelse(fullx & fulls & s != 7L, 
-                  yes = 1L + (x + (6L - s)) %% 7L, 
-                  no = x)
+  # res   <- ifelse(fullx & fulls & s != 7L, 
+  #                 yes = 1L + (x + (6L - s)) %% 7L, 
+  #                 no = x)
 
-  # ensure that the missing values are represented as missing since they might
-  # leak through here.
-  res[!fullx | !fulls] <- NA
-  res
+  # # ensure that the missing values are represented as missing since they might
+  # # leak through here.
+  # res[!fullx | !fulls] <- NA
+  # res
 
 }
 

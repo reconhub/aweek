@@ -31,7 +31,7 @@
 \arguments{
 \item{x}{an object of class \code{aweek}}
 
-\item{...}{a series of \code{aweek} objects (unused in \code{print.aweek()})}
+\item{...}{a series of \code{aweek} objects, characters, or Dates, (unused in \code{print.aweek()})}
 
 \item{i}{index for subsetting an aweek object.}
 
@@ -43,14 +43,59 @@
 an object of class \code{aweek}
 }
 \description{
-The methods for combining or modifying aweek objects require
-that any aweek obe
-}
-\details{
 The aweek class is a character or factor in the format YYYY-Www(-d) with a
 "week_start" attribute containing an integer specifying which day of the ISO
-8601 week each week should begin. This documentation shows how to print or
-subset the object.
+8601 week each week should begin.
+}
+\details{
+Weeks differ in their start dates depending on context. The ISO
+8601 standard specifies that Monday starts the week
+(\url{https://en.wikipedia.org/wiki/ISO_week_date}) while the US CDC uses
+Sunday as the start of the week
+(\url{https://wwwn.cdc.gov/nndss/document/MMWR_Week_overview.pdf}). For
+example, MSF has varying start dates depending on country in order to
+better coordinate response.
+
+While there are packages that provide conversion for ISOweeks and epiweeks,
+these do not provide seamless conversion from dates to epiweeks with
+non-standard start dates. This package provides a lightweight utility to
+be able to convert each day.
+
+\subsection{Structure of the aweek object}{
+
+The aweek object is a character vector in either the precise ISO week
+format (YYYY-Www-d) or imprecise ISO week format (YYYY-Www) with
+a \code{week_start} attribute indicating which ISO week day the week begins.
+The precise ISO week format can be broken down like this:
+\itemize{
+\item \strong{YYYY} is an ISO week-numbering year, which is the year relative to
+the week, not the day. For example, the date 2016-01-01 would be
+represented as 2015-W53-5 (ISO week), because while the date is in the
+year 2016, the week is still part of the final week of 2015.
+\item W\strong{ww} is the week number, prefixed by the character "W". This ranges
+from 01 to 52 or 53, depending on whether or not the year has 52 or 53
+weeks.
+\item \strong{d} is a digit representing the weekday where 1 represents the first
+day of the week and 7 represents the last day of the week. The day of
+of the week (d) relative to the week start (s) is calculated using the
+ISO week day (i) via \code{d = 1L + ((i + (7L - s)) \%\% 7L)}.
+}
+
+The attribute \code{week_start} represents the first day of the week as an ISO
+week day. This defaults to 1, which is Monday. If, for example, an aweek
+object represented weeks starting on Friday, then the \code{week_start}
+attribute would be 5, which is Friday of the ISO week.
+
+Imprecise formats (YYYY-Www) are equivalent to the first day of the week.
+For example, 2015-W53 and 2015-W53-1 will be identical when converted to
+date.
+
+}
+}
+\note{
+when combining aweek objects together, you must ensure that they have
+the same week_start attribute. You can use \code{\link[=change_week_start]{change_week_start()}} to adjust
+it.
 }
 \examples{
 d <- as.Date("2018-12-20") + 1:40
@@ -78,5 +123,5 @@ w2
 c(w[1:5], w2)
 }
 \seealso{
-\code{\link[=date2week]{date2week()}}, \code{\link[=as.Date.aweek]{as.Date.aweek()}}
+\code{\link[=date2week]{date2week()}}, \code{\link[=get_aweek]{get_aweek()}}, \code{\link[=as.Date.aweek]{as.Date.aweek()}}, \code{\link[=change_week_start]{change_week_start()}}
 }
