@@ -139,6 +139,10 @@ print.aweek <- function(x, ...) {
     }
   }
 
+  if (inherits(value, "character")) {
+    value <- as.aweek(value, week_start = get_week_start(x)) 
+  }
+
   if (inherits(value, c("Date", "POSIXt"))) {
     value <- date2week(value, week_start = ws)
   }

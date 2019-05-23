@@ -37,18 +37,31 @@ test_that("subsetting returns an aweek object", {
 test_that("aweek objects can be ammended", {
 
   xx <- rev(x)
+  # ammended with missing
   xx[1] <- NA
   expect_identical(xx[1], as.aweek(NA_character_, week_start = get_week_start(xx)))
+
+  # ammended with aweek objects
   xx[1] <- x[1]
   expect_identical(xx[1], x[1])
+
+  # ammended with dates
   xx[2] <- as.Date(x[2])
   expect_identical(xx[2], x[2])
+
+  # ammended with ISO week character strings
   xx[3] <- as.character(x[3])
   expect_identical(xx[3], x[3])
 
+  # entire object can be replaced
+  xx[] <- x
+  expect_identical(xx, x)
+
   expect_error(y[1] <- x[1], "aweek objects must have the same week_start attribute")
+  expect_error(y[1] <- "1999-01-01", "The first incorrect string was: '1999-01-01'")
 
 })
+
 
 test_that("change_week_start() only works on aweek objects", {
 
