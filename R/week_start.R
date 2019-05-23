@@ -14,7 +14,8 @@
 #' 
 #' @export
 #' @rdname week_start
-#' @seealso [date2week()], [week2date()]
+#' @seealso [change_week_start()] for changing the week_start attribute of an
+#'   aweek object, [date2week()], [week2date()]
 #' @examples
 #' 
 #' # get the current definition of the week start
@@ -62,6 +63,9 @@ get_week_start <- function(w = NULL) {
 #' @noRd
 parse_week_start <- function(w) {
 
+  if (is.null(w)) {
+    stop("please provide a week_start")
+  }
   if (length(w) != 1) {
     stop("week_start must be length 1")
   }

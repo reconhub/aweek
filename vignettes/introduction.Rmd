@@ -236,8 +236,8 @@ If you want to combine different aweek objects, you must first change their
 `week_start` attribute:
 
 ```{r cweekweek}
-wed <- change_week_start(res$Wednesday)
-fri <- change_week_start(res$Friday)
+wed <- change_week_start(res$Wednesday, get_week_start())
+fri <- change_week_start(res$Friday, get_week_start())
 c(res$Sunday[1], wed[2], fri[3])
 ```
 

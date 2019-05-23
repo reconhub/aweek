@@ -42,5 +42,6 @@ w <- date2week("2019-05-04", week_start = "Sunday")
 get_week_start(w)
 }
 \seealso{
-\code{\link[=date2week]{date2week()}}, \code{\link[=week2date]{week2date()}}
+\code{\link[=change_week_start]{change_week_start()}} for changing the week_start attribute of an
+aweek object, \code{\link[=date2week]{date2week()}}, \code{\link[=week2date]{week2date()}}
 }

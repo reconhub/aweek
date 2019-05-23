@@ -123,7 +123,7 @@ test_that("null arguments throw an error", {
   expect_error(get_aweek(year = NULL), "all arguments must not be NULL")
   expect_error(get_aweek(day = NULL), "all arguments must not be NULL")
   expect_error(get_aweek(start = NULL), "all arguments must not be NULL")
-  expect_error(get_aweek(week_start = NULL), "week_start must be length 1")
+  expect_error(get_aweek(week_start = NULL), "please provide a week_start")
 
 })
 

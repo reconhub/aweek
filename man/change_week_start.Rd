@@ -4,14 +4,19 @@
 \alias{change_week_start}
 \title{Change the week start of an aweek object}
 \usage{
-change_week_start(x, week_start = get_week_start(), ...)
+change_week_start(x, week_start = NULL, ...)
 }
 \arguments{
-\item{x}{an aweek object}
+\item{x}{a \link{Date}, \link{POSIXt}, \link{character}, or any data that can be easily
+converted to a date with \code{\link[=as.POSIXlt]{as.POSIXlt()}}.}
 
-\item{week_start}{the new desired week_start}
+\item{week_start}{a number indicating the start of the week based on the ISO
+8601 standard from 1 to 7 where 1 = Monday OR an abbreviation of the
+weekdate in an English or current locale. \emph{Note: using a non-English locale
+may render your code non-portable.} Unlike \code{\link[=date2week]{date2week()}}, this defaults to
+NULL, which will throw an error unless you supply a value.}
 
-\item{...}{parameters passed to \code{\link[=date2week]{date2week()}}}
+\item{...}{arguments passed to \code{\link[=as.POSIXlt]{as.POSIXlt()}}, unused in all other cases.}
 }
 \description{
 This will change the week_start attribute of an aweek object and adjust the
@@ -35,5 +40,6 @@ identical(as.Date(s), as.Date(m))
 change_week_start(s, "Monday", floor_day = TRUE)
 }
 \seealso{
-\code{\link[=as.aweek]{as.aweek()}}, which wraps this function.
+\code{\link[=get_week_start]{get_week_start()}} for accessing the global and local \code{week_start}
+attribute, \code{\link[=as.aweek]{as.aweek()}}, which wraps this function.
 }
