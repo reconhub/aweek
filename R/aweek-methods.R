@@ -132,7 +132,7 @@ print.aweek <- function(x, ...) {
 
   ws <- attr(x, "week_start")
   cl <- oldClass(x)
-
+  
   if (inherits(value, "aweek")) {
     if (ws != attr(value, "week_start")) {
       stop("aweek objects must have the same week_start attribute")
@@ -145,6 +145,15 @@ print.aweek <- function(x, ...) {
 
   if (inherits(value, c("Date", "POSIXt"))) {
     value <- date2week(value, week_start = ws)
+  }
+
+  if (all(is.na(value))) {
+    value <- as.aweek(as.character(value), week_start = ws)
+  }
+
+  if (!inherits(value, "aweek")) {
+    stop(sprintf("Cannot add an object of class '%s' to an aweek object", 
+         paste(class(value), collapse = ", ")))
   }
 
   xx <- NextMethod("[")
