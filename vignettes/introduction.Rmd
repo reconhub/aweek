@@ -200,7 +200,7 @@ identical(as.Date(w), as.Date(ww))
 
 ```{r week2week, R.options=list(width = 100)}
 # create a table with all days in the week
-d <- dat[1] + 0:6
+d   <- as.Date("2019-03-03") + 0:6
 res <- lapply(weekdays(d), function(i) date2week(d, week_start = i))
 names(res) <- weekdays(d)
 data.frame(res)
@@ -211,7 +211,6 @@ All of these columns contain the same dates:
 ```{r week2week2date, R.options=list(width = 100)}
 data.frame(lapply(res, as.Date))
 ```
-
 
 Combining `aweek` objects
 -----------------------
@@ -241,7 +240,6 @@ fri <- change_week_start(res$Friday, get_week_start())
 c(res$Sunday[1], wed[2], fri[3])
 ```
 
-
 ### Dates can be appended to aweek objects
 
 Dates combined with aweek objects will will be automatically converted.
@@ -268,6 +266,80 @@ m
 as.Date(s[7:8])
 as.Date(m[7:8])
 ```
+
+Working with weeks in data frames
+=================================
+
+You may encounter a situation where you have a merged data frame with weeks
+starting on different days. This section will cover two situations where you
+may have weeks as numbers and weeks as ISO-week strings. First we will create
+our demonstration data that represents the same week with different `week_start`
+attributes.
+
+```{r date_a_frame}
+# create a table with all days in the week
+d    <- as.Date("2019-03-03") + 0:6
+res  <- lapply(weekdays(d), function(i) date2week(d, week_start = i))
+resn <- lapply(weekdays(d), function(i) date2week(d, week_start = i, numeric = TRUE))
+datf <- data.frame(wday = rep(weekdays(d), each = 7), 
+                   week = unlist(res), # note: unlist converts to character
+                   week_number = unlist(resn),
+                   year  = 2019,
+                   stringsAsFactors = FALSE)
+datf$day <- substring(datf$week, 10, 11)
+head(datf, 10)
+```
+
+To get the weeks (numbers or strings) to aweek objects, you should use the
+`start` argument to specify which day of the week they start on. Internally,
+this translates the week to their corresponding dates and then to aweek objects
+with the same `week_start` attribute (which defaults to `get_week_start()`).
+
+weeks as numbers
+------------
+
+Most commonly, you will have weeks across data sets represented by numbers. 
+These can be converted to aweek objects using the `get_aweek()` function 
+and to dates using the `get_date()` function:
+
+```{r get_aweek}
+datf$aweek <- with(datf, get_aweek(week = week_number, year = year, day = day, start = wday))
+datf$date  <- with(datf, get_date(week = week_number, year = year, day = day, start = wday))
+head(datf, 10)
+```
+
+These functions are also useful for constructing weeks or dates on the fly if
+you only have a week and a year:
+
+```{r}
+get_aweek(11, 2019)
+get_date(11, 2019)
+```
+
+```{r remove_things, include = FALSE}
+datf$aweek <- NULL
+datf$date  <- NULL
+```
+
+
+weeks as characters
+-------------------
+
+If you have weeks formatted as ISO-week strings, then you can convert to aweek
+objects using `as.aweek()`:
+
+```{r date_a_frame_2}
+datf$aweek <- with(datf, as.aweek(week, start = wday))
+head(datf, 10)
+str(datf)
+```
+
+We can tabulate them to see how they transformed:
+
+```{r tabluate_data_frame, R.options = list(width = 100)}
+print(with(datf, table(before = week, after = aweek)), zero.print = ".")
+```
+
 
 
 Converting weeks to dates with `week2date()`
