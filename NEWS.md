@@ -25,6 +25,7 @@ stability by removing unclear coercion methods
 * `as.list.aweek()` will now preserve the aweek structure in lists
 * `trunc.aweek()` will truncate the day to the first day of the week. 
 * `rep.aweek()` allows repeating aweek characters.
+* `factor_aweek()` allows the user to create aggregated aweek objects on the fly.
 
 ## BUG FIX
 
@@ -34,6 +35,8 @@ stability by removing unclear coercion methods
 
 * More checks that weekdays and weeks are within the correct bounds have been
   added. 
+* as.Date.aweek has been simplified to no longer rely on regex since the aweek
+  class is standard.
 
 # aweek 0.3.0
 
