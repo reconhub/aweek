@@ -140,14 +140,23 @@ print.aweek <- function(x, ...) {
   }
 
   if (inherits(value, "character")) {
-    value <- as.aweek(value, week_start = get_week_start(x)) 
+    value <- as.aweek(value, week_start = ws) 
+  }
+
+  if (inherits(value, "factor")) {
+    value <- as.character(value)
+    stop_if_not_aweek_string(value)
+    value <- get_aweek(week = int_week(value), 
+                       year = int_year(value), 
+                       day  = int_wday(value), 
+                       week_start = ws)
   }
 
   if (inherits(value, c("Date", "POSIXt"))) {
     value <- date2week(value, week_start = ws)
   }
 
-  if (all(is.na(value))) {
+  if (!is.null(value) && all(is.na(value))) {
     value <- as.aweek(as.character(value), week_start = ws)
   }
 
@@ -234,9 +243,9 @@ c.aweek <- function(..., recursive = FALSE, use.names = TRUE) {
   date_chars <- grepl("[0-9]{4}-[0-9]{2}-[0-9]{2}", res, perl = TRUE)
   res[date_chars] <- as.character(date2week(res[date_chars], week_start = week_start))
   # convert the characters to aweek objects
-  out <- get_aweek(week = substr(res, 7, 8), 
-                   year = substr(res, 1, 4),
-                   day  = substr(res, 10, 11),
+  out <- get_aweek(week = int_week(res),
+                   year = int_year(res),
+                   day  = int_wday(res),
                    start = week_start,
                    week_start = week_start
                    ) 

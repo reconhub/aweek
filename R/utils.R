@@ -53,8 +53,23 @@ date_from_week_matrix <- function(mat) {
   first_week <- january_1 - j1_day
 
   unname(first_week + (weeks_as_days + mat[, "day"] - 1L))
-
 }
+
+#' Template the week matrix
+#'
+#' @param n the number of rows for the matrix to have
+#' @noRd
+template_week_matrix <- function(n = 1L) {
+  out           <- matrix(NA_integer_, ncol = 4, nrow = n)
+  colnames(out) <- c("year", "week", "day", "week_start")
+  out
+}
+
+#' Helpers for getting the integer components of an aweek string
+#' @noRd
+int_year <- function(x) as.integer(substr(x, 1, 4))
+int_week <- function(x) as.integer(substr(x, 7, 8))
+int_wday <- function(x) as.integer(substr(x, 10, 10))
 
 #' Get the weekday given an integer/date and a start date
 #'

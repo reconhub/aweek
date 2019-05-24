@@ -57,8 +57,17 @@ test_that("aweek objects can be ammended", {
   xx[] <- x
   expect_identical(xx, x)
 
+  # factors can be ammended
+  xx[c(1, 8, 15)] <- factor_aweek(x[c(1, 8, 15)])
+  expect_identical(xx, x)
+
   expect_error(y[1] <- x[1], "aweek objects must have the same week_start attribute")
+
   expect_error(y[1] <- "1999-01-01", "The first incorrect string was: '1999-01-01'")
+
+  base <- "Cannot add an object of class '%s' to an aweek object"
+  expect_error(y[1] <- NULL, sprintf(base, "NULL"))
+  
 
 })
 
