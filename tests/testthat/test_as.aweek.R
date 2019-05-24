@@ -33,7 +33,7 @@ test_that("as.aweek takes into account the length of week_start", {
 
   x <- as.aweek("2018-W10-1", start = 1:2)
   y <- as.aweek("2018-W10-1", start = c("Mon", "Tue"))
-  z <- as.aweek(c("2018-W09-7", "2018-W10-1"), week_start = 1, start = "Tuesday")
+  z <- as.aweek(c("2018-W09-7", "2018-W10-1"), week_start = get_week_start() + runif(1), start = "Tuesday")
 
   expect_identical(x, y)
   expect_identical(y, z)

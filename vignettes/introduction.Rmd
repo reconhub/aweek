@@ -33,8 +33,8 @@ start on any day. You can use this package for any of the following:
  - create a factor of weeks that contains ordered levels that includes missing
    weeks. 
 
-Converting dates to weeks with `date2week()`
-==========================================
+Converting dates to weeks
+=========================
 
 You can convert dates to weeks starting on any day by using `date2week()` with
 the `week_start` argument. This argument can be a number from 1 to 7 representing
@@ -342,8 +342,8 @@ print(with(datf, table(before = week, after = aweek)), zero.print = ".")
 
 
 
-Converting weeks to dates with `week2date()`
-==========================================
+Converting weeks to dates
+=========================
 
 If you receive data that contains week definitions, you can convert it back to 
 a date if you know where the week starts.
