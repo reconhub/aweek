@@ -54,7 +54,7 @@ Note that this requires the package *remotes* installed.
    a numeric date. 
  - `get_aweek()` generates an aweek object from a week number
  - `get_date()` converts a week number to a date
- - `as.aweek()` converts dates and characters to aweek objects.
+ - `as.aweek()` converts dates, characters, and factors to aweek objects.
  - Dependencies only on R itself.
 
 <!-- -->
@@ -90,6 +90,29 @@ date2week(onset, week_start = 6) # EPI week starting on Saturday
 x <- date2week(onset, week_start = "sat", floor_day = TRUE) # truncate to just the weeks
 table(x)
 table(week2date(x))
+```
+
+## Weeks to dates
+
+If you have numeric weeks, you can rapidly convert to dates with `get_date()`.
+Here are all the dates for the first day of last 10 ISO weeks of 2015:
+
+```{r get_date}
+get_date(week = 44:53, year = 2015)
+
+# you can also use this to generate aweek objects
+get_aweek(week = 44:53, year = 2015)
+```
+
+If you have weeks recorded from different data sets that start on different days,
+you can account for that by using the `start` option. For example, 2018-01-01 is
+a Monday, but 2018-W01-1 starting on a Sunday is 2017-12-31
+
+```{r different_starts}
+get_date(week = 1, year = 2018, day = 1, start = c("Sunday", "Monday"))
+
+# get_aweek will align them to the default week_start
+get_aweek(week = 1, year = 2018, day = 1, start = c("Sunday", "Monday"))
 ```
 
 
