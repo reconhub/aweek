@@ -8,7 +8,8 @@
 #' @inheritParams date2week
 #' @return an [aweek][aweek-class] object
 #'
-#' @seealso [get_aweek()] for converting numeric weeks to weeks or dates,
+#' @seealso ["aweek-class"][aweek-class] for details on the aweek object, 
+#'   [get_aweek()] for converting numeric weeks to weeks or dates,
 #'   [date2week()] for converting dates to weeks, [week2date()] for converting
 #'   weeks to dates.
 #'
@@ -30,6 +31,9 @@
 #'      you should use the `start` parameter to reflect this. Internally, the
 #'      weeks will first be converted to dates with their respective starts and
 #'      then converted back to weeks, unified under the `week_start` parameter.
+#' 
+#' @note factors are first converted to characters before they are converted to
+#'   aweek objects.
 #'      
 #' @export
 #' @examples
@@ -115,9 +119,9 @@ as.aweek.character <- function(x, week_start = get_week_start(), start = week_st
   } else {
     # each of these characters represents a different week, so they need to be
     # converted separately.
-    x <- get_aweek(week = substr(x, 7, 8), 
-                   year = substr(x, 1, 4),
-                   day  = substr(x, 10, 11),
+    x <- get_aweek(week = int_week(x), 
+                   year = int_year(x),
+                   day  = int_wday(x),
                    start = start,
                    week_start = week_start
                   )
@@ -137,6 +141,15 @@ as.aweek.character <- function(x, week_start = get_week_start(), start = week_st
   
   x
 }
+
+#' @rdname as.aweek
+#' @export
+as.aweek.factor <- function(x, week_start = get_week_start(), ...) {
+
+  as.aweek(as.character(x), week_start = week_start, ...)
+
+}
+
 
 #' @export
 #' @rdname as.aweek

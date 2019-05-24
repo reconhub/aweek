@@ -15,8 +15,9 @@ stability by removing unclear coercion methods
 
 * `change_week_start()` allows the user to change the `week_start` attribute of
   an aweek object, adjusting the weeks to match the new attribute accordingly.
-* `make_aweek()` can generate aweek objects from a vector of week numbers. It has
+* `get_aweek()` can generate aweek objects from a vector of week numbers. It has
   the ability to take into account different week start times. 
+* `get_date()` is similar to `get_aweek()`, but returns dates istead.
 * `as.aweek()` allows users to create aweek object directly from characters with
   validation. It also allows for dates by passing to `date2week()`.
 * `as.data.frame.aweek()` is a new function that allows aweek objects to be

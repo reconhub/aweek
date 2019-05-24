@@ -44,13 +44,25 @@ test_that("as.aweek takes into account the length of week_start", {
 
 test_that("as.aweek correctly converts characters", {
 
-  expect_is(as.aweek(c(NA, "2018-W10-1")), "aweek")
-  expect_identical(as.aweek(c(NA, "2018-W10-1")), as.aweek(c(NA, "2018-W10-1"), start = "Monday"))
-  expect_is(as.aweek(c(NA, "2018-W10-1"), factor = TRUE, floor_day = TRUE), "aweek")
-  expect_is(as.aweek(c(NA, "2018-W10-1"), factor = TRUE, floor_day = TRUE), "factor")
+  x <- c(NA, "2018-W10-1")
+  expect_is(as.aweek(x), "aweek")
+  expect_identical(as.aweek(x), as.aweek(x, start = "Monday"))
+  expect_is(as.aweek(x, factor = TRUE, floor_day = TRUE), "aweek")
+  expect_is(as.aweek(x, factor = TRUE, floor_day = TRUE), "factor")
 
 })
 
+
+test_that("as.aweek correctly converts factors", {
+
+  
+  f <- factor(c(NA, "2018-W10-1"))
+  expect_is(as.aweek(f), "aweek")
+  expect_identical(as.aweek(f), as.aweek(f, start = "Monday"))
+  expect_is(as.aweek(f, factor = TRUE, floor_day = TRUE), "aweek")
+  expect_is(as.aweek(f, factor = TRUE, floor_day = TRUE), "factor")
+
+})
 
 test_that("as.aweek correctly converts dates", {
 

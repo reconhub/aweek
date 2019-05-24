@@ -52,6 +52,9 @@ Note that this requires the package *remotes* installed.
    any day. 
  - `week2date()` / `as.Date()` does the backwards conversion from (YYYY-Www(-d)) to
    a numeric date. 
+ - `get_aweek()` generates an aweek object from a week number
+ - `get_date()` converts a week number to a date
+ - `as.aweek()` converts dates and characters to aweek objects.
  - Dependencies only on R itself.
 
 <!-- -->
