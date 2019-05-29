@@ -5,6 +5,7 @@
 \alias{as.aweek.default}
 \alias{as.aweek.NULL}
 \alias{as.aweek.character}
+\alias{as.aweek.factor}
 \alias{as.aweek.Date}
 \alias{as.aweek.POSIXt}
 \alias{as.aweek.aweek}
@@ -18,6 +19,8 @@ as.aweek(x, week_start = get_week_start(), ...)
 
 \method{as.aweek}{character}(x, week_start = get_week_start(),
   start = week_start, ...)
+
+\method{as.aweek}{factor}(x, week_start = get_week_start(), ...)
 
 \method{as.aweek}{Date}(x, week_start = get_week_start(), ...)
 
@@ -69,6 +72,10 @@ weeks will first be converted to dates with their respective starts and
 then converted back to weeks, unified under the \code{week_start} parameter.
 }
 }
+\note{
+factors are first converted to characters before they are converted to
+aweek objects.
+}
 \examples{
 
 # aweek objects can only be created from valid weeks:
@@ -97,6 +104,7 @@ as.aweek(x)
 as.aweek(x, week_start = 7)
 }
 \seealso{
+\link[=aweek-class]{"aweek-class"} for details on the aweek object,
 \code{\link[=get_aweek]{get_aweek()}} for converting numeric weeks to weeks or dates,
 \code{\link[=date2week]{date2week()}} for converting dates to weeks, \code{\link[=week2date]{week2date()}} for converting
 weeks to dates.

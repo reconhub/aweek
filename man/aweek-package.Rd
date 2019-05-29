@@ -134,4 +134,3 @@ Useful links:
 \strong{Maintainer}: Zhian N. Kamvar \email{zkamvar@gmail.com}
 
 }
-\keyword{internal}

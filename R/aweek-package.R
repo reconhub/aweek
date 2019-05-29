@@ -72,8 +72,9 @@
 #' are trivial to add to aweek objects. See the [aweek-class][aweek-class]
 #' documentation for details.
 #'
-#' 
-#' @keywords internal
+#'
+#' @name aweek-package
+#' @docType package 
 #' @examples
 #' # At the beginning of your analysis, set the week start to the weeks you want
 #' # to use for reporting
@@ -105,7 +106,6 @@
 #'
 #' # Don't forget to reset the week_start at the end
 #' set_week_start(ow)
-
 "_PACKAGE"
 
 # The following block is used by usethis to automatically manage
