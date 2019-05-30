@@ -55,6 +55,8 @@ Note that this requires the package *remotes* installed.
  - `get_aweek()` generates an aweek object from a week number
  - `get_date()` converts a week number to a date
  - `as.aweek()` converts dates, characters, and factors to aweek objects.
+ - `factor_aweek()` creates an aggregated factor of weeks where the levels
+   contain all weeks within range.
  - Dependencies only on R itself.
 
 <!-- -->
