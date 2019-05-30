@@ -32,11 +32,9 @@
 
 <meta property="og:title" content="The aweek class — print.aweek" />
 
-<meta property="og:description" content="The method c.aweek() will always return an aweek object with
-the same week_start attribute as the first object in the list. If the
-first object is also a factor, then the output will be re-leveled. If
-week-like characters are presented (e.g. &quot;2019-W10-1&quot;), then these are
-assumed to have the same week_start as the first object." />
+<meta property="og:description" content="The aweek class is a character or factor in the format YYYY-Www(-d) with a
+&quot;week_start&quot; attribute containing an integer specifying which day of the ISO
+8601 week each week should begin." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -67,7 +65,7 @@ assumed to have the same week_start as the first object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">aweek</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9000</span>
       </span>
     </div>
 
@@ -120,11 +118,9 @@ assumed to have the same week_start as the first object." />
 
     <div class="ref-description">
     
-    <p>The method <code>c.aweek()</code> will always return an <code>aweek</code> object with
-the same <code>week_start</code> attribute as the first object in the list. If the
-first object is also a factor, then the output will be re-leveled. If
-week-like characters are presented (e.g. "2019-W10-1"), then these are
-assumed to have the same <code>week_start</code> as the first object.</p>
+    <p>The aweek class is a character or factor in the format YYYY-Www(-d) with a
+"week_start" attribute containing an integer specifying which day of the ISO
+8601 week each week should begin.</p>
     
     </div>
 
@@ -133,6 +129,21 @@ print(x, ...)
 
 # S3 method for aweek
 [(x, i)
+
+# S3 method for aweek
+[[(x, i)
+
+# S3 method for aweek
+[(x, i) <- value
+
+# S3 method for aweek
+as.list(x, ...)
+
+# S3 method for aweek
+trunc(x, ...)
+
+# S3 method for aweek
+rep(x, ...)
 
 # S3 method for aweek
 c(..., recursive = FALSE, use.names = TRUE)</pre>
@@ -146,11 +157,15 @@ c(..., recursive = FALSE, use.names = TRUE)</pre>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>a series of <code>aweek</code> objects (unused in <code>print.aweek()</code>)</p></td>
+      <td><p>a series of <code>aweek</code> objects, characters, or Dates, (unused in <code>print.aweek()</code>)</p></td>
     </tr>
     <tr>
       <th>i</th>
       <td><p>index for subsetting an aweek object.</p></td>
+    </tr>
+    <tr>
+      <th>value</th>
+      <td><p>a value to add or replace in an aweek object</p></td>
     </tr>
     <tr>
       <th>recursive, use.names</th>
@@ -164,14 +179,67 @@ c(..., recursive = FALSE, use.names = TRUE)</pre>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The aweek class is a character or factor in the format YYYY-Www(-d) with a
-"week_start" attribute containing an integer specifying which day of the ISO
-8601 week each week should begin. This documentation shows how to print or
-subset the object.</p>
+    <p>Weeks differ in their start dates depending on context. The ISO
+8601 standard specifies that Monday starts the week
+(<a href='https://en.wikipedia.org/wiki/ISO_week_date'>https://en.wikipedia.org/wiki/ISO_week_date</a>) while the US CDC uses
+Sunday as the start of the week
+(<a href='https://wwwn.cdc.gov/nndss/document/MMWR_Week_overview.pdf'>https://wwwn.cdc.gov/nndss/document/MMWR_Week_overview.pdf</a>). For
+example, MSF has varying start dates depending on country in order to
+better coordinate response.</p>
+<p>While there are packages that provide conversion for ISOweeks and epiweeks,
+these do not provide seamless conversion from dates to epiweeks with
+non-standard start dates. This package provides a lightweight utility to
+be able to convert each day.</p>
+<h3>Calculation of week numbers</h3>
+    Week numbers are calculated in three steps:
+<ol>
+<li><p>Find the day of the week, relative to the week_start (d). The day of the
+week (d) relative to the week start (s) is calculated using the ISO week
+day (i) via <code>d = 1L + ((i + (7L - s)) %% 7L)</code>.</p></li>
+<li><p>Find the date that represents midweek (m). The date that represents
+midweek is found by subtracting the day of the week (d) from 4 and
+adding that number of days to the current date: <code>m = date + (4 - d)</code>.</p></li>
+<li><p>Find the week number (w) by counting the number of days since 1 January
+to (m), and use integer division by 7: <code>w = 1L + ((m - yyyy-01-01) %/% 7)</code></p></li>
+</ol>
+    For the weeks around 1 January, the year is determined by the week number.
+If the month is January, but the week number is 52 or 53, then the year for
+the week (YYYY) is the calendar year (yyyy) minus 1. However, if the month
+is December, but the week number is 1, then the year for the week (YYYY) is
+the calendar year (yyyy) plus 1.
+    <h3>Structure of the aweek object</h3>
+    The aweek object is a character vector in either the precise ISO week
+format (YYYY-Www-d) or imprecise ISO week format (YYYY-Www) with
+a <code>week_start</code> attribute indicating which ISO week day the week begins.
+The precise ISO week format can be broken down like this:
+<ul>
+<li><p><strong>YYYY</strong> is an ISO week-numbering year, which is the year relative to
+the week, not the day. For example, the date 2016-01-01 would be
+represented as 2015-W53-5 (ISO week), because while the date is in the
+year 2016, the week is still part of the final week of 2015.</p></li>
+<li><p>W<strong>ww</strong> is the week number, prefixed by the character "W". This ranges
+from 01 to 52 or 53, depending on whether or not the year has 52 or 53
+weeks.</p></li>
+<li><p><strong>d</strong> is a digit representing the weekday where 1 represents the first
+day of the week and 7 represents the last day of the week. #'
+The attribute <code>week_start</code> represents the first day of the week as an ISO
+week day. This defaults to 1, which is Monday. If, for example, an aweek
+object represented weeks starting on Friday, then the <code>week_start</code>
+attribute would be 5, which is Friday of the ISO week.</p></li>
+</ul>
+    Imprecise formats (YYYY-Www) are equivalent to the first day of the week.
+For example, 2015-W53 and 2015-W53-1 will be identical when converted to
+date.
+    
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>when combining aweek objects together, you must ensure that they have
+the same week_start attribute. You can use <code><a href='change_week_start.html'>change_week_start()</a></code> to adjust
+it.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='date2week.html'>date2week()</a></code>, <code><a href='aweek-conversions.html'>as.Date.aweek()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='date2week.html'>date2week()</a></code>, <code><a href='get_aweek.html'>get_aweek()</a></code>, <code><a href='aweek-conversions.html'>as.Date.aweek()</a></code>, <code><a href='change_week_start.html'>change_week_start()</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -190,32 +258,15 @@ subset the object.</p>
 <span class='no'>w</span>[<span class='fl'>1</span>:<span class='fl'>10</span>]</div><div class='output co'>#&gt; &lt;aweek start: Sunday&gt;
 #&gt;  [1] "2018-W51-6" "2018-W51-7" "2018-W52-1" "2018-W52-2" "2018-W52-3"
 #&gt;  [6] "2018-W52-4" "2018-W52-5" "2018-W52-6" "2018-W52-7" "2019-W01-1"</div><div class='input'>
-<span class='co'># Combining multiple aweek objects</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>w</span>[<span class='fl'>1</span>], <span class='no'>w</span>[<span class='fl'>3</span>], <span class='no'>w</span>[<span class='fl'>5</span>])</div><div class='output co'>#&gt; &lt;aweek start: Sunday&gt;
-#&gt; [1] "2018-W51-6" "2018-W52-1" "2018-W52-3"</div><div class='input'>
-<span class='co'># differing week_start days will default to the attribute of the first </span>
-<span class='co'># aweek object</span>
-<span class='no'>mon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='date2week.html'>date2week</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.time'>Sys.Date</a></span>(), <span class='kw'>week_start</span> <span class='kw'>=</span> <span class='st'>"Monday"</span>)
+<span class='co'># Combining multiple aweek objects will only work if they have the same</span>
+<span class='co'># week_start day</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>w</span>[<span class='fl'>1</span>], <span class='no'>w</span>[<span class='fl'>3</span>], <span class='no'>w</span>[<span class='fl'>5</span>], <span class='fu'><a href='as.aweek.html'>as.aweek</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.Date'>as.Date</a></span>(<span class='st'>"2018-12-01"</span>), <span class='kw'>week_start</span> <span class='kw'>=</span> <span class='st'>"Sunday"</span>))</div><div class='output co'>#&gt; &lt;aweek start: Sunday&gt;
+#&gt; [1] "2018-W51-6" "2018-W52-1" "2018-W52-3" "2018-W48-7"</div><div class='input'>
+<span class='co'># differing week_start days will throw an error</span>
+<span class='no'>mon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='date2week.html'>date2week</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.Date'>as.Date</a></span>(<span class='st'>"2018-12-01"</span>), <span class='kw'>week_start</span> <span class='kw'>=</span> <span class='st'>"Monday"</span>)
 <span class='no'>mon</span></div><div class='output co'>#&gt; &lt;aweek start: Monday&gt;
-#&gt; [1] "2019-W19-2"</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>w</span>, <span class='no'>mon</span>)</div><div class='output co'>#&gt; &lt;aweek start: Sunday&gt;
-#&gt;  [1] "2018-W51-6" "2018-W51-7" "2018-W52-1" "2018-W52-2" "2018-W52-3"
-#&gt;  [6] "2018-W52-4" "2018-W52-5" "2018-W52-6" "2018-W52-7" "2019-W01-1"
-#&gt; [11] "2019-W01-2" "2019-W01-3" "2019-W01-4" "2019-W01-5" "2019-W01-6"
-#&gt; [16] "2019-W01-7" "2019-W02-1" "2019-W02-2" "2019-W02-3" "2019-W02-4"
-#&gt; [21] "2019-W02-5" "2019-W02-6" "2019-W02-7" "2019-W03-1" "2019-W03-2"
-#&gt; [26] "2019-W03-3" "2019-W03-4" "2019-W03-5" "2019-W03-6" "2019-W03-7"
-#&gt; [31] "2019-W04-1" "2019-W04-2" "2019-W04-3" "2019-W04-4" "2019-W04-5"
-#&gt; [36] "2019-W04-6" "2019-W04-7" "2019-W05-1" "2019-W05-2" "2019-W05-3"
-#&gt; [41] "2019-W19-3"</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>mon</span>, <span class='no'>w</span>)</div><div class='output co'>#&gt; &lt;aweek start: Monday&gt;
-#&gt;  [1] "2019-W19-2" "2018-W51-5" "2018-W51-6" "2018-W51-7" "2018-W52-1"
-#&gt;  [6] "2018-W52-2" "2018-W52-3" "2018-W52-4" "2018-W52-5" "2018-W52-6"
-#&gt; [11] "2018-W52-7" "2019-W01-1" "2019-W01-2" "2019-W01-3" "2019-W01-4"
-#&gt; [16] "2019-W01-5" "2019-W01-6" "2019-W01-7" "2019-W02-1" "2019-W02-2"
-#&gt; [21] "2019-W02-3" "2019-W02-4" "2019-W02-5" "2019-W02-6" "2019-W02-7"
-#&gt; [26] "2019-W03-1" "2019-W03-2" "2019-W03-3" "2019-W03-4" "2019-W03-5"
-#&gt; [31] "2019-W03-6" "2019-W03-7" "2019-W04-1" "2019-W04-2" "2019-W04-3"
-#&gt; [36] "2019-W04-4" "2019-W04-5" "2019-W04-6" "2019-W04-7" "2019-W05-1"
-#&gt; [41] "2019-W05-2"</div><div class='input'>
+#&gt; [1] "2018-W48-6"</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>w</span>, <span class='no'>mon</span>))</div><div class='output co'>#&gt; Error in c.aweek(w, mon) : 
+#&gt;   All aweek objects must have the same week_start attribute. Please use change_week_start() to adjust the week_start attribute if you wish to combine these objects.</div><div class='input'>
 <span class='co'># combining Dates will be coerced to aweek objects under the same rules</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>w</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.time'>Sys.Date</a></span>())</div><div class='output co'>#&gt; &lt;aweek start: Sunday&gt;
 #&gt;  [1] "2018-W51-6" "2018-W51-7" "2018-W52-1" "2018-W52-2" "2018-W52-3"
@@ -226,13 +277,13 @@ subset the object.</p>
 #&gt; [26] "2019-W03-3" "2019-W03-4" "2019-W03-5" "2019-W03-6" "2019-W03-7"
 #&gt; [31] "2019-W04-1" "2019-W04-2" "2019-W04-3" "2019-W04-4" "2019-W04-5"
 #&gt; [36] "2019-W04-6" "2019-W04-7" "2019-W05-1" "2019-W05-2" "2019-W05-3"
-#&gt; [41] "2019-W19-3"</div><div class='input'>
+#&gt; [41] "2019-W22-5"</div><div class='input'>
 <span class='co'># truncated aweek objects will be un-truncated</span>
-<span class='no'>w2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='date2week.html'>date2week</a></span>(<span class='no'>d</span>[<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='kw'>week_start</span> <span class='kw'>=</span> <span class='st'>"Monday"</span>, <span class='kw'>floor_day</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>w2</span></div><div class='output co'>#&gt; &lt;aweek start: Monday&gt;
-#&gt; [1] "2018-W51" "2018-W51" "2018-W51" "2018-W52" "2018-W52"</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>w</span>[<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='no'>w2</span>)</div><div class='output co'>#&gt; &lt;aweek start: Sunday&gt;
+<span class='no'>w2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='date2week.html'>date2week</a></span>(<span class='no'>d</span>[<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='kw'>week_start</span> <span class='kw'>=</span> <span class='st'>"Sunday"</span>, <span class='kw'>floor_day</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>w2</span></div><div class='output co'>#&gt; &lt;aweek start: Sunday&gt;
+#&gt; [1] "2018-W51" "2018-W51" "2018-W52" "2018-W52" "2018-W52"</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>w</span>[<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='no'>w2</span>)</div><div class='output co'>#&gt; &lt;aweek start: Sunday&gt;
 #&gt;  [1] "2018-W51-6" "2018-W51-7" "2018-W52-1" "2018-W52-2" "2018-W52-3"
-#&gt;  [6] "2018-W51-2" "2018-W51-2" "2018-W51-2" "2018-W52-2" "2018-W52-2"</div></pre>
+#&gt;  [6] "2018-W51-1" "2018-W51-1" "2018-W52-1" "2018-W52-1" "2018-W52-1"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -242,6 +293,8 @@ subset the object.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#note">Note</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

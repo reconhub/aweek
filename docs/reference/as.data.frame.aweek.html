@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • aweek</title>
+<title>Convert aweek objects to a data frame — as.data.frame.aweek • aweek</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,10 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Convert aweek objects to a data frame — as.data.frame.aweek" />
+
+<meta property="og:description" content="Convert aweek objects to a data frame" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -47,7 +50,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -104,96 +107,72 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Convert aweek objects to a data frame</h1>
+    
+    <div class="hidden name"><code>as.data.frame.aweek.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>Convert aweek objects to a data frame</p>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="as.aweek.html">as.aweek()</a></code> </p>
-        </td>
-        <td><p>Convert characters or dates to aweek objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="as.data.frame.aweek.html">as.data.frame(<i>&lt;aweek&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Convert aweek objects to a data frame</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="aweek-class.html">print(<i>&lt;aweek&gt;</i>)</a></code> <code><a href="aweek-class.html">`[`(<i>&lt;aweek&gt;</i>)</a></code> <code><a href="aweek-class.html">`[[`(<i>&lt;aweek&gt;</i>)</a></code> <code><a href="aweek-class.html">`[<-`(<i>&lt;aweek&gt;</i>)</a></code> <code><a href="aweek-class.html">as.list(<i>&lt;aweek&gt;</i>)</a></code> <code><a href="aweek-class.html">trunc(<i>&lt;aweek&gt;</i>)</a></code> <code><a href="aweek-class.html">rep(<i>&lt;aweek&gt;</i>)</a></code> <code><a href="aweek-class.html">c(<i>&lt;aweek&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>The aweek class</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="aweek-conversions.html">as.Date(<i>&lt;aweek&gt;</i>)</a></code> <code><a href="aweek-conversions.html">as.POSIXlt(<i>&lt;aweek&gt;</i>)</a></code> <code><a href="aweek-conversions.html">as.character(<i>&lt;aweek&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Convert aweek objects to characters or dates</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="aweek-package.html">aweek-package</a></code> </p>
-        </td>
-        <td><p>Convert dates to weeks and back again</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="change_week_start.html">change_week_start()</a></code> </p>
-        </td>
-        <td><p>Change the week start of an aweek object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="date2week.html">date2week()</a></code> <code><a href="date2week.html">week2date()</a></code> </p>
-        </td>
-        <td><p>Convert date to a an arbitrary week definition</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="factor_aweek.html">factor_aweek()</a></code> </p>
-        </td>
-        <td><p>Coerce an aweek object to factor to include missing weeks</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_aweek.html">get_aweek()</a></code> <code><a href="get_aweek.html">get_date()</a></code> </p>
-        </td>
-        <td><p>Convert week numbers to dates or aweek objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="week_start.html">set_week_start()</a></code> <code><a href="week_start.html">get_week_start()</a></code> </p>
-        </td>
-        <td><p>Get and set the global week_start variable</p></td>
-      </tr>
-    </tbody>
+    <pre class="usage"><span class='co'># S3 method for aweek</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>an aweek object</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>unused</p></td>
+    </tr>
     </table>
-  </div>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>a data frame with an aweek column</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='date2week.html'>date2week()</a></code> <code><a href='aweek-class.html'>print.aweek()</a></code></p></div>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='no'>d</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.Date'>as.Date</a></span>(<span class='st'>"2019-03-25"</span>) + <span class='fl'>0</span>:<span class='fl'>6</span>
+<span class='no'>w</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='date2week.html'>date2week</a></span>(<span class='no'>d</span>, <span class='st'>"Sunday"</span>)
+<span class='no'>dw</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>date</span> <span class='kw'>=</span> <span class='no'>d</span>, <span class='kw'>week</span> <span class='kw'>=</span> <span class='no'>w</span>)
+<span class='no'>dw</span></div><div class='output co'>#&gt;         date       week
+#&gt; 1 2019-03-25 2019-W13-2
+#&gt; 2 2019-03-26 2019-W13-3
+#&gt; 3 2019-03-27 2019-W13-4
+#&gt; 4 2019-03-28 2019-W13-5
+#&gt; 5 2019-03-29 2019-W13-6
+#&gt; 6 2019-03-30 2019-W13-7
+#&gt; 7 2019-03-31 2019-W14-1</div><div class='input'><span class='no'>dw</span>$<span class='no'>week</span></div><div class='output co'>#&gt; &lt;aweek start: Sunday&gt;
+#&gt; [1] "2019-W13-2" "2019-W13-3" "2019-W13-4" "2019-W13-5" "2019-W13-6"
+#&gt; [6] "2019-W13-7" "2019-W14-1"</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 
