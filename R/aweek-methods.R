@@ -23,6 +23,26 @@
 #'   non-standard start dates. This package provides a lightweight utility to
 #'   be able to convert each day.
 #'
+#'   \subsection{Calculation of week numbers}{
+#'
+#'   Week numbers are calculated in three steps:
+#'
+#'   1. Find the day of the week, relative to the week_start (d). The day of the
+#'      week (d) relative to the week start (s) is calculated using the ISO week
+#'      day (i) via `d = 1L + ((i + (7L - s)) %% 7L)`. 
+#'   2. Find the date that represents midweek (m). The date that represents 
+#'      midweek is found by subtracting the day of the week (d) from 4 and
+#'      adding that number of days to the current date: `m = date + (4 - d)`.
+#'   3. Find the week number (w) by counting the number of days since 1 January
+#'      to (m), and use integer division by 7: `w = 1L + ((m - yyyy-01-01) %/% 7)`
+#'
+#'   For the weeks around 1 January, the year is determined by the week number.
+#'   If the month is January, but the week number is 52 or 53, then the year for
+#'   the week (YYYY) is the calendar year (yyyy) minus 1. However, if the month
+#'   is December, but the week number is 1, then the year for the week (YYYY) is
+#'   the calendar year (yyyy) plus 1.
+#'
+#'   }
 #'   \subsection{Structure of the aweek object}{
 #'   
 #'   The aweek object is a character vector in either the precise ISO week
@@ -38,10 +58,7 @@
 #'      from 01 to 52 or 53, depending on whether or not the year has 52 or 53
 #'      weeks.
 #'    - **d** is a digit representing the weekday where 1 represents the first
-#'      day of the week and 7 represents the last day of the week. The day of
-#'      of the week (d) relative to the week start (s) is calculated using the
-#'      ISO week day (i) via `d = 1L + ((i + (7L - s)) %% 7L)`. 
-#'
+#'      day of the week and 7 represents the last day of the week. #'
 #'    The attribute `week_start` represents the first day of the week as an ISO
 #'    week day. This defaults to 1, which is Monday. If, for example, an aweek
 #'    object represented weeks starting on Friday, then the `week_start`

@@ -136,6 +136,7 @@
 #' date2week(dat, "Sunday")
 date2week <- function(x, week_start = get_week_start(), floor_day = factor, numeric = FALSE, factor = FALSE, ...) {
 
+  # Cromulence checks ----------------------------------------------------------
   format_exists <- !is.null(list(...)$format)
   nas  <- is.na(x)
   nams <- names(x)
@@ -152,6 +153,7 @@ date2week <- function(x, week_start = get_week_start(), floor_day = factor, nume
       stop(sprintf(msg, x[!iso_std][1]))
     }
   }
+
   x  <- tryCatch(as.POSIXlt(x, ...), error = function(e) e)
 
   if (inherits(x, "error")) {
@@ -160,34 +162,45 @@ date2week <- function(x, week_start = get_week_start(), floor_day = factor, nume
     stop(sprintf(msg, deparse(mc[["x"]]), x$message))
   }
 
-  wday     <- as.integer(x$wday)# + 1L # weekdays in R run 0:6, 0 being Sunday
-
-  # stop_if_not_weekday(wday)
-
-  wday     <- get_wday(wday, week_start)
+  # Conversion from date to week -----------------------------------------------
+  #
+  # Step 1: Get the weekday as an integer in pseudo ISO 8601 ---------
+  wday     <- as.integer(x$wday) # weekdays in R run 0:6, 0 being Sunday
   the_date <- as.Date.POSIXlt(x)
-  the_week_bounds <- the_date + (4L - wday)
-  the_week <- week_in_year(the_week_bounds)
 
-  # adjust for cases where the year is different than the date
-  december <- format(the_date, "%m") == "12"
-  january  <- format(the_date, "%m") == "01"
-  boundary_adjustment <- integer(length(the_date))
-  
-  # Shift the year backwards if the date is in january, but the week is not
-  boundary_adjustment[january  & the_week >= 52] <- -1L
-
-  # Shift the year forwards if the date is in december, but it's the first week
-  boundary_adjustment[december & the_week == 1]  <- 1L
+  # Step 2: Find week and weekday ------------------------------------ 
+  # This part is important for accurately assessing the week. It shifts the date
+  # to the middle of the relative week so that it can accurately be counted.
+  # 
+  # If the weekday is in the first three days of the week, then the middle of
+  # the week is in the future, but if the weekday is in the last three days of
+  # the week, then the middle of the week has already past and the date needs
+  # to be shifted backward.
+  wday     <- get_wday(wday, week_start)
+  midweek  <- the_date + (4L - wday)
+  the_week <- week_in_year(midweek)
 
   if (!numeric) {
+    # Adding years to weeks ----------------------------------------------------
+    # Step 1: find the months of each date -----------------------------
+    december <- format(the_date, "%m") == "12"
+    january  <- format(the_date, "%m") == "01"
+    boundary_adjustment <- integer(length(the_date))
+    
+    # Step 2: Shift the years based on month/week agreement ------------
+    # Shift the year backwards if the date is in january, but the week is not
+    boundary_adjustment[january  & the_week >= 52] <- -1L
+    # Shift the year forwards if the date is in december, but it's the first week
+    boundary_adjustment[december & the_week == 1]  <- 1L
+
+    # Step 3: Create ISO week strings ----------------------------------
     the_year <- as.integer(format(the_date, "%Y"))
     the_week <- sprintf("%04d-W%02d-%d", 
                         the_year + boundary_adjustment,
                         the_week,
                         wday
                        )
-    # set the missing data back to missing
+    # set the missing data back to missing -----------------------------
     the_week[nas] <- NA
 
     class(the_week) <- c("aweek", oldClass(the_week))

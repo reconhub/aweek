@@ -91,25 +91,12 @@ int_wday <- function(x) as.integer(substr(x, 10, 10))
 #' get_wday(as.Date("2007-01-01"), 7) 
 #' get_wday(1, 5) # Monday is the fourth day in a Friday - Saturday week
 get_wday <- function(x, s) { 
+
   if (inherits(x, c("Date", "POSIXt"))) {
     x <- as.integer(as.POSIXlt(x, tz = "UTC")$wday) # + 1L)
   }
 
-  # # avoid missing values that mess up the ifelse
-  # fullx <- !is.na(x)
-  # fulls <- !is.na(s)
-
   return(1L + (x + (7L - s)) %% 7L)
-  # if the week_start is 7, then just return the weekday since it will already
-  # be relative. 
-  # res   <- ifelse(fullx & fulls & s != 7L, 
-  #                 yes = 1L + (x + (6L - s)) %% 7L, 
-  #                 no = x)
-
-  # # ensure that the missing values are represented as missing since they might
-  # # leak through here.
-  # res[!fullx | !fulls] <- NA
-  # res
 
 }
 

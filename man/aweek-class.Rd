@@ -61,6 +61,27 @@ these do not provide seamless conversion from dates to epiweeks with
 non-standard start dates. This package provides a lightweight utility to
 be able to convert each day.
 
+\subsection{Calculation of week numbers}{
+
+Week numbers are calculated in three steps:
+\enumerate{
+\item Find the day of the week, relative to the week_start (d). The day of the
+week (d) relative to the week start (s) is calculated using the ISO week
+day (i) via \code{d = 1L + ((i + (7L - s)) \%\% 7L)}.
+\item Find the date that represents midweek (m). The date that represents
+midweek is found by subtracting the day of the week (d) from 4 and
+adding that number of days to the current date: \code{m = date + (4 - d)}.
+\item Find the week number (w) by counting the number of days since 1 January
+to (m), and use integer division by 7: \code{w = 1L + ((m - yyyy-01-01) \%/\% 7)}
+}
+
+For the weeks around 1 January, the year is determined by the week number.
+If the month is January, but the week number is 52 or 53, then the year for
+the week (YYYY) is the calendar year (yyyy) minus 1. However, if the month
+is December, but the week number is 1, then the year for the week (YYYY) is
+the calendar year (yyyy) plus 1.
+
+}
 \subsection{Structure of the aweek object}{
 
 The aweek object is a character vector in either the precise ISO week
@@ -76,15 +97,12 @@ year 2016, the week is still part of the final week of 2015.
 from 01 to 52 or 53, depending on whether or not the year has 52 or 53
 weeks.
 \item \strong{d} is a digit representing the weekday where 1 represents the first
-day of the week and 7 represents the last day of the week. The day of
-of the week (d) relative to the week start (s) is calculated using the
-ISO week day (i) via \code{d = 1L + ((i + (7L - s)) \%\% 7L)}.
-}
-
+day of the week and 7 represents the last day of the week. #'
 The attribute \code{week_start} represents the first day of the week as an ISO
 week day. This defaults to 1, which is Monday. If, for example, an aweek
 object represented weeks starting on Friday, then the \code{week_start}
 attribute would be 5, which is Friday of the ISO week.
+}
 
 Imprecise formats (YYYY-Www) are equivalent to the first day of the week.
 For example, 2015-W53 and 2015-W53-1 will be identical when converted to

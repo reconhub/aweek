@@ -84,6 +84,55 @@ week2date(w)
 as.Date(w)
 ```
 
+
+How does it work?
+-----------------
+
+The calculation of weeks from dates requires knowledge of the current day of the
+week and the number of days past 1 January.
+
+Week numbers are calculated in three steps:
+
+ 1. Find the day of the week, relative to the week_start (d). The day of the
+    week (d) relative to the week start (s) is calculated using the ISO week
+    day (i) via `d = 1L + ((i + (7L - s)) %% 7L)`. 
+ 2. Find the date that represents midweek (m). The date that represents 
+    midweek is found by subtracting the day of the week (d) from 4 and
+    adding that number of days to the current date: `m = date + (4 - d)`.
+ 3. Find the week number (w) by counting the number of days since 1 January
+    to (m), and use integer division by 7: `w = 1L + ((m - yyyy-01-01) %/% 7)`
+
+For example, here's how to calculate the week for Tuesday, 6 December 2016,
+assuming the week start is a Sunday:
+
+```{r example_day}
+the_date <- as.Date("2016-12-06")
+jan_1    <- as.Date("2016-01-01")
+
+i <- as.POSIXlt(the_date)$wday # 2, the ISO date for Tuesday 
+s <- 7L                        # week_start for sunday
+
+# 1. Find the day of the week
+print(w <- 1L + ((i + (7L - s)) %% 7L))
+
+# 2. Find the date that represents midweek
+print(m <- the_date + (4L - d))
+
+# 3. Find the week
+print(w <- 1L + as.integer(m - jan_1) %/% 7L)
+
+# Format the week
+sprintf("2016-W%02d-%d", w, d)
+```
+
+
+For the weeks around 1 January, the year is determined by the week number.  If
+the month is January, but the week number is 52 or 53, then the year for the
+week (YYYY) is the calendar year (yyyy) minus 1. However, if the month is
+December, but the week number is 1, then the year for the week (YYYY) is the
+calendar year (yyyy) plus 1.
+
+
 The `aweek` class 
 ---------------
 
@@ -161,6 +210,7 @@ If you want to aggregate your `aweek` objects after you created them, you can
 always use the `trunc()` function:
 
 ```{r trunc}
+w <- date2week(dat)
 w
 trunc(w)
 ```
