@@ -27,7 +27,7 @@ factor_aweek <- function(x) {
   # convert back to dates to get the first days of the week
   drange <- week2date(range(x, na.rm = TRUE), week_start = week_start)
   # create the sequence from the first week to the last week
-  lvls   <- seq.Date(drange[1], drange[2], by = 7L)
+  lvls   <- seq.Date(drange[1], drange[2] + 1, by = 7L)
   # convert to weeks to use for levels
   lvls   <- date2week(lvls, 
                       week_start = week_start, 

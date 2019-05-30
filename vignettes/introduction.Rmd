@@ -11,6 +11,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+
+
 Introduction
 ============
 
@@ -231,6 +233,15 @@ date2week(dat[1] + c(0, 15), week_start = 1, factor = TRUE)
 > CAUTION: Do not use this with `floor_day = FALSE` as this will be removed
 > in future versions.
 
+If you already have an aweek object and want to convert it to a factor, you
+can use `factor_aweek()`:
+
+```{r factor_aweek}
+factor_aweek(w)
+```
+
+
+
 Be careful when combining factors with other dates or aweek objects as they will
 force the other objects to be truncated as well.
 
@@ -277,8 +288,8 @@ c(as.aweek("2010-W10-1"),
 However, you *can not* combine aweek objects with different `week_start` 
 attributes.
 
-```{r cweek2week_err}
-try(c(res$Sunday[1], res$Wednesday[2], res$Friday[3]))
+```{r cweek2week_err, error = TRUE}
+c(res$Sunday[1], res$Wednesday[2], res$Friday[3])
 ```
 
 If you want to combine different aweek objects, you must first change their 

@@ -1,4 +1,4 @@
-# aweek 0.4.0
+# aweek 1.0.0
 
 ## BREAKING CHANGES
 
@@ -10,6 +10,14 @@ stability by removing unclear coercion methods
   same `week_start` attribute. This will result in an error informing the user
   to adjust the `week_start` attribute with the `change_week_start()` function.
 * Factors will no longer coerce factors when combining aweek objects. 
+
+## DOCUMENTATION
+
+* The vignette has been updated to include an explanation of the underlying
+  week calculation from date.
+* The aweek class documentation has been updated to detail the different
+  elements of the object and the calculations. 
+* Package documentation `package?aweek` has been added for an introduction.
 
 ## NEW FUNCTIONS
 
@@ -37,6 +45,7 @@ stability by removing unclear coercion methods
   added. 
 * as.Date.aweek has been simplified to no longer rely on regex since the aweek
   class is standard.
+* The internal `get_wday()` has been vastly simplified with improved speed.
 
 # aweek 0.3.0
 
