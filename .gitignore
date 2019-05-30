@@ -7,3 +7,4 @@
 *.swp
 ^inst/doc
 README.html
+tmp.R
