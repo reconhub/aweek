@@ -113,7 +113,7 @@ i <- as.POSIXlt(the_date)$wday # 2, the ISO date for Tuesday
 s <- 7L                        # week_start for sunday
 
 # 1. Find the day of the week
-print(w <- 1L + ((i + (7L - s)) %% 7L))
+print(d <- 1L + ((i + (7L - s)) %% 7L))
 
 # 2. Find the date that represents midweek
 print(m <- the_date + (4L - d))
