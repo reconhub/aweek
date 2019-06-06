@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">aweek</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9000</span>
       </span>
     </div>
 
@@ -120,7 +120,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>date2week</span>(<span class='no'>x</span>, <span class='kw'>week_start</span> <span class='kw'>=</span> <span class='fu'><a href='week_start.html'>get_week_start</a></span>(), <span class='kw'>floor_day</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+    <pre class="usage"><span class='fu'>date2week</span>(<span class='no'>x</span>, <span class='kw'>week_start</span> <span class='kw'>=</span> <span class='fu'><a href='week_start.html'>get_week_start</a></span>(), <span class='kw'>floor_day</span> <span class='kw'>=</span> <span class='no'>factor</span>,
   <span class='kw'>numeric</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>factor</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='fu'>week2date</span>(<span class='no'>x</span>, <span class='kw'>week_start</span> <span class='kw'>=</span> <span class='fu'><a href='week_start.html'>get_week_start</a></span>(), <span class='kw'>floor_day</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
@@ -166,6 +166,20 @@ days between dates</em>.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    
+<ul>
+<li><p><code>date2week()</code> an <a href='aweek-class.html'>aweek</a> object which represents dates in
+<code>YYYY-Www-d</code> format where <code>YYYY</code> is the year (associated with the week,
+not necessarily the day), <code>Www</code> is the week number prepended by a "W" that
+ranges from 01-53 and <code>d</code> is the day of the week from 1 to 7 where 1
+represents the first day of the week (as defined by the <code>week_start</code>
+attribute).</p></li>
+<li><p><code>week2date()</code> a <a href='https://www.rdocumentation.org/packages/base/topics/Dates'>Date</a> object.</p></li>
+</ul>
+
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Weeks differ in their start dates depending on context. The ISO
@@ -191,7 +205,8 @@ input is not in yyyy-mm-dd and the format parameter is not passed,
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='week_start.html'>set_week_start()</a></code>, <code><a href='aweek-conversions.html'>as.Date.aweek()</a></code>, <code><a href='aweek-class.html'>print.aweek()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='week_start.html'>set_week_start()</a></code>, <code><a href='aweek-conversions.html'>as.Date.aweek()</a></code>, <code><a href='aweek-class.html'>print.aweek()</a></code>, <code><a href='as.aweek.html'>as.aweek()</a></code>,
+<code><a href='get_aweek.html'>get_aweek()</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -313,6 +328,8 @@ input is not in yyyy-mm-dd and the format parameter is not passed,
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
 
       <li><a href="#note">Note</a></li>

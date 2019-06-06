@@ -5,7 +5,7 @@
 \alias{week2date}
 \title{Convert date to a an arbitrary week definition}
 \usage{
-date2week(x, week_start = get_week_start(), floor_day = FALSE,
+date2week(x, week_start = get_week_start(), floor_day = factor,
   numeric = FALSE, factor = FALSE, ...)
 
 week2date(x, week_start = get_week_start(), floor_day = FALSE)
@@ -34,6 +34,17 @@ using this with a large date range as the resulting factor can contain all
 days between dates}.}
 
 \item{...}{arguments passed to \code{\link[=as.POSIXlt]{as.POSIXlt()}}, unused in all other cases.}
+}
+\value{
+\itemize{
+\item \code{date2week()} an \link[=aweek-class]{aweek} object which represents dates in
+\code{YYYY-Www-d} format where \code{YYYY} is the year (associated with the week,
+not necessarily the day), \code{Www} is the week number prepended by a "W" that
+ranges from 01-53 and \code{d} is the day of the week from 1 to 7 where 1
+represents the first day of the week (as defined by the \code{week_start}
+attribute).
+\item \code{week2date()} a \link{Date} object.
+}
 }
 \description{
 Convert date to a an arbitrary week definition
@@ -139,7 +150,8 @@ date2week(dat, 7)
 date2week(dat, "Sunday")
 }
 \seealso{
-\code{\link[=set_week_start]{set_week_start()}}, \code{\link[=as.Date.aweek]{as.Date.aweek()}}, \code{\link[=print.aweek]{print.aweek()}}
+\code{\link[=set_week_start]{set_week_start()}}, \code{\link[=as.Date.aweek]{as.Date.aweek()}}, \code{\link[=print.aweek]{print.aweek()}}, \code{\link[=as.aweek]{as.aweek()}},
+\code{\link[=get_aweek]{get_aweek()}}
 }
 \author{
 Zhian N. Kamvar

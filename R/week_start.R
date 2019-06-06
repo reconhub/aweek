@@ -14,7 +14,8 @@
 #' 
 #' @export
 #' @rdname week_start
-#' @seealso [date2week()], [week2date()]
+#' @seealso [change_week_start()] for changing the week_start attribute of an
+#'   aweek object, [date2week()], [week2date()]
 #' @examples
 #' 
 #' # get the current definition of the week start
@@ -53,4 +54,33 @@ get_week_start <- function(w = NULL) {
   } else {
     stop("w must be an 'aweek' object or NULL")
   }
+}
+
+#' Parse the week_start scalar
+#'
+#' This will check the length and enforce integers and non-missing
+#'
+#' @noRd
+parse_week_start <- function(w) {
+
+  if (is.null(w)) {
+    stop("please provide a week_start")
+  }
+  if (length(w) != 1) {
+    stop("week_start must be length 1")
+  }
+
+  if (is.na(w)) {
+    stop("week_start must not be missing")
+  }
+
+  if (is.character(w)) {
+    w <- weekday_from_char(w)
+  } else {
+    w <- as.integer(w)
+  }
+
+  stop_if_not_weekday(w)
+
+  return(w)
 }

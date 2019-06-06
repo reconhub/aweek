@@ -1,10 +1,7 @@
 context("conversion to aweek tests")
 
 
-dats <- sprintf("%d-%02d-%02d",
-                2001:2019,
-                01,
-                01)
+dats <- sprintf("%d-01-01", 2001:2019)
 
 
 dats <- as.Date(c(dats, NA_character_))
@@ -14,6 +11,13 @@ test_that("an error is thrown if something can't be converted to a date", {
   expect_error(date2week(iris), "iris could not be converted to a date")                
                 
 })
+
+test_that("an error will be thrown if a date is NULL", {
+
+  expect_error(date2week(NULL), "NULL could not be converted to a date.")
+
+})
+
 
 test_that("January first dates can be properly converted", {
 
@@ -26,13 +30,8 @@ test_that("January first dates can be properly converted", {
   # Factors
   datffac <- date2week(dats, 1, floor_day = TRUE, factor = TRUE)
 
-  msg <- "In future versions of aweek, `factor = TRUE` must also include"
-  msg <- paste(msg, "`floor_day = TRUE`")
-  expect_message({
-    datfac  <- date2week(dats, 1, floor_day = FALSE, factor = TRUE)
-  }, msg)
-
   datn    <- date2week(dats, 1, numeric = TRUE)
+
   datback <- as.Date(datw)
   # isoweeks
   weeknums <- c(1, 1, 1, 1, 53, 52, 1, 1, 1, 53, 52, 52, 1, 1, 1, 53, 52, 1, 1, NA) 
@@ -45,11 +44,10 @@ test_that("January first dates can be properly converted", {
                 "2016-W52-7", "2018-W01-1", "2019-W01-2", NA)
   class(iw) <- "aweek"
   attr(iw, "week_start") <- 1L
-  floored <-gsub("-\\d$", "", iw)
+  floored <- gsub("-\\d$", "", iw)
 
   # conversions are reversible
   expect_identical(as.character(dats), as.character(datback))
-  expect_identical(as.character(dats), as.character(as.Date(datfac)))
 
   # weeks print as expected
   expect_identical(datw, iw)
@@ -62,12 +60,14 @@ test_that("January first dates can be properly converted", {
   # floored weeks are handled as expected
   expect_identical(datf, floored)
 
+  expect_identical(trunc(datw), floored)
+
   # Factors are handled as expected
   expect_identical(as.character(datffac), as.character(datf))
 
   # Factor levels are the sequence of dates
-  expect_identical(seq.Date(min(dats, na.rm = TRUE), max(dats, na.rm = TRUE), by = 1), week2date(levels(datfac), 1))
-  expect_identical(seq.Date(min(dats, na.rm = TRUE), max(dats, na.rm = TRUE), by = 7), week2date(levels(datffac), 1))
+  expect_identical(seq.Date(min(dats, na.rm = TRUE), max(dats, na.rm = TRUE), by = 7), 
+                   week2date(levels(datffac), 1))
 
 })
 
@@ -81,5 +81,13 @@ test_that("dates can be co back and forth no matter the start day", {
     expect_identical(as.character(dats), as.character(datback), 
                      info = sprintf("day: %d", i))
   }
+
+})
+
+test_that("invalid weekdays throw an error", {
+  
+  expect_error(week2date("2019-W20-8"), "Weekdays must be between 1 and 7")
+  expect_error(date2week(Sys.Date(), week_start = 1:7), "week_start must be length 1")
+  expect_error(date2week(Sys.Date(), week_start = 8), "Weekdays must be between 1 and 7")
 
 })

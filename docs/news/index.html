@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">aweek</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9000</span>
       </span>
     </div>
 
@@ -110,6 +110,69 @@
       
     </div>
 
+    <div id="aweek-1-0-0" class="section level1">
+<h1 class="page-header">
+<a href="#aweek-1-0-0" class="anchor"></a>aweek 1.0.0<small> Unreleased </small>
+</h1>
+<div id="breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes" class="anchor"></a>BREAKING CHANGES</h2>
+<p>There are a couple of breaking changes coming to aweek that will improve stability by removing unclear coercion methods (see <a href="https://github.com/reconhub/aweek/issues/20" class="uri">https://github.com/reconhub/aweek/issues/20</a>).</p>
+<ul>
+<li>It is no longer possible to combine aweek objects if they do not share the same <code>week_start</code> attribute. This will result in an error informing the user to adjust the <code>week_start</code> attribute with the <code><a href="../reference/change_week_start.html">change_week_start()</a></code> function.</li>
+<li>Factors will no longer coerce factors when combining aweek objects.</li>
+</ul>
+</div>
+<div id="documentation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#documentation" class="anchor"></a>DOCUMENTATION</h2>
+<ul>
+<li>The vignette has been updated to include an explanation of the underlying week calculation from date.</li>
+<li>The aweek class documentation has been updated to detail the different elements of the object and the calculations.</li>
+<li>Package documentation <code><a href="../reference/aweek-package.html">package?aweek</a></code> has been added for an introduction.</li>
+</ul>
+</div>
+<div id="new-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functions" class="anchor"></a>NEW FUNCTIONS</h2>
+<ul>
+<li>
+<code><a href="../reference/change_week_start.html">change_week_start()</a></code> allows the user to change the <code>week_start</code> attribute of an aweek object, adjusting the weeks to match the new attribute accordingly.</li>
+<li>
+<code><a href="../reference/get_aweek.html">get_aweek()</a></code> can generate aweek objects from a vector of week numbers. It has the ability to take into account different week start times.</li>
+<li>
+<code><a href="../reference/get_aweek.html">get_date()</a></code> is similar to <code><a href="../reference/get_aweek.html">get_aweek()</a></code>, but returns dates istead.</li>
+<li>
+<code><a href="../reference/as.aweek.html">as.aweek()</a></code> allows users to create aweek object directly from characters with validation. It also allows for dates by passing to <code><a href="../reference/date2week.html">date2week()</a></code>.</li>
+<li>
+<code><a href="../reference/as.data.frame.aweek.html">as.data.frame.aweek()</a></code> is a new function that allows aweek objects to be directly incorporated into data frames.</li>
+<li>
+<code><a href="../reference/aweek-class.html">as.list.aweek()</a></code> will now preserve the aweek structure in lists</li>
+<li>
+<code><a href="../reference/aweek-class.html">trunc.aweek()</a></code> will truncate the day to the first day of the week.</li>
+<li>
+<code><a href="../reference/aweek-class.html">rep.aweek()</a></code> allows repeating aweek characters.</li>
+<li>
+<code><a href="../reference/factor_aweek.html">factor_aweek()</a></code> allows the user to create aggregated aweek objects on the fly.</li>
+</ul>
+</div>
+<div id="bug-fix" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fix" class="anchor"></a>BUG FIX</h2>
+<ul>
+<li>conversions will now retain the names of the object.</li>
+</ul>
+</div>
+<div id="misc" class="section level2">
+<h2 class="hasAnchor">
+<a href="#misc" class="anchor"></a>MISC</h2>
+<ul>
+<li>More checks that weekdays and weeks are within the correct bounds have been added.</li>
+<li>as.Date.aweek has been simplified to no longer rely on regex since the aweek class is standard.</li>
+<li>The internal <code>get_wday()</code> has been vastly simplified with improved speed.</li>
+</ul>
+</div>
+</div>
     <div id="aweek-0-3-0" class="section level1">
 <h1 class="page-header">
 <a href="#aweek-0-3-0" class="anchor"></a>aweek 0.3.0<small> Unreleased </small>
@@ -136,7 +199,10 @@
 <a href="#aweek-0-2-1" class="anchor"></a>aweek 0.2.1<small> Unreleased </small>
 </h1>
 <ul>
-<li>Fix bug where NAs threw errors in the dates (found: <a href='https://github.com/aspina7'>@aspina7</a>, #12)</li>
+<li><p>Fix bug where NAs threw errors in the dates (found: <a href='https://github.com/aspina7'>@aspina7</a>, #12)</p></li>
+<li>
+<code><a href="../reference/as.data.frame.aweek.html">as.data.frame.aweek()</a></code> will now convert aweek objects to columns of data frames without losing class or attributes</li>
+<li><p>The introduction vignette has been updated to reflect this change.</p></li>
 </ul>
 </div>
     <div id="aweek-0-2-0" class="section level1">
@@ -223,6 +289,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#aweek-1-0-0">1.0.0</a></li>
         <li><a href="#aweek-0-3-0">0.3.0</a></li>
         <li><a href="#aweek-0-2-2">0.2.2</a></li>
         <li><a href="#aweek-0-2-1">0.2.1</a></li>

@@ -11,6 +11,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+
+
 Introduction
 ============
 
@@ -27,22 +29,23 @@ This package provides tools to convert dates to weeks and back where a week can
 start on any day. You can use this package for any of the following:
 
  - convert date to week starting on any day
- - convert week back to date
+ - convert week numbers and years to dates
+ - convert week to date
  - convert week to week
  - create a factor of weeks that contains ordered levels that includes missing
    weeks. 
 
-Converting dates to weeks with `date2week()`
-==========================================
+Converting dates to weeks
+=========================
 
 You can convert dates to weeks starting on any day by using `date2week()` with
 the `week_start` argument. This argument can be a number from 1 to 7 representing
 the ISO 8601 day of the week OR it can be a string representing the day of the
 week in either an English locale or the locale defined on your computer. The 
 default of this argument is the value of `get_week_start()`, which is a thin
-wrapper around `options("aweek.week_start", 1L)`. Unless you have specified a
+wrapper around `options("aweek.week_start", 1L)`. **Unless you have specified a
 default `aweek.week_start` option with `set_week_start()`, this will always be 
-set to "Monday".
+set to 1 (Monday).**
 
 > It is **highly recommended** that you set the default `aweek.week_start` either
 > in the beginning of your Rscript, Rmarkdown document, or in your .Rprofile.
@@ -55,7 +58,7 @@ set_week_start("Sunday") # setting the default week_start to Sunday
 set.seed(2019-03-03)
 dat <- as.Date("2019-03-03") + sample(-6:7, 10, replace = TRUE)
 dat
-print(w <-date2week(dat))
+print(w <- date2week(dat))
 ```
 
 If you need a different day on the fly, you can supply an integer or character
@@ -68,12 +71,69 @@ date2week(dat, week_start = "Monday")
 date2week(dat, week_start = 1)
 ```
 
+If you want to save two extra keystrokes, you can also use the `as.aweek()`
+method for dates, which wraps `date2week()`:
+
+```{r as.aweek.Date}
+as.aweek(dat, week_start = 1)
+```
+
 What you get back is an `aweek` class object. It can be converted back to a date
 with either `as.Date()` or `week2date()`:
 
 ```{r date2week2date}
 week2date(w)
+as.Date(w)
 ```
+
+
+How does it work?
+-----------------
+
+The calculation of weeks from dates requires knowledge of the current day of the
+week and the number of days past 1 January.
+
+Week numbers are calculated in three steps:
+
+ 1. Find the day of the week, relative to the week_start (d). The day of the
+    week (d) relative to the week start (s) is calculated using the ISO week
+    day (i) via `d = 1L + ((i + (7L - s)) %% 7L)`. 
+ 2. Find the date that represents midweek (m). The date that represents 
+    midweek is found by subtracting the day of the week (d) from 4 and
+    adding that number of days to the current date: `m = date + (4 - d)`.
+ 3. Find the week number (w) by counting the number of days since 1 January
+    to (m), and use integer division by 7: `w = 1L + ((m - yyyy-01-01) %/% 7)`
+
+For example, here's how to calculate the week for Tuesday, 6 December 2016,
+assuming the week start is a Sunday:
+
+```{r example_day}
+the_date <- as.Date("2016-12-06")
+jan_1    <- as.Date("2016-01-01")
+
+i <- as.POSIXlt(the_date)$wday # 2, the ISO date for Tuesday 
+s <- 7L                        # week_start for sunday
+
+# 1. Find the day of the week
+print(d <- 1L + ((i + (7L - s)) %% 7L))
+
+# 2. Find the date that represents midweek
+print(m <- the_date + (4L - d))
+
+# 3. Find the week
+print(w <- 1L + as.integer(m - jan_1) %/% 7L)
+
+# Format the week
+sprintf("2016-W%02d-%d", w, d)
+```
+
+
+For the weeks around 1 January, the year is determined by the week number.  If
+the month is January, but the week number is 52 or 53, then the year for the
+week (YYYY) is the calendar year (yyyy) minus 1. However, if the month is
+December, but the week number is 1, then the year for the week (YYYY) is the
+calendar year (yyyy) plus 1.
+
 
 The `aweek` class 
 ---------------
@@ -81,15 +141,23 @@ The `aweek` class
 The result you see above is an object of class "aweek". The `aweek` class is a
 character that contains the `week_start` attribute. This attribute allows it to
 be easily converted back to a date without the user needing to enter the start
-day every time. It can be created like so: 
+day every time. You can convert a character that matches the `YYYY-Www-d`
+pattern to an `aweek` class object with `as.aweek()`:
 
-```{r aweek}
-x <- "2019-W10-1"
-attr(x, "week_start") <- 7 # Sunday 
-class(x) <- "aweek"
+
+```{r as.aweek.character}
+x <- as.aweek("2019-W10-1")
 x
-class(x)
 ```
+
+> Under the hood, it checks the validity of the week string and then add the
+> attribute and class:
+> 
+>     x <- "2019-W10-1"
+>     attr(x, "week_start") <- 7 # Sunday 
+>     class(x) <- "aweek"
+>
+
 
 If you need to remove the class, you can just use `as.character()`:
 
@@ -140,56 +208,97 @@ print(dwf <- week2date(wf))
 weekdays(dwf)
 ```
 
+If you want to aggregate your `aweek` objects after you created them, you can
+always use the `trunc()` function:
+
+```{r trunc}
+w <- date2week(dat)
+w
+trunc(w)
+```
+
+
 Factors
 -------
 
 Weeks can be represented as factors, which is useful for tabulations across
-weeks. You can use `factor = TRUE` in combination with `floor_day = TRUE` in
-`date2week()` and it will automatically fill in any missing weeks.
+weeks. You can use `factor = TRUE` in `date2week()` and it will automatically
+fill in any missing weeks.
 
 ```{r factors}
 dat[1] + c(0, 15)
-date2week(dat[1] + c(0, 15), week_start = 1, factor = TRUE, floor_day = TRUE)
+date2week(dat[1] + c(0, 15), week_start = 1, factor = TRUE)
 ```
 
-> CAUTION: Do not use this with `floor_day = FALSE` as this will be deprecated
+> CAUTION: Do not use this with `floor_day = FALSE` as this will be removed
 > in future versions.
+
+If you already have an aweek object and want to convert it to a factor, you
+can use `factor_aweek()`:
+
+```{r factor_aweek}
+factor_aweek(w)
+```
+
+
+
+Be careful when combining factors with other dates or aweek objects as they will
+force the other objects to be truncated as well.
 
 Weeks to weeks
 --------------
 
-You can also use `date2week()` to convert between different week definitions if
-you have an `aweek` object:
+You can use `change_week_start()` to convert between different week definitions
+if you have an `aweek` object:
 
+
+```{r week2week_wednesday}
+w # week starting on Sunday
+ww <- change_week_start(w, week_start = "wednesday") # same dates, starting on Wednesday
+ww
+identical(as.Date(w), as.Date(ww))
+```
 
 ```{r week2week, R.options=list(width = 100)}
-w # week starting on Sunday
-date2week(w, week_start = "wednesday")
-
 # create a table with all days in the week
-d <- dat[1] + 0:6
-res <- as.data.frame(matrix("", nrow = 7, ncol = 7), stringsAsFactors = FALSE)
-names(res) <- weekdays(d) # days of the week
-for (i in names(res)) res[[i]] <- date2week(d, week_start = i)
-res
+d   <- as.Date("2019-03-03") + 0:6
+res <- lapply(weekdays(d), function(i) date2week(d, week_start = i))
+names(res) <- weekdays(d)
+data.frame(res)
 ```
 
 All of these columns contain the same dates:
 
-```{r week2week2date, R.options=list(width=100)}
+```{r week2week2date, R.options=list(width = 100)}
 data.frame(lapply(res, as.Date))
 ```
-
 
 Combining `aweek` objects
 -----------------------
 
-You can combine aweek objects with different `week_start` attributes. The 
-resulting `aweek` object will have the same `week_start` as the first object.
+You can add dates, aweek objects, or characters to aweek objects:
 
-```{r cweek2week}
+```{r caweekdate}
+c(as.aweek("2010-W10-1"), 
+  res$Sunday, 
+  "2010-W12-1", 
+  as.Date(res$Monday[1]) + 14)
+```
+
+However, you *can not* combine aweek objects with different `week_start` 
+attributes.
+
+```{r cweek2week_err, error = TRUE}
 c(res$Sunday[1], res$Wednesday[2], res$Friday[3])
-c(res$Tuesday[1], res$Thursday[2], res$Friday[3])
+```
+
+If you want to combine different aweek objects, you must first change their 
+`week_start` attribute:
+
+```{r cweekweek}
+wed <- change_week_start(res$Wednesday, get_week_start())
+fri <- change_week_start(res$Friday, get_week_start())
+c(res$Sunday[1], wed[2], fri[3])
 ```
 
 ### Dates can be appended to aweek objects
@@ -219,9 +328,83 @@ as.Date(s[7:8])
 as.Date(m[7:8])
 ```
 
+Working with weeks in data frames
+=================================
 
-Converting weeks to dates with `week2date()`
-==========================================
+You may encounter a situation where you have a merged data frame with weeks
+starting on different days. This section will cover two situations where you
+may have weeks as numbers and weeks as ISO-week strings. First we will create
+our demonstration data that represents the same week with different `week_start`
+attributes.
+
+```{r date_a_frame}
+# create a table with all days in the week
+d    <- as.Date("2019-03-03") + 0:6
+res  <- lapply(weekdays(d), function(i) date2week(d, week_start = i))
+resn <- lapply(weekdays(d), function(i) date2week(d, week_start = i, numeric = TRUE))
+datf <- data.frame(wday = rep(weekdays(d), each = 7), 
+                   week = unlist(res), # note: unlist converts to character
+                   week_number = unlist(resn),
+                   year  = 2019,
+                   stringsAsFactors = FALSE)
+datf$day <- substring(datf$week, 10, 11)
+head(datf, 10)
+```
+
+To get the weeks (numbers or strings) to aweek objects, you should use the
+`start` argument to specify which day of the week they start on. Internally,
+this translates the week to their corresponding dates and then to aweek objects
+with the same `week_start` attribute (which defaults to `get_week_start()`).
+
+weeks as numbers
+------------
+
+Most commonly, you will have weeks across data sets represented by numbers. 
+These can be converted to aweek objects using the `get_aweek()` function 
+and to dates using the `get_date()` function:
+
+```{r get_aweek}
+datf$aweek <- with(datf, get_aweek(week = week_number, year = year, day = day, start = wday))
+datf$date  <- with(datf, get_date(week = week_number, year = year, day = day, start = wday))
+head(datf, 10)
+```
+
+These functions are also useful for constructing weeks or dates on the fly if
+you only have a week and a year:
+
+```{r}
+get_aweek(11, 2019)
+get_date(11, 2019)
+```
+
+```{r remove_things, include = FALSE}
+datf$aweek <- NULL
+datf$date  <- NULL
+```
+
+
+weeks as characters
+-------------------
+
+If you have weeks formatted as ISO-week strings, then you can convert to aweek
+objects using `as.aweek()`:
+
+```{r date_a_frame_2}
+datf$aweek <- with(datf, as.aweek(week, start = wday))
+head(datf, 10)
+str(datf)
+```
+
+We can tabulate them to see how they transformed:
+
+```{r tabluate_data_frame, R.options = list(width = 100)}
+print(with(datf, table(before = week, after = aweek)), zero.print = ".")
+```
+
+
+
+Converting weeks to dates
+=========================
 
 If you receive data that contains week definitions, you can convert it back to 
 a date if you know where the week starts.
