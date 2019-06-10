@@ -21,7 +21,7 @@ when factored aweek objects are combined with other aweek objects, they
 are converted back to characters.
 }
 \examples{
-w <- get_aweek(week = 1:2 * 5, year = 2019)
+w <- get_aweek(week = (1:2) * 5, year = 2019, day = c(7, 1))
 w
 wf <- factor_aweek(w)
 wf
