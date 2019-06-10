@@ -230,9 +230,6 @@ dat[1] + c(0, 15)
 date2week(dat[1] + c(0, 15), week_start = 1, factor = TRUE)
 ```
 
-> CAUTION: Do not use this with `floor_day = FALSE` as this will be removed
-> in future versions.
-
 If you already have an aweek object and want to convert it to a factor, you
 can use `factor_aweek()`:
 
