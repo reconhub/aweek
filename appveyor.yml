@@ -54,3 +54,16 @@ artifacts:
 
   - path: '\*_*.zip'
     name: Bits
+
+deploy:
+  release: aweek-v$(appveyor_build_version)
+  description: 'Automated release'
+  provider: GitHub
+  auth_token:
+    secure: wHCBlaHGogrgPu/Ci3a/Z050tsCgGZPIE+gWF0youew3ZLBQhAr9hMbBCITmdlOu
+  artifact: *_*.tar.gz
+  draft: true
+  prerelease: false
+  on:
+    branch: master
+    APPVEYOR_REPO_TAG: false
