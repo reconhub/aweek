@@ -26,6 +26,8 @@ stability by removing unclear coercion methods
   same `week_start` attribute. This will result in an error informing the user
   to adjust the `week_start` attribute with the `change_week_start()` function.
 * Factors will no longer coerce factors when combining aweek objects. 
+* Using `date2week()` with `factor = TRUE` and `floor_day = FALSE` now throws an
+  error instead of a warning (as prophesized in #13).
 
 ## DOCUMENTATION
 
