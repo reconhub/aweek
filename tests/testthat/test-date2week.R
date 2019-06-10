@@ -18,6 +18,12 @@ test_that("an error will be thrown if a date is NULL", {
 
 })
 
+test_that("an error will be thrown if the user tries to use factor without floor_day", {
+
+  expect_error(date2week(dats[1], factor = TRUE, floor_day = FALSE), 
+               "as of aweek 1.0, using factor without floor_day is not allowed.")
+})
+
 
 test_that("January first dates can be properly converted", {
 

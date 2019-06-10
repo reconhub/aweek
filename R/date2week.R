@@ -211,6 +211,9 @@ date2week <- function(x, week_start = get_week_start(), floor_day = factor, nume
     }
 
     if (factor) {
+      if (!floor_day) {
+        stop("as of aweek 1.0, using factor without floor_day is not allowed.")
+      }
       the_week <- factor_aweek(the_week)
     }
 
