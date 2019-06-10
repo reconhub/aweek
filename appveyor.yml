@@ -61,7 +61,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: wHCBlaHGogrgPu/Ci3a/Z050tsCgGZPIE+gWF0youew3ZLBQhAr9hMbBCITmdlOu
-  artifact: *_*.tar.gz
+  artifact: '**\*'
   draft: true
   prerelease: false
   on:
