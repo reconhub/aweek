@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">aweek</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -75,7 +75,7 @@
     <div class="page-header toc-ignore">
       <h1>aweek means ‘any week’</h1>
             
-            <h4 class="date">2019-05-30</h4>
+            <h4 class="date">2019-06-11</h4>
       
       
       <div class="hidden name"><code>introduction.Rmd</code></div>
@@ -87,7 +87,7 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>The day in which a week starts differs depending on context. For countries like the UK, the first day of the week is the first working day, which is Monday. This definition conforms with the <a href="http://en.wikipedia.org/wiki/ISO_week_date">ISO 8601 standard definition for the begining of a week</a>, but there are examples of situations where the first day of the week is different:</p>
+<p>The day in which a week starts differs depending on context. For countries like the UK, the first day of the week is the first working day, which is Monday. This definition conforms with the <a href="http://en.wikipedia.org/wiki/ISO_week_date">ISO 8601 standard definition for the beginning of a week</a>, but there are examples of situations where the first day of the week is different:</p>
 <ul>
 <li><a href="https://wwwn.cdc.gov/nndss/document/MMWR_Week_overview.pdf">The US CDC defines an “MMWR” week which starts on a Sunday</a></li>
 <li>In some regions, MSF will define a week that starts on Saturday</li>
@@ -198,7 +198,7 @@ class(x) &lt;- "aweek"</code></pre>
 <h2 class="hasAnchor">
 <a href="#best-practices" class="anchor"></a>Best practices</h2>
 <p>The <code><a href="../reference/date2week.html">date2week()</a></code> function only checks that dates are in ISO 8601 (yyyy-mm-dd) format before converting to weeks, <em>and otherwise assumes that the dates are accurate</em> so it’s strongly recommended to make sure your dates are in either <code>Date</code> or <code>POISXt</code> format and accurate before converting to weeks. The <a href="https://cran.r-project.org/package=lubridate">lubridate</a> can be used for this purpose.</p>
-<p>Use <code><a href="../reference/week_start.html">set_week_start()</a></code> at the beginning of all your scripts to explicitly define the day on wich your weeks start. This can be overridden if need be in specific parts of your scripts. Otherwise, the default will be dependent on the value of <code><a href="https://www.rdocumentation.org/packages/base/topics/options">getOption("aweek.week_start", 1L)</a></code>.</p>
+<p>Use <code><a href="../reference/week_start.html">set_week_start()</a></code> at the beginning of all your scripts to explicitly define the day on which your weeks start. This can be overridden if need be in specific parts of your scripts. Otherwise, the default will be dependent on the value of <code><a href="https://www.rdocumentation.org/packages/base/topics/options">getOption("aweek.week_start", 1L)</a></code>.</p>
 <p>Because the <code>week_start</code> arguments default to <code><a href="../reference/week_start.html">get_week_start()</a></code>, it’s recommended to specify <code>week_start</code> in <code><a href="../reference/date2week.html">date2week()</a></code> and <code><a href="../reference/date2week.html">week2date()</a></code> if you don’t have an <code>aweek</code> object.</p>
 <p>Before you combine aweek objects, confirm that they are actually aweek objects with <code><a href="https://www.rdocumentation.org/packages/base/topics/class">inherits(myObject, "aweek")</a></code>.</p>
 </div>
@@ -242,9 +242,6 @@ class(x) &lt;- "aweek"</code></pre>
 <pre><code>## &lt;aweek start: Monday&gt;
 ## [1] 2019-W10 2019-W13
 ## Levels: 2019-W10 2019-W11 2019-W12 2019-W13</code></pre>
-<blockquote>
-<p>CAUTION: Do not use this with <code>floor_day = FALSE</code> as this will be removed in future versions.</p>
-</blockquote>
 <p>If you already have an aweek object and want to convert it to a factor, you can use <code><a href="../reference/factor_aweek.html">factor_aweek()</a></code>:</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw"><a href="../reference/factor_aweek.html">factor_aweek</a></span>(w)</a></code></pre></div>
 <pre><code>## &lt;aweek start: Sunday&gt;
