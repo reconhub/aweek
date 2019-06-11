@@ -4,7 +4,7 @@ output: github_document
 
 <!-- badges: start -->
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version-ago/aweek)](https://cran.r-project.org/package=aweek) 
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version-ago/aweek)](https://cran.r-project.org/package=aweek) 
 [![Codecov test coverage](https://codecov.io/gh/reconhub/aweek/branch/master/graph/badge.svg)](https://codecov.io/gh/reconhub/aweek?branch=master) 
 [![Travis build status](https://travis-ci.org/reconhub/aweek.svg?branch=master)](https://travis-ci.org/reconhub/aweek)
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/66xj9134ac3yg62l/branch/master?svg=true)](https://ci.appveyor.com/project/zkamvar/aweek)
@@ -15,18 +15,10 @@ output: github_document
 
 # Welcome to the *aweek* package!
 
-This package will convert dates to
-[US CDC epiweeks](https://wwwn.cdc.gov/nndss/document/MMWR_Week_overview.pdf),
-[isoweeks](http://en.wikipedia.org/wiki/ISO_week_date), and all others in
-between with minimal overhead. Other packages such as
-[lubridate](https://github.com/tidyverse/lubridate),
-[ISOweek](https://cran.r-project.org/package=ISOweek), and
-[surveillance](http://surveillance.r-forge.r-project.org/) have the ability to
-define ISOweeks and/or epiweeks have the ability to define ISOweeks and/or
-epiweeks, the ability to easily switch between day and week intervals is only
-available for ISOweeks. However, the ability to easily switch between day and
-week intervals is only available for ISOweeks and all of the packages above
-have dependencies that require compiled code.
+This package will convert dates to [US CDC
+epiweeks](https://wwwn.cdc.gov/nndss/document/MMWR_Week_overview.pdf),
+[isoweeks](https://en.wikipedia.org/wiki/ISO_week_date), and all others in
+between with minimal overhead. 
 
 ## Installing the package
 
@@ -36,22 +28,20 @@ To install the stable package version from CRAN, you can use
 install.packages("aweek")
 ```
 
-
-To benefit from the latest features and bug fixes, install the development, *github* version of the package using:
+To benefit from the latest features and bug fixes, install the development,
+*github* version of the package using:
 
 ```{r install2, eval = FALSE}
+# install.packages("remotes")
 remotes::install_github("reconhub/aweek")
 ```
-
-Note that this requires the package *remotes* installed.
-
 
 # Main Features
 
  - `date2week()` converts dates to a week format (YYYY-Www-d) that can start on 
    any day. 
- - `week2date()` / `as.Date()` does the backwards conversion from (YYYY-Www(-d)) to
-   a numeric date. 
+ - `week2date()` / `as.Date()` does the backwards conversion from
+   (YYYY-Www(-d)) to a numeric date. 
  - `get_aweek()` generates an aweek object from a week number
  - `get_date()` converts a week number to a date
  - `as.aweek()` converts dates, characters, and factors to aweek objects.
@@ -72,12 +62,12 @@ dates.
 # generate dates
 set.seed(2019-02-26)
 onset <- as.Date("2019-02-26") + sort(sample(-6:7, 20, replace = TRUE))
-onset
 
 # load aweek
 library("aweek")
 set_week_start("Monday") # set the default start of the week
 
+print(onset)
 date2week(onset) # convert dates to weeks
 ```
 
@@ -106,9 +96,9 @@ get_date(week = 44:53, year = 2015)
 get_aweek(week = 44:53, year = 2015)
 ```
 
-If you have weeks recorded from different data sets that start on different days,
-you can account for that by using the `start` option. For example, 2018-01-01 is
-a Monday, but 2018-W01-1 starting on a Sunday is 2017-12-31
+If you have weeks recorded from different data sets that start on different
+days, you can account for that by using the `start` option. For example,
+2018-01-01 is a Monday, but 2018-W01-1 starting on a Sunday is 2017-12-31
 
 ```{r different_starts}
 get_date(week = 1, year = 2018, day = 1, start = c("Sunday", "Monday"))
@@ -120,13 +110,13 @@ get_aweek(week = 1, year = 2018, day = 1, start = c("Sunday", "Monday"))
 
 ## Factors
 
-You can also use it to automatically calculate factor levels, which is useful
-in tabulating across weeks and including missing values. 
+You can also automatically calculate factor levels, which is useful in
+tabulating across weeks and including missing values. 
 
 ```{r show_factors}
 set.seed(2019-02-26)
 onset <- as.Date("2019-02-26") + sort(sample(-48:49, 20, replace = TRUE))
-x <- date2week(onset, week_start = "sat", floor_day = TRUE, factor = TRUE)
+x     <- date2week(onset, week_start = "sat", factor = TRUE)
 x
 table(x)
 ```
@@ -150,14 +140,30 @@ Sys.setlocale("LC_TIME", lct)
 
 ```
 
-
-
 ## Getting help online
 
-Bug reports and feature requests should be posted on *github* using the [*issue*](http://github.com/reconhub/aweek/issues) system. All other questions should be posted on the **RECON forum**: <br>
-[http://www.repidemicsconsortium.org/forum/](http://www.repidemicsconsortium.org/forum/)
+Bug reports and feature requests should be posted on *github* using the
+[*issue*](https://github.com/reconhub/aweek/issues) system. All other questions
+should be posted on the **RECON forum**: <br>
+[https://www.repidemicsconsortium.org/forum/](https://www.repidemicsconsortium.org/forum/)
 
 Contributions are welcome via **pull requests**.
 
-Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+Please note that this project is released with a [Contributor Code of
+Conduct](CONDUCT.md). By participating in this project you agree to abide by
+its terms.
+
+## Similar Work
+
+There are other packages that can define ISOweeks and/or epiweeks. However, the
+ability to easily switch between day and week intervals is only available for
+the ISOweek package and all of the packages above have dependencies that
+require compiled code.
+
+ - [ISOweek](https://cran.r-project.org/package=ISOweek) converts dates to ISO
+   weeks as the "%W" and "%u" formats don't exist in windows
+ - [lubridate](https://github.com/tidyverse/lubridate) performs general
+   datetime handling with some auxilary functions that return the week or day
+   of the week. 
+ - [surveillance](https://surveillance.r-forge.r-project.org/) implements ISOWeekYear. 
 
