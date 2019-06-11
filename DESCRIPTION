@@ -14,9 +14,11 @@ Suggests:
     stats,
     roxygen2,
     knitr,
-    covr
+    covr,
+    spelling
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 URL: https://www.repidemicsconsortium.org/aweek
 BugReports: https://github.com/reconhub/aweek/issues
 VignetteBuilder: knitr
+Language: en-US
