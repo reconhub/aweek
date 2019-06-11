@@ -6,7 +6,7 @@
   an aweek object, adjusting the weeks to match the new attribute accordingly.
 * `get_aweek()` can generate aweek objects from a vector of week numbers. It has
   the ability to take into account different week start times. 
-* `get_date()` is similar to `get_aweek()`, but returns dates istead.
+* `get_date()` is similar to `get_aweek()`, but returns dates instead.
 * `as.aweek()` allows users to create aweek object directly from characters with
   validation. It also allows for dates by passing to `date2week()`.
 * `as.data.frame.aweek()` is a new function that allows aweek objects to be
@@ -115,5 +115,5 @@ q `print.aweek()` now displays the day of the week in the current locale.
 * `week2date()` converts `aweek` objects or character strings to dates
 * `as.Date()` does the same thing as above
 * `as.POSIXlt()` as well
-* `as.character()` unclasses the `aweek` object
+* `as.character()` will unclass the `aweek` object
 * Added a `NEWS.md` file to track changes to the package.

@@ -19,7 +19,7 @@ Introduction
 The day in which a week starts differs depending on context. For countries like
 the UK, the first day of the week is the first working day, which is Monday.
 This definition conforms with the [ISO 8601 standard definition for the
-begining of a week](http://en.wikipedia.org/wiki/ISO_week_date), but there are
+beginning of a week](http://en.wikipedia.org/wiki/ISO_week_date), but there are
 examples of situations where the first day of the week is different:
 
  - [The US CDC defines an "MMWR" week which starts on a Sunday](https://wwwn.cdc.gov/nndss/document/MMWR_Week_overview.pdf)
@@ -176,7 +176,7 @@ accurate* so it's strongly recommended to make sure your dates are in either
 purpose.
 
 Use `set_week_start()` at the beginning of all your scripts to explicitly define
-the day on wich your weeks start. This can be overridden if need be in specific
+the day on which your weeks start. This can be overridden if need be in specific
 parts of your scripts. Otherwise, the default will be dependent on the value of
 `getOption("aweek.week_start", 1L)`.
 

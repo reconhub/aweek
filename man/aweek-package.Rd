@@ -80,7 +80,7 @@ a character with \code{\link[=as.character]{as.character()}}
 with levels spanning all the weeks from the first week to the last week.
 Useful for creating tables with zero counts for unobserved weeks.
 \item \code{\link[=change_week_start]{change_week_start()}} will change the week_start attribute and adjust the
-weeks accordingly so that the dates will always be consistant.
+weeks accordingly so that the dates will always be consistent.
 }
 
 When you combine aweek objects, they must have the same week_start attribute.
