@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">aweek</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -112,26 +112,8 @@
 
     <div id="aweek-1-0-0" class="section level1">
 <h1 class="page-header">
-<a href="#aweek-1-0-0" class="anchor"></a>aweek 1.0.0<small> Unreleased </small>
+<a href="#aweek-1-0-0" class="anchor"></a>aweek 1.0.0<small> 2019-06-11 </small>
 </h1>
-<div id="breaking-changes" class="section level2">
-<h2 class="hasAnchor">
-<a href="#breaking-changes" class="anchor"></a>BREAKING CHANGES</h2>
-<p>There are a couple of breaking changes coming to aweek that will improve stability by removing unclear coercion methods (see <a href="https://github.com/reconhub/aweek/issues/20" class="uri">https://github.com/reconhub/aweek/issues/20</a>).</p>
-<ul>
-<li>It is no longer possible to combine aweek objects if they do not share the same <code>week_start</code> attribute. This will result in an error informing the user to adjust the <code>week_start</code> attribute with the <code><a href="../reference/change_week_start.html">change_week_start()</a></code> function.</li>
-<li>Factors will no longer coerce factors when combining aweek objects.</li>
-</ul>
-</div>
-<div id="documentation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#documentation" class="anchor"></a>DOCUMENTATION</h2>
-<ul>
-<li>The vignette has been updated to include an explanation of the underlying week calculation from date.</li>
-<li>The aweek class documentation has been updated to detail the different elements of the object and the calculations.</li>
-<li>Package documentation <code><a href="../reference/aweek-package.html">package?aweek</a></code> has been added for an introduction.</li>
-</ul>
-</div>
 <div id="new-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-functions" class="anchor"></a>NEW FUNCTIONS</h2>
@@ -141,7 +123,7 @@
 <li>
 <code><a href="../reference/get_aweek.html">get_aweek()</a></code> can generate aweek objects from a vector of week numbers. It has the ability to take into account different week start times.</li>
 <li>
-<code><a href="../reference/get_aweek.html">get_date()</a></code> is similar to <code><a href="../reference/get_aweek.html">get_aweek()</a></code>, but returns dates istead.</li>
+<code><a href="../reference/get_aweek.html">get_date()</a></code> is similar to <code><a href="../reference/get_aweek.html">get_aweek()</a></code>, but returns dates instead.</li>
 <li>
 <code><a href="../reference/as.aweek.html">as.aweek()</a></code> allows users to create aweek object directly from characters with validation. It also allows for dates by passing to <code><a href="../reference/date2week.html">date2week()</a></code>.</li>
 <li>
@@ -154,6 +136,25 @@
 <code><a href="../reference/aweek-class.html">rep.aweek()</a></code> allows repeating aweek characters.</li>
 <li>
 <code><a href="../reference/factor_aweek.html">factor_aweek()</a></code> allows the user to create aggregated aweek objects on the fly.</li>
+</ul>
+</div>
+<div id="breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes" class="anchor"></a>BREAKING CHANGES</h2>
+<p>There are a couple of breaking changes coming to aweek that will improve stability by removing unclear coercion methods (see <a href="https://github.com/reconhub/aweek/issues/20" class="uri">https://github.com/reconhub/aweek/issues/20</a>).</p>
+<ul>
+<li>It is no longer possible to combine aweek objects if they do not share the same <code>week_start</code> attribute. This will result in an error informing the user to adjust the <code>week_start</code> attribute with the <code><a href="../reference/change_week_start.html">change_week_start()</a></code> function.</li>
+<li>Factors will no longer coerce factors when combining aweek objects.</li>
+<li>Using <code><a href="../reference/date2week.html">date2week()</a></code> with <code>factor = TRUE</code> and <code>floor_day = FALSE</code> now throws an error instead of a warning (as prophesized in #13).</li>
+</ul>
+</div>
+<div id="documentation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#documentation" class="anchor"></a>DOCUMENTATION</h2>
+<ul>
+<li>The vignette has been updated to include an explanation of the underlying week calculation from date.</li>
+<li>The aweek class documentation has been updated to detail the different elements of the object and the calculations.</li>
+<li>Package documentation <code><a href="../reference/aweek-package.html">package?aweek</a></code> has been added for an introduction.</li>
 </ul>
 </div>
 <div id="bug-fix" class="section level2">
@@ -279,7 +280,7 @@
 <li>
 <code><a href="https://www.rdocumentation.org/packages/base/topics/as.POSIXlt">as.POSIXlt()</a></code> as well</li>
 <li>
-<code><a href="https://www.rdocumentation.org/packages/base/topics/character">as.character()</a></code> unclasses the <code>aweek</code> object</li>
+<code><a href="https://www.rdocumentation.org/packages/base/topics/character">as.character()</a></code> will unclass the <code>aweek</code> object</li>
 <li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
 </ul>
 </div>

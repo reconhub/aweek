@@ -1,5 +1,21 @@
 # aweek 1.0.0
 
+## NEW FUNCTIONS
+
+* `change_week_start()` allows the user to change the `week_start` attribute of
+  an aweek object, adjusting the weeks to match the new attribute accordingly.
+* `get_aweek()` can generate aweek objects from a vector of week numbers. It has
+  the ability to take into account different week start times. 
+* `get_date()` is similar to `get_aweek()`, but returns dates instead.
+* `as.aweek()` allows users to create aweek object directly from characters with
+  validation. It also allows for dates by passing to `date2week()`.
+* `as.data.frame.aweek()` is a new function that allows aweek objects to be
+  directly incorporated into data frames.
+* `as.list.aweek()` will now preserve the aweek structure in lists
+* `trunc.aweek()` will truncate the day to the first day of the week. 
+* `rep.aweek()` allows repeating aweek characters.
+* `factor_aweek()` allows the user to create aggregated aweek objects on the fly.
+
 ## BREAKING CHANGES
 
 There are a couple of breaking changes coming to aweek that will improve
@@ -10,6 +26,8 @@ stability by removing unclear coercion methods
   same `week_start` attribute. This will result in an error informing the user
   to adjust the `week_start` attribute with the `change_week_start()` function.
 * Factors will no longer coerce factors when combining aweek objects. 
+* Using `date2week()` with `factor = TRUE` and `floor_day = FALSE` now throws an
+  error instead of a warning (as prophesized in #13).
 
 ## DOCUMENTATION
 
@@ -18,22 +36,6 @@ stability by removing unclear coercion methods
 * The aweek class documentation has been updated to detail the different
   elements of the object and the calculations. 
 * Package documentation `package?aweek` has been added for an introduction.
-
-## NEW FUNCTIONS
-
-* `change_week_start()` allows the user to change the `week_start` attribute of
-  an aweek object, adjusting the weeks to match the new attribute accordingly.
-* `get_aweek()` can generate aweek objects from a vector of week numbers. It has
-  the ability to take into account different week start times. 
-* `get_date()` is similar to `get_aweek()`, but returns dates istead.
-* `as.aweek()` allows users to create aweek object directly from characters with
-  validation. It also allows for dates by passing to `date2week()`.
-* `as.data.frame.aweek()` is a new function that allows aweek objects to be
-  directly incorporated into data frames.
-* `as.list.aweek()` will now preserve the aweek structure in lists
-* `trunc.aweek()` will truncate the day to the first day of the week. 
-* `rep.aweek()` allows repeating aweek characters.
-* `factor_aweek()` allows the user to create aggregated aweek objects on the fly.
 
 ## BUG FIX
 
@@ -113,5 +115,5 @@ q `print.aweek()` now displays the day of the week in the current locale.
 * `week2date()` converts `aweek` objects or character strings to dates
 * `as.Date()` does the same thing as above
 * `as.POSIXlt()` as well
-* `as.character()` unclasses the `aweek` object
+* `as.character()` will unclass the `aweek` object
 * Added a `NEWS.md` file to track changes to the package.

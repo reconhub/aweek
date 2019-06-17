@@ -9,7 +9,7 @@
 #'
 #' @export
 #' @examples
-#' w <- get_aweek(week = 1:2 * 5, year = 2019)
+#' w <- get_aweek(week = (1:2) * 5, year = 2019, day = c(7, 1))
 #' w
 #' wf <- factor_aweek(w)
 #' wf
@@ -25,15 +25,20 @@ factor_aweek <- function(x) {
   week_start <- get_week_start(x)
 
   # convert back to dates to get the first days of the week
-  drange <- week2date(range(x, na.rm = TRUE), week_start = week_start)
+  drange <- week2date(range(x, na.rm = TRUE), 
+                      week_start = week_start, 
+                      floor_day = TRUE)
+
   # create the sequence from the first week to the last week
   lvls   <- seq.Date(drange[1], drange[2] + 1, by = 7L)
+
   # convert to weeks to use for levels
   lvls   <- date2week(lvls, 
                       week_start = week_start, 
                       floor_day = TRUE,
                       factor = FALSE,
                       numeric = FALSE)
+
   # convert to factor
   xx <- factor(trunc(x), levels = lvls)
   attr(xx, "week_start") <- week_start

@@ -1,7 +1,7 @@
 
 <!-- badges: start -->
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version-ago/aweek)](https://cran.r-project.org/package=aweek)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version-ago/aweek)](https://cran.r-project.org/package=aweek)
 [![Codecov test
 coverage](https://codecov.io/gh/reconhub/aweek/branch/master/graph/badge.svg)](https://codecov.io/gh/reconhub/aweek?branch=master)
 [![Travis build
@@ -17,17 +17,8 @@ status](https://ci.appveyor.com/api/projects/status/66xj9134ac3yg62l/branch/mast
 
 This package will convert dates to [US CDC
 epiweeks](https://wwwn.cdc.gov/nndss/document/MMWR_Week_overview.pdf),
-[isoweeks](http://en.wikipedia.org/wiki/ISO_week_date), and all others
-in between with minimal overhead. Other packages such as
-[lubridate](https://github.com/tidyverse/lubridate),
-[ISOweek](https://cran.r-project.org/package=ISOweek), and
-[surveillance](http://surveillance.r-forge.r-project.org/) have the
-ability to define ISOweeks and/or epiweeks have the ability to define
-ISOweeks and/or epiweeks, the ability to easily switch between day and
-week intervals is only available for ISOweeks. However, the ability to
-easily switch between day and week intervals is only available for
-ISOweeks and all of the packages above have dependencies that require
-compiled code.
+[isoweeks](https://en.wikipedia.org/wiki/ISO_week_date), and all others
+in between with minimal overhead.
 
 ## Installing the package
 
@@ -41,10 +32,9 @@ To benefit from the latest features and bug fixes, install the
 development, *github* version of the package using:
 
 ``` r
+# install.packages("remotes")
 remotes::install_github("reconhub/aweek")
 ```
-
-Note that this requires the package *remotes* installed.
 
 # Main Features
 
@@ -72,7 +62,12 @@ vector of dates.
 # generate dates
 set.seed(2019-02-26)
 onset <- as.Date("2019-02-26") + sort(sample(-6:7, 20, replace = TRUE))
-onset
+
+# load aweek
+library("aweek")
+set_week_start("Monday") # set the default start of the week
+
+print(onset)
 ```
 
     ##  [1] "2019-02-21" "2019-02-21" "2019-02-22" "2019-02-22" "2019-02-22"
@@ -81,10 +76,6 @@ onset
     ## [16] "2019-03-03" "2019-03-04" "2019-03-05" "2019-03-05" "2019-03-05"
 
 ``` r
-# load aweek
-library("aweek")
-set_week_start("Monday") # set the default start of the week
-
 date2week(onset) # convert dates to weeks
 ```
 
@@ -189,13 +180,13 @@ get_aweek(week = 1, year = 2018, day = 1, start = c("Sunday", "Monday"))
 
 ## Factors
 
-You can also use it to automatically calculate factor levels, which is
-useful in tabulating across weeks and including missing values.
+You can also automatically calculate factor levels, which is useful in
+tabulating across weeks and including missing values.
 
 ``` r
 set.seed(2019-02-26)
 onset <- as.Date("2019-02-26") + sort(sample(-48:49, 20, replace = TRUE))
-x <- date2week(onset, week_start = "sat", floor_day = TRUE, factor = TRUE)
+x     <- date2week(onset, week_start = "sat", factor = TRUE)
 x
 ```
 
@@ -249,12 +240,27 @@ Sys.setlocale("LC_TIME", lct)
 ## Getting help online
 
 Bug reports and feature requests should be posted on *github* using the
-[*issue*](http://github.com/reconhub/aweek/issues) system. All other
+[*issue*](https://github.com/reconhub/aweek/issues) system. All other
 questions should be posted on the **RECON forum**: <br>
-<http://www.repidemicsconsortium.org/forum/>
+<https://www.repidemicsconsortium.org/forum/>
 
 Contributions are welcome via **pull requests**.
 
 Please note that this project is released with a [Contributor Code of
 Conduct](CONDUCT.md). By participating in this project you agree to
 abide by its terms.
+
+## Similar Work
+
+There are other packages that can define ISOweeks and/or epiweeks.
+However, the ability to easily switch between day and week intervals is
+only available for the ISOweek package and all of the packages above
+have dependencies that require compiled code.
+
+  - [ISOweek](https://cran.r-project.org/package=ISOweek) converts dates
+    to ISO weeks as the “%W” and “%u” formats don’t exist in windows
+  - [lubridate](https://github.com/tidyverse/lubridate) performs general
+    datetime handling with some auxilary functions that return the week
+    or day of the week.
+  - [surveillance](https://surveillance.r-forge.r-project.org/)
+    implements ISOWeekYear.

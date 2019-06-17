@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">aweek</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -219,8 +219,8 @@ weeks to dates.</p></div>
 #&gt;   aweek strings must match the pattern 'YYYY-Www-d'. The first incorrect string was: '2018-10-5'</div><div class='input'>
 <span class='co'># you can also convert dates or datetimes</span>
 <span class='fu'>as.aweek</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.time'>Sys.Date</a></span>())</div><div class='output co'>#&gt; &lt;aweek start: Monday&gt;
-#&gt; [1] "2019-W22-4"</div><div class='input'><span class='fu'>as.aweek</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.time'>Sys.time</a></span>())</div><div class='output co'>#&gt; &lt;aweek start: Monday&gt;
-#&gt; [1] "2019-W22-4"</div><div class='input'>
+#&gt; [1] "2019-W24-3"</div><div class='input'><span class='fu'>as.aweek</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.time'>Sys.time</a></span>())</div><div class='output co'>#&gt; &lt;aweek start: Monday&gt;
+#&gt; [1] "2019-W24-3"</div><div class='input'>
 <span class='co'># all functions get passed to date2week, so you can use any of its arguments:</span>
 <span class='fu'>as.aweek</span>(<span class='st'>"2018-W10-5"</span>, <span class='kw'>week_start</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>floor_day</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>factor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; &lt;aweek start: Sunday&gt;
 #&gt; [1] 2018-W10

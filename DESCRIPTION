@@ -1,6 +1,6 @@
 Package: aweek
 Title: Convert Dates to Arbitrary Week Definitions
-Version: 0.3.0.9000
+Version: 1.0.0
 Authors@R: person(c("Zhian N."), "Kamvar", email = "zkamvar@gmail.com", role = c("aut", "cre"))
 Description: Which day a week starts depends heavily on the either the local or
   professional context. This package is designed to be a lightweight solution
@@ -14,9 +14,11 @@ Suggests:
     stats,
     roxygen2,
     knitr,
-    covr
+    covr,
+    spelling
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 URL: https://www.repidemicsconsortium.org/aweek
 BugReports: https://github.com/reconhub/aweek/issues
 VignetteBuilder: knitr
+Language: en-US
