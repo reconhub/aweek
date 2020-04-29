@@ -5,11 +5,21 @@
 \alias{get_date}
 \title{Convert week numbers to dates or aweek objects}
 \usage{
-get_aweek(week = 1L, year = format(Sys.Date(), "\%Y"), day = 1L,
-  start = week_start, week_start = get_week_start(), ...)
+get_aweek(
+  week = 1L,
+  year = format(Sys.Date(), "\%Y"),
+  day = 1L,
+  start = week_start,
+  week_start = get_week_start(),
+  ...
+)
 
-get_date(week = 1L, year = format(Sys.Date(), "\%Y"), day = 1L,
-  start = get_week_start())
+get_date(
+  week = 1L,
+  year = format(Sys.Date(), "\%Y"),
+  day = 1L,
+  start = get_week_start()
+)
 }
 \arguments{
 \item{week}{an integer vector, defaults to 1, representing the first week of the year.}

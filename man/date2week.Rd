@@ -5,8 +5,14 @@
 \alias{week2date}
 \title{Convert date to a an arbitrary week definition}
 \usage{
-date2week(x, week_start = get_week_start(), floor_day = factor,
-  numeric = FALSE, factor = FALSE, ...)
+date2week(
+  x,
+  week_start = get_week_start(),
+  floor_day = factor,
+  numeric = FALSE,
+  factor = FALSE,
+  ...
+)
 
 week2date(x, week_start = get_week_start(), floor_day = FALSE)
 }

@@ -15,10 +15,9 @@ as.aweek(x, week_start = get_week_start(), ...)
 
 \method{as.aweek}{default}(x, week_start = NULL, ...)
 
-\method{as.aweek}{NULL}(x, week_start = NULL, ...)
+\method{as.aweek}{`NULL`}(x, week_start = NULL, ...)
 
-\method{as.aweek}{character}(x, week_start = get_week_start(),
-  start = week_start, ...)
+\method{as.aweek}{character}(x, week_start = get_week_start(), start = week_start, ...)
 
 \method{as.aweek}{factor}(x, week_start = get_week_start(), ...)
 
