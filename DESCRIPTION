@@ -16,7 +16,7 @@ Suggests:
     knitr,
     covr,
     spelling
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 Roxygen: list(markdown = TRUE)
 URL: https://www.repidemicsconsortium.org/aweek
 BugReports: https://github.com/reconhub/aweek/issues
