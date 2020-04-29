@@ -11,8 +11,6 @@ matrix:
       r: devel
     - os: linux
       r: oldrel
-    - os: osx
-      osx_image: xcode8.3
 
 warnings_are_errors: true
 
