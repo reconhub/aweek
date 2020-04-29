@@ -1,6 +1,6 @@
 Package: aweek
 Title: Convert Dates to Arbitrary Week Definitions
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: person(c("Zhian N."), "Kamvar", email = "zkamvar@gmail.com", role = c("aut", "cre"))
 Description: Which day a week starts depends heavily on the either the local or
   professional context. This package is designed to be a lightweight solution
