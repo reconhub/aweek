@@ -1,3 +1,11 @@
+# aweek 1.0.1
+
+## CRAN MAINTENANCE
+
+* `as.POSIXlt()` now converts NULL to an empty POSIXlt object, so a test that
+  was previously checking for an error failed. That test has been fixed
+  (#33, @zkamvar)
+
 # aweek 1.0.0
 
 ## NEW FUNCTIONS
