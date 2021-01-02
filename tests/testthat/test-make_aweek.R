@@ -17,12 +17,25 @@ ex_dat <- as.Date("2019-03-10") + 0:6
 
 test_that("get_aweek() will always default to the first weekday of the year", {
 
+  w1d <- get_date(week = 1, year = format(Sys.Date(), "%Y"), day = 1)
   d1 <- as.Date(get_aweek())
-  d2 <- as.Date(date2week(sprintf("%s-01-01", format(Sys.Date(), "%Y")), floor_day = TRUE))
+  d2 <- as.Date(as.aweek(w1d, floor_day = TRUE))
   expect_identical(d1, d2)
 
 })
 
+test_that("get_aweek() will always default to the first weekday of the year for any given year", {
+
+  # Span of forty-one consecutive years
+  years <- as.integer(format(Sys.Date(), "%Y")) + -20:20
+  expect_equal(diff(sort(years)), rep(1L, 40))
+
+  w1d <- get_date(week = 1, year = years, day = 1)
+  d1 <- as.Date(get_aweek(year = years))
+  d2 <- as.Date(as.aweek(w1d, floor_day = TRUE))
+  expect_identical(d1, d2)
+
+})
 
 test_that("get_aweek() can use vectors", {
 

@@ -11,6 +11,7 @@ status](https://ci.appveyor.com/api/projects/status/66xj9134ac3yg62l/branch/mast
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/aweek?color=ff69b4)](https://cran.r-project.org/package=aweek)
 [![DOI](https://zenodo.org/badge/172648833.svg)](https://zenodo.org/badge/latestdoi/172648833)
 
+[![R-CMD-check](https://github.com/zkamvar/aweek/workflows/R-CMD-check/badge.svg)](https://github.com/zkamvar/aweek/actions)
 <!-- badges: end -->
 
 # Welcome to the *aweek* package\!
@@ -70,54 +71,48 @@ set_week_start("Monday") # set the default start of the week
 print(onset)
 ```
 
-    ##  [1] "2019-02-21" "2019-02-21" "2019-02-22" "2019-02-22" "2019-02-22"
-    ##  [6] "2019-02-23" "2019-02-23" "2019-02-23" "2019-02-25" "2019-02-26"
-    ## [11] "2019-02-26" "2019-02-27" "2019-02-28" "2019-02-28" "2019-03-02"
-    ## [16] "2019-03-03" "2019-03-04" "2019-03-05" "2019-03-05" "2019-03-05"
+    ##  [1] "2019-02-21" "2019-02-21" "2019-02-22" "2019-02-22" "2019-02-22" "2019-02-23" "2019-02-23"
+    ##  [8] "2019-02-23" "2019-02-25" "2019-02-26" "2019-02-26" "2019-02-27" "2019-02-28" "2019-02-28"
+    ## [15] "2019-03-02" "2019-03-03" "2019-03-04" "2019-03-05" "2019-03-05" "2019-03-05"
 
 ``` r
 date2week(onset) # convert dates to weeks
 ```
 
     ## <aweek start: Monday>
-    ##  [1] "2019-W08-4" "2019-W08-4" "2019-W08-5" "2019-W08-5" "2019-W08-5"
-    ##  [6] "2019-W08-6" "2019-W08-6" "2019-W08-6" "2019-W09-1" "2019-W09-2"
-    ## [11] "2019-W09-2" "2019-W09-3" "2019-W09-4" "2019-W09-4" "2019-W09-6"
-    ## [16] "2019-W09-7" "2019-W10-1" "2019-W10-2" "2019-W10-2" "2019-W10-2"
+    ##  [1] "2019-W08-4" "2019-W08-4" "2019-W08-5" "2019-W08-5" "2019-W08-5" "2019-W08-6" "2019-W08-6"
+    ##  [8] "2019-W08-6" "2019-W09-1" "2019-W09-2" "2019-W09-2" "2019-W09-3" "2019-W09-4" "2019-W09-4"
+    ## [15] "2019-W09-6" "2019-W09-7" "2019-W10-1" "2019-W10-2" "2019-W10-2" "2019-W10-2"
 
 If you want to override the default, you can use the `week_start`
-attribute of
-`date2week()`:
+attribute of `date2week()`:
 
 ``` r
 date2week(onset, week_start = 1) # ISO weeks starting on Monday (default)
 ```
 
     ## <aweek start: Monday>
-    ##  [1] "2019-W08-4" "2019-W08-4" "2019-W08-5" "2019-W08-5" "2019-W08-5"
-    ##  [6] "2019-W08-6" "2019-W08-6" "2019-W08-6" "2019-W09-1" "2019-W09-2"
-    ## [11] "2019-W09-2" "2019-W09-3" "2019-W09-4" "2019-W09-4" "2019-W09-6"
-    ## [16] "2019-W09-7" "2019-W10-1" "2019-W10-2" "2019-W10-2" "2019-W10-2"
+    ##  [1] "2019-W08-4" "2019-W08-4" "2019-W08-5" "2019-W08-5" "2019-W08-5" "2019-W08-6" "2019-W08-6"
+    ##  [8] "2019-W08-6" "2019-W09-1" "2019-W09-2" "2019-W09-2" "2019-W09-3" "2019-W09-4" "2019-W09-4"
+    ## [15] "2019-W09-6" "2019-W09-7" "2019-W10-1" "2019-W10-2" "2019-W10-2" "2019-W10-2"
 
 ``` r
 date2week(onset, week_start = 7) # EPI week starting on Sunday
 ```
 
     ## <aweek start: Sunday>
-    ##  [1] "2019-W08-5" "2019-W08-5" "2019-W08-6" "2019-W08-6" "2019-W08-6"
-    ##  [6] "2019-W08-7" "2019-W08-7" "2019-W08-7" "2019-W09-2" "2019-W09-3"
-    ## [11] "2019-W09-3" "2019-W09-4" "2019-W09-5" "2019-W09-5" "2019-W09-7"
-    ## [16] "2019-W10-1" "2019-W10-2" "2019-W10-3" "2019-W10-3" "2019-W10-3"
+    ##  [1] "2019-W08-5" "2019-W08-5" "2019-W08-6" "2019-W08-6" "2019-W08-6" "2019-W08-7" "2019-W08-7"
+    ##  [8] "2019-W08-7" "2019-W09-2" "2019-W09-3" "2019-W09-3" "2019-W09-4" "2019-W09-5" "2019-W09-5"
+    ## [15] "2019-W09-7" "2019-W10-1" "2019-W10-2" "2019-W10-3" "2019-W10-3" "2019-W10-3"
 
 ``` r
 date2week(onset, week_start = 6) # EPI week starting on Saturday
 ```
 
     ## <aweek start: Saturday>
-    ##  [1] "2019-W08-6" "2019-W08-6" "2019-W08-7" "2019-W08-7" "2019-W08-7"
-    ##  [6] "2019-W09-1" "2019-W09-1" "2019-W09-1" "2019-W09-3" "2019-W09-4"
-    ## [11] "2019-W09-4" "2019-W09-5" "2019-W09-6" "2019-W09-6" "2019-W10-1"
-    ## [16] "2019-W10-2" "2019-W10-3" "2019-W10-4" "2019-W10-4" "2019-W10-4"
+    ##  [1] "2019-W08-6" "2019-W08-6" "2019-W08-7" "2019-W08-7" "2019-W08-7" "2019-W09-1" "2019-W09-1"
+    ##  [8] "2019-W09-1" "2019-W09-3" "2019-W09-4" "2019-W09-4" "2019-W09-5" "2019-W09-6" "2019-W09-6"
+    ## [15] "2019-W10-1" "2019-W10-2" "2019-W10-3" "2019-W10-4" "2019-W10-4" "2019-W10-4"
 
 ``` r
 x <- date2week(onset, week_start = "sat", floor_day = TRUE) # truncate to just the weeks
@@ -140,15 +135,14 @@ table(week2date(x))
 
 If you have numeric weeks, you can rapidly convert to dates with
 `get_date()`. Here are all the dates for the first day of last 10 ISO
-weeks of
-    2015:
+weeks of 2015:
 
 ``` r
 get_date(week = 44:53, year = 2015)
 ```
 
-    ##  [1] "2015-10-26" "2015-11-02" "2015-11-09" "2015-11-16" "2015-11-23"
-    ##  [6] "2015-11-30" "2015-12-07" "2015-12-14" "2015-12-21" "2015-12-28"
+    ##  [1] "2015-10-26" "2015-11-02" "2015-11-09" "2015-11-16" "2015-11-23" "2015-11-30" "2015-12-07"
+    ##  [8] "2015-12-14" "2015-12-21" "2015-12-28"
 
 ``` r
 # you can also use this to generate aweek objects
@@ -156,8 +150,8 @@ get_aweek(week = 44:53, year = 2015)
 ```
 
     ## <aweek start: Monday>
-    ##  [1] "2015-W44-1" "2015-W45-1" "2015-W46-1" "2015-W47-1" "2015-W48-1"
-    ##  [6] "2015-W49-1" "2015-W50-1" "2015-W51-1" "2015-W52-1" "2015-W53-1"
+    ##  [1] "2015-W44-1" "2015-W45-1" "2015-W46-1" "2015-W47-1" "2015-W48-1" "2015-W49-1" "2015-W50-1"
+    ##  [8] "2015-W51-1" "2015-W52-1" "2015-W53-1"
 
 If you have weeks recorded from different data sets that start on
 different days, you can account for that by using the `start` option.
@@ -191,20 +185,19 @@ x
 ```
 
     ## <aweek start: Saturday>
-    ##  [1] 2019-W03 2019-W03 2019-W04 2019-W04 2019-W04 2019-W05 2019-W05
-    ##  [8] 2019-W05 2019-W06 2019-W06 2019-W06 2019-W09 2019-W09 2019-W10
-    ## [15] 2019-W11 2019-W12 2019-W12 2019-W14 2019-W15 2019-W15
-    ## 13 Levels: 2019-W03 2019-W04 2019-W05 2019-W06 2019-W07 ... 2019-W15
+    ##  [1] 2019-W03 2019-W03 2019-W04 2019-W04 2019-W04 2019-W05 2019-W05 2019-W05 2019-W06 2019-W06
+    ## [11] 2019-W06 2019-W09 2019-W09 2019-W10 2019-W11 2019-W12 2019-W12 2019-W14 2019-W15 2019-W15
+    ## 13 Levels: 2019-W03 2019-W04 2019-W05 2019-W06 2019-W07 2019-W08 2019-W09 2019-W10 ... 2019-W15
 
 ``` r
 table(x)
 ```
 
     ## x
-    ## 2019-W03 2019-W04 2019-W05 2019-W06 2019-W07 2019-W08 2019-W09 2019-W10 
-    ##        2        3        3        3        0        0        2        1 
-    ## 2019-W11 2019-W12 2019-W13 2019-W14 2019-W15 
-    ##        1        2        0        1        2
+    ## 2019-W03 2019-W04 2019-W05 2019-W06 2019-W07 2019-W08 2019-W09 2019-W10 2019-W11 2019-W12 2019-W13 
+    ##        2        3        3        3        0        0        2        1        1        2        0 
+    ## 2019-W14 2019-W15 
+    ##        1        2
 
 ## Locales
 
@@ -235,7 +228,7 @@ date2week(as.Date("2019-02-26"), week_start = "Sunday")
 Sys.setlocale("LC_TIME", lct)
 ```
 
-    ## [1] "en_GB.UTF-8"
+    ## [1] "en_US.UTF-8"
 
 ## Getting help online
 
@@ -260,7 +253,7 @@ have dependencies that require compiled code.
   - [ISOweek](https://cran.r-project.org/package=ISOweek) converts dates
     to ISO weeks as the “%W” and “%u” formats don’t exist in windows
   - [lubridate](https://github.com/tidyverse/lubridate) performs general
-    datetime handling with some auxilary functions that return the week
+    datetime handling with some auxiliary functions that return the week
     or day of the week.
   - [surveillance](https://surveillance.r-forge.r-project.org/)
     implements ISOWeekYear.

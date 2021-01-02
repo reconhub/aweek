@@ -1,9 +1,9 @@
-This fixes an issue of a failing minor test. It has been removed.
+This fixes an issue brought up by a test defined with incorrect parameters. The test has been updated with the correct parameters.
 
 ## Test environments
 
-* local macOS install, R 4.0.0
-* ubuntu 14.04 (on travis-ci and R-hub), R 4.0.0, R devel, R old release
+* local macOS install, R 4.0.2
+* ubuntu 16.04 (on GitHub Actions and R-hub), R 4.0.2, R devel, R old release
 * win-builder (devel and release)
 
 ## R CMD check results

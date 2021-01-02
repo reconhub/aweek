@@ -1,3 +1,17 @@
+# aweek 1.0.2
+
+## CRAN MAINTENANCE
+
+* A test that was failing due to an incorrect assumption that the first day of
+  the year would always fall on the first week of the year was fixed 
+  (see https://github.com/reconhub/aweek/issues/35 for details).
+  (#36, @zkamvar).
+
+## MISC
+
+* Continuous integration has been migrated from Travis-CI + AppVeyor to
+  GitHub actions.
+
 # aweek 1.0.1
 
 ## CRAN MAINTENANCE

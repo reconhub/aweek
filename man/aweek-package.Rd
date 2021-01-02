@@ -125,8 +125,8 @@ set_week_start(ow)
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://www.repidemicsconsortium.org/aweek}
-  \item Report bugs at \url{https://github.com/reconhub/aweek/issues}
+  \item \url{https://www.repidemicsconsortium.org/aweek/}
+  \item Report bugs at \url{https://github.com/reconhub/aweek/issues/}
 }
 
 }

@@ -1,4 +1,5 @@
 AppVeyor
+CMD
 Codecov
 datetime
 datetimes
@@ -6,8 +7,10 @@ DOI
 epiweeks
 github
 https
+ISOWeekYear
 ISOweek
 ISOweeks
+isoweeks
 lubridate
 MMWR
 MSF
