@@ -1,4 +1,6 @@
 context("as.aweek tests")
+ver <- package_version(paste(R.version$major, R.version$minor, sep = "."))
+min_ver <- package_version("3.5")
 
 
 # Setup for a default
@@ -45,6 +47,7 @@ test_that("as.aweek takes into account the length of week_start", {
 test_that("as.aweek correctly converts characters", {
 
   x <- c(NA, "2018-W10-1")
+  skip_if(ver < min_ver)
   expect_is(as.aweek(x), "aweek")
   expect_identical(as.aweek(x), as.aweek(x, start = "Monday"))
   expect_is(as.aweek(x, factor = TRUE, floor_day = TRUE), "aweek")
@@ -55,7 +58,8 @@ test_that("as.aweek correctly converts characters", {
 
 test_that("as.aweek correctly converts factors", {
 
-  
+
+  skip_if(ver < min_ver)
   f <- factor(c(NA, "2018-W10-1"))
   expect_is(as.aweek(f), "aweek")
   expect_identical(as.aweek(f), as.aweek(f, start = "Monday"))
