@@ -164,7 +164,7 @@ require compiled code.
  - [ISOweek](https://cran.r-project.org/package=ISOweek) converts dates to ISO
    weeks as the "%W" and "%u" formats don't exist in windows
  - [lubridate](https://github.com/tidyverse/lubridate) performs general
-   datetime handling with some auxilary functions that return the week or day
+   datetime handling with some auxiliary functions that return the week or day
    of the week. 
  - [surveillance](https://surveillance.r-forge.r-project.org/) implements ISOWeekYear. 
 
