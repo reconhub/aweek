@@ -53,6 +53,10 @@ test_that("get_aweek() can use vectors", {
 
 test_that("get_aweek() can handle missing data", {
  
+  ver <- package_version(paste(R.version$major, R.version$minor, sep = "."))
+  min_ver <- package_version("3.5")
+  skip_if(ver < min_ver)
+
   for (i in c("year", "week", "week_start")) {
     mm <- m
     mm[1, i] <- NA
