@@ -72,6 +72,10 @@ test_that("get_aweek() can handle missing data", {
 
 test_that("get_aweek() can handle several missing random data", {
 
+  ver <- package_version(paste(R.version$major, R.version$minor, sep = "."))
+  min_ver <- package_version("3.5")
+  skip_if(ver < min_ver)
+
   skip_if_not_installed("stats")
   mm <- mat
   mm[sample.int(7, 1), "year"] <- NA
