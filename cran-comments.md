@@ -1,9 +1,10 @@
-This fixes an issue brought up by a test defined with incorrect parameters. The test has been updated with the correct parameters.
+This fixes a failing test from R devel and fixes invalid URLs
+
 
 ## Test environments
 
-* local macOS install, R 4.0.2
-* ubuntu 16.04 (on GitHub Actions and R-hub), R 4.0.2, R devel, R old release
+* local ubuntu install, R 4.2.1
+* ubuntu 16.04 (on GitHub Actions and R-hub), R 4.2.1, R devel, R old release
 * win-builder (devel and release)
 
 ## R CMD check results
