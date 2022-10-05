@@ -60,7 +60,7 @@ Weeks differ in their start dates depending on context. The ISO
 8601 standard specifies that Monday starts the week
 (\url{https://en.wikipedia.org/wiki/ISO_week_date}) while the US CDC uses
 Sunday as the start of the week
-(\url{https://wwwn.cdc.gov/nndss/document/MMWR_Week_overview.pdf}). For
+(\url{https://stacks.cdc.gov/view/cdc/22305}). For
 example, MSF has varying start dates depending on country in order to
 better coordinate response.
 
