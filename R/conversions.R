@@ -24,7 +24,7 @@
 #' as.character(w)
 as.POSIXlt.aweek <- function(x, tz = "", floor_day = FALSE, ...) {
 
-  as.POSIXlt(as.character(as.Date(x, floor_day)), tz = tz, ...)
+  as.POSIXlt(as.Date(x, floor_day), tz = tz, ...)
 
 }
 

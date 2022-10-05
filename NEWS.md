@@ -1,3 +1,10 @@
+# aweek 1.0.3
+
+## CRAN MAINTENANCE
+
+* `as.POSIXlt()` method for aweek objects no longer converts dates to character
+  before converting to POSIXlt
+
 # aweek 1.0.2
 
 ## CRAN MAINTENANCE
